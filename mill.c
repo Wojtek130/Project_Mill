@@ -60,12 +60,12 @@ void print_board(int n, int **board)
 
     for (int i = 0; i < n; i++)
     {
-        printf("%d ", board[i][7]);
+        printf("%d  ", board[i][7]);
     }
-    printf("    ");
+    printf("     ");
     for (int i = 0; i < n; i++)
     {
-        printf("%d ", board[i][3]);
+        printf("%d  ", board[i][3]);
     }
     printf("\n");
 
