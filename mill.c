@@ -71,7 +71,7 @@ void print_board(int n, int **board)
 
     for (int i = 0; i < n; i++)
     {
-        for (int k = 3*(n/2-i+1); k > 0; k--)
+        for (int k = 0; k < 3*(n-i-1); k++)
         {
             printf(" ");
         }
