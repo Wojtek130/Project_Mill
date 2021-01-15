@@ -2,41 +2,34 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "mill.h"
+#define NUMBER_OF_FIELDS 8
+
 
 // Wojciech Sniady, nr indeksu: 322993
 
-
-int **generate_board(int n)
+Board* generate_board(int n)
 {
     int counter = 0;
-    int **board;
-    board = malloc(sizeof(int*)*n);
+    Board* board = malloc(sizeof(Board));
+    board->number_of_squares = n;
+    board->data = malloc(sizeof(int*)*n);
     
     for (int k = 0; k < n; k++)
     {
-        board[k] = malloc(sizeof(int)*8);   
+        board->data[k] = malloc(sizeof(int)*NUMBER_OF_FIELDS);   
     }
-
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < 8; j++)
+        for (int j = 0; j < NUMBER_OF_FIELDS; j++)
         {
-            board[i][j] = counter%10;
+            board->data[i][j] = counter%10;
             counter++;
         }
     }
     return board;
 }
 
-struct board {
-    int** data;
-    int number_of_squares;
-    int number_of_fields; //
-}
-
-
-
-void print_board(int n, int **board)
+void print_board(Board* board)
 //board[][8]
 {
     /*int counter = 0;
@@ -48,34 +41,35 @@ void print_board(int n, int **board)
             counter++;
         }
     }*/
+    int n = board->number_of_squares;
     for (int i = 0; i < n; i++)
     {
         for (int k = 0; k < 3*i; k++)
         {
             printf(" ");
         }
-        printf("%d", board[i][0]);
+        printf("%d", board->data[i][0]);
         for (int j = 3*(n - i); j >= 1; j--)
         {
             printf(" ");
         }
-        printf("%d", board[i][1]);
+        printf("%d", board->data[i][1]);
         for (int j = 3*(n - i); j >= 1; j--)
         {
             printf(" ");
         }
-        printf("%d", board[i][2]);
+        printf("%d", board->data[i][2]);
         printf("\n");
     }
 
     for (int i = 0; i < n; i++)
     {
-        printf("%d  ", board[i][7]);
+        printf("%d  ", board->data[i][7]);
     }
     printf("     ");
     for (int i = 0; i < n; i++)
     {
-        printf("%d  ", board[i][3]);
+        printf("%d  ", board->data[i][3]);
     }
     printf("\n");
 
@@ -85,19 +79,28 @@ void print_board(int n, int **board)
         {
             printf(" ");
         }
-        printf("%d", board[i][6]);
+        printf("%d", board->data[i][6]);
         for (int j = 3*(-i-1); j < 0; j++)
         {
             printf(" ");
         }
-        printf("%d", board[i][5]);
+        printf("%d", board->data[i][5]);
         for (int j = 3*(-i-1); j < 0; j++)
         {
             printf(" ");
         }
-        printf("%d", board[i][4]);
+        printf("%d", board->data[i][4]);
 
         printf("\n");
     }
 }
 
+void free_board(Board* board)
+{
+    for (int k = 0; k < board->number_of_squares; k++)
+    {
+        free(board->data[k]);  
+    }
+    free(board->data);
+    free(board);
+}
