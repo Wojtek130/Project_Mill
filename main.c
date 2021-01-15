@@ -7,7 +7,6 @@ int main()
 {
     int n = 3;
     int m = 2;
-    int p;
     Board *board_3 = generate_board(n);
     Board *board_2 = generate_board(m);
     Board *board_7 = generate_board(7);
