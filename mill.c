@@ -5,6 +5,7 @@
 
 // Wojciech Sniady, nr indeksu: 322993
 
+
 int **generate_board(int n)
 {
     int counter = 0;
@@ -13,7 +14,7 @@ int **generate_board(int n)
     
     for (int k = 0; k < n; k++)
     {
-        board[k] = malloc(sizeof(int*)*8);   
+        board[k] = malloc(sizeof(int)*8);   
     }
 
     for (int i = 0; i < n; i++)
@@ -27,7 +28,16 @@ int **generate_board(int n)
     return board;
 }
 
+struct board {
+    int** data;
+    int number_of_squares;
+    int number_of_fields; //
+}
+
+
+
 void print_board(int n, int **board)
+//board[][8]
 {
     /*int counter = 0;
     for (int i = 0; i < n; i++)
@@ -90,3 +100,4 @@ void print_board(int n, int **board)
         printf("\n");
     }
 }
+
