@@ -30,17 +30,7 @@ Board* generate_board(int n)
 }
 
 void print_board(Board* board)
-//board[][8]
 {
-    /*int counter = 0;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            printf("%d ", board[i][j]);
-            counter++;
-        }
-    }*/
     int n = board->number_of_squares;
     for (int i = 0; i < n; i++)
     {
@@ -113,7 +103,16 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
     bool not_successfully_placed = true;
     while (not_successfully_placed)
     {
-        printf("Enter number of the square and number of the field: ");
+        if (players_1_turn)
+        {
+            printf("Player's 1 turn! Enter number of the square and number of the field: ");
+        }
+        else
+        {
+            printf("Player's 2 turn! Enter number of the square and number of the field: ");
+        }
+        
+        
         scanf("%d %d", &square_number, &field_number);
         printf("\n");
         if (board->data[square_number][field_number] == 0)
@@ -201,23 +200,82 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
             }
             else
             {
-                board->data[square_number][field_number] = 0;
-                (*men_number_player_1)--;
-                not_successfully_selected = false;
+                if (all_oponents_men_in_a_mill(board, !players_1_turn))
+                {
+                    board->data[square_number][field_number] = 0;
+                    (*men_number_player_1)--;
+                    not_successfully_selected = false;
+                }
+                else
+                {
+                    if (mill_achieved(board, square_number, field_number))
+                    {
+                        printf("This man is in a mill and you cannot remove it, select another one\n");
+                    }
+                    else
+                    {
+                        board->data[square_number][field_number] = 0;
+                        (*men_number_player_1)--;
+                        not_successfully_selected = false;
+                    }
+                    
+                }
+                
+
             }     
         }
         else
         {
-            if (players_1_turn)
-            {
-                board->data[square_number][field_number] = 0;
-                (*men_number_player_2)--;
-                not_successfully_selected = false;
-            }
-            else
+            if (players_1_turn == false)
             {
                 printf("You cannot remove your man, select a man of the opponent\n");
             }
+            else
+            {
+                if (all_oponents_men_in_a_mill(board, players_1_turn))
+                {
+                    board->data[square_number][field_number] = 0;
+                    (*men_number_player_2)--;
+                    not_successfully_selected = false;
+                }
+                else
+                {
+                    if (mill_achieved(board, square_number, field_number))
+                    {
+                        printf("This man is in a mill and you cannot remove it, select another one\n");
+                    }
+                    else
+                    {
+                        board->data[square_number][field_number] = 0;
+                        (*men_number_player_2)--;
+                        not_successfully_selected = false;
+                    }
+                    
+                }
+            }
         }     
     }
+}
+
+bool all_oponents_men_in_a_mill(Board* board, bool player_1_turn)
+{
+    for (int sqr = 0; sqr < board->number_of_squares; sqr++)
+    {
+        for (int field = 0; field < NUMBER_OF_FIELDS; field++)
+        {
+            if (player_1_turn && board->data[sqr][field] == 2)
+            {
+                if (mill_achieved(board, sqr, field) == false)
+                {
+                    return false;
+                }
+            }
+            else if (player_1_turn == false && board->data[sqr][field] == 1)
+            if (mill_achieved(board, sqr, field) == false)
+                {
+                    return false;
+                }
+        }
+    }
+    return true;
 }
