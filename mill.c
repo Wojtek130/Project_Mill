@@ -9,7 +9,7 @@
 
 Board* generate_board(int n)
 {
-    int counter = 0;
+    //int counter = 0;
     Board* board = malloc(sizeof(Board));
     board->number_of_squares = n;
     board->data = malloc(sizeof(int*)*n);
@@ -22,8 +22,8 @@ Board* generate_board(int n)
     {
         for (int j = 0; j < NUMBER_OF_FIELDS; j++)
         {
-            board->data[i][j] = counter%10;
-            counter++;
+            board->data[i][j] = 0;
+            //counter++;
         }
     }
     return board;
@@ -48,17 +48,19 @@ void print_board(Board* board)
         {
             printf(" ");
         }
-        printf("%d", board->data[i][0]);
+        printf("%d", board->data[n-i-1][0]);
+        //int w = 123 + i;
+        //printf("%d", w);
         for (int j = 3*(n - i); j >= 1; j--)
         {
             printf(" ");
         }
-        printf("%d", board->data[i][1]);
+        printf("%d", board->data[n-i-1][1]);
         for (int j = 3*(n - i); j >= 1; j--)
         {
             printf(" ");
         }
-        printf("%d", board->data[i][2]);
+        printf("%d", board->data[n-i-1][2]);
         printf("\n");
     }
 
@@ -103,4 +105,62 @@ void free_board(Board* board)
     }
     free(board->data);
     free(board);
+}
+
+void place_men(Board* board, bool players_1_turn)
+{
+    int square_number, field_number;
+    bool not_successfully_placed = true;
+    while (not_successfully_placed)
+    {
+        printf("Enter number of the square and number of the field: ");
+        scanf("%d %d", &square_number, &field_number);
+        printf("\n");
+        if (board->data[square_number][field_number] == 0)
+        {
+            if (players_1_turn)
+            {
+                board->data[square_number][field_number] = 1;
+            }
+            else
+            {
+                board->data[square_number][field_number] = 2;
+            }
+            not_successfully_placed = false;
+            // if (mill_achieved(board, square_number, field_number))
+            // {
+            //     printf("MILL!!!\n");
+            // }
+        }
+        else
+        {
+            printf("wrong field selected, try again\n");
+        }
+        
+    }
+}
+
+bool mill_achieved(Board* board, int current_square, int current_field)
+{
+    if (current_field % 2 == 0)
+    {
+        //if (((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % 8])
+        //== board->data[current_square][(current_field + 2) % 8]) && (board->data[current_square][current_field + 1] != 0))
+        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % 8]) 
+        && (board->data[current_square][(current_field + 1) % 8] == board->data[current_square][(current_field + 2) % 8])
+        && (board->data[current_square][current_field + 1] != 0))
+        {
+            return true;
+        }
+        //if (((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 8 - 1) % 8])
+        //== board->data[current_square][(current_field + 8 - 2) % 8] && (board->data[current_square][current_field] != 0)
+        //&& (board->data[current_square][current_field + 8 - 1] != 0)))
+        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 8 - 1) % 8]) 
+        && (board->data[current_square][(current_field + 8 - 1) % 8] == board->data[current_square][(current_field + 8) - 2 % 8])
+        && (board->data[current_square][(current_field + 8 - 1) % 8] != 0))
+        {
+            return true;
+        }
+    }
+    return false;
 }
