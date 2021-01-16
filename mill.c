@@ -107,7 +107,7 @@ void free_board(Board* board)
     free(board);
 }
 
-void place_men(Board* board, bool players_1_turn)
+void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2)
 {
     int square_number, field_number;
     bool not_successfully_placed = true;
@@ -121,15 +121,18 @@ void place_men(Board* board, bool players_1_turn)
             if (players_1_turn)
             {
                 board->data[square_number][field_number] = 1;
+                (*men_number_player_1)++;
             }
             else
             {
                 board->data[square_number][field_number] = 2;
+                (*men_number_player_2)++;
             }
             not_successfully_placed = false;
             if (mill_achieved(board, square_number, field_number))
             {
-                printf("MILL!!!\n");
+                print_board(board);
+                remove_opponents_men(board, players_1_turn, men_number_player_1, men_number_player_2);
             }
         }
         else
@@ -174,6 +177,47 @@ bool mill_achieved(Board* board, int current_square, int current_field)
             return true;
         }
     }
-    
     return false;
+}
+
+void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2)
+{
+    int square_number, field_number;
+    bool not_successfully_selected = true;
+    while (not_successfully_selected)
+    {
+        printf("Enter number of the square and number of the opponents man that you want to remove: ");
+        scanf("%d %d", &square_number, &field_number);
+        printf("\n");
+        if (board->data[square_number][field_number] == 0)
+        {
+            printf("There is no men on this field selected, select again\n");
+        }
+        else if (board->data[square_number][field_number] == 1)
+        {
+            if (players_1_turn)
+            {
+                printf("You cannot remove your man, select a man of the opponent\n");
+            }
+            else
+            {
+                board->data[square_number][field_number] = 0;
+                (*men_number_player_1)--;
+                not_successfully_selected = false;
+            }     
+        }
+        else
+        {
+            if (players_1_turn)
+            {
+                board->data[square_number][field_number] = 0;
+                (*men_number_player_2)--;
+                not_successfully_selected = false;
+            }
+            else
+            {
+                printf("You cannot remove your man, select a man of the opponent\n");
+            }
+        }     
+    }
 }
