@@ -135,8 +135,7 @@ void place_men(Board* board, bool players_1_turn)
         else
         {
             printf("wrong field selected, try again\n");
-        }
-        
+        }     
     }
 }
 
@@ -144,18 +143,37 @@ bool mill_achieved(Board* board, int current_square, int current_field)
 {
     if (current_field % 2 == 0)
     {
-        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % 8]) 
-        && (board->data[current_square][(current_field + 1) % 8] == board->data[current_square][(current_field + 2) % 8])
+        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % NUMBER_OF_FIELDS]) 
+        && (board->data[current_square][(current_field + 1) % NUMBER_OF_FIELDS] == board->data[current_square][(current_field + 2) %  NUMBER_OF_FIELDS])
         && (board->data[current_square][current_field + 1] != 0))
         {
             return true;
         }
-        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 8 - 1) % 8]) 
-        && (board->data[current_square][(current_field + 8 - 1) % 8] == board->data[current_square][(current_field + 8) - 2 % 8])
-        && (board->data[current_square][(current_field + 8 - 1) % 8] != 0))
+        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field +  NUMBER_OF_FIELDS - 1) %  NUMBER_OF_FIELDS]) 
+        && (board->data[current_square][(current_field +  NUMBER_OF_FIELDS - 1) %  NUMBER_OF_FIELDS] == board->data[current_square][(current_field +  NUMBER_OF_FIELDS - 2) %  NUMBER_OF_FIELDS])
+        && (board->data[current_square][(current_field +  NUMBER_OF_FIELDS - 1) %  NUMBER_OF_FIELDS] != 0))
         {
             return true;
         }
     }
+    else
+    {
+        if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + NUMBER_OF_FIELDS - 1) % NUMBER_OF_FIELDS]) 
+        && (board->data[current_square][(current_field + NUMBER_OF_FIELDS - 1) % NUMBER_OF_FIELDS] == board->data[current_square][(current_field + 1) % NUMBER_OF_FIELDS])
+        && (board->data[current_square][(current_field + NUMBER_OF_FIELDS - 1) % NUMBER_OF_FIELDS] != 0))
+        {
+            return true;
+        }
+    }
+    if (current_field % 2 == 1 && board->number_of_squares == 3)
+    {
+        if ((board->data[0][current_field] ==  board->data[1][current_field]) 
+        && (board->data[0][current_field] == board->data[2][current_field])
+        && (board->data[current_square][current_field] != 0))
+        {
+            return true;
+        }
+    }
+    
     return false;
 }
