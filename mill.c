@@ -66,7 +66,7 @@ void print_board(Board* board)
 
     for (int i = 0; i < n; i++)
     {
-        printf("%d  ", board->data[i][7]);
+        printf("%d  ", board->data[n-i-1][7]);
     }
     printf("     ");
     for (int i = 0; i < n; i++)
@@ -127,10 +127,10 @@ void place_men(Board* board, bool players_1_turn)
                 board->data[square_number][field_number] = 2;
             }
             not_successfully_placed = false;
-            // if (mill_achieved(board, square_number, field_number))
-            // {
-            //     printf("MILL!!!\n");
-            // }
+            if (mill_achieved(board, square_number, field_number))
+            {
+                printf("MILL!!!\n");
+            }
         }
         else
         {
@@ -144,17 +144,12 @@ bool mill_achieved(Board* board, int current_square, int current_field)
 {
     if (current_field % 2 == 0)
     {
-        //if (((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % 8])
-        //== board->data[current_square][(current_field + 2) % 8]) && (board->data[current_square][current_field + 1] != 0))
         if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % 8]) 
         && (board->data[current_square][(current_field + 1) % 8] == board->data[current_square][(current_field + 2) % 8])
         && (board->data[current_square][current_field + 1] != 0))
         {
             return true;
         }
-        //if (((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 8 - 1) % 8])
-        //== board->data[current_square][(current_field + 8 - 2) % 8] && (board->data[current_square][current_field] != 0)
-        //&& (board->data[current_square][current_field + 8 - 1] != 0)))
         if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 8 - 1) % 8]) 
         && (board->data[current_square][(current_field + 8 - 1) % 8] == board->data[current_square][(current_field + 8) - 2 % 8])
         && (board->data[current_square][(current_field + 8 - 1) % 8] != 0))
