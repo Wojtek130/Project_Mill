@@ -301,11 +301,11 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
         }
         if (players_1_turn)
         {
-            printf("Player's 1 turn! Enter number of the square and number of the field where you want to move it: ");
+            printf("Move! Enter number of the square and number of the field where you want to move it: ");
         }
         else
         {
-            printf("Player's 2 turn! Enter number of the square and number of the field where you want to move it: ");
+            printf("Move! Enter number of the square and number of the field where you want to move it: ");
         }
         scanf("%d %d", &chosen_square_number, &chosen_field_number);
         printf("\n");
@@ -318,11 +318,11 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
     board->data[current_square_number][current_field_number] = 0;
     if (players_1_turn)
     {
-        board->data[current_square_number][current_field_number] = 1;
+        board->data[chosen_square_number][chosen_field_number] = 1;
     }
     else
     {
-        board->data[current_square_number][current_field_number] = 2;
+        board->data[chosen_square_number][chosen_field_number] = 2;
     }
     
     if (mill_achieved(board, chosen_square_number, chosen_field_number))
@@ -379,7 +379,7 @@ bool properly_selected_field_to_move_on(Board* board, int current_square_number,
         return false;
     }
     if (((abs(current_field_number - chosen_field_number) == 1 && current_square_number == chosen_square_number) 
-    || (current_field_number == chosen_field_number && (abs(current_square_number - chosen_square_number) == 1))) == false) 
+    || ((current_field_number % 2 == 1) && current_field_number == chosen_field_number && (abs(current_square_number - chosen_square_number) == 1))) == false) 
     {
         printf("A man can be moved only by one step, select again\n");
         return false;
