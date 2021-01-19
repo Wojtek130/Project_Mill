@@ -477,7 +477,7 @@ bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_
 
 void show_winner(bool players_1_turn)
 {
-    printf("GAME OVER!!!\n")
+    printf("GAME OVER!!!\n");
     if (players_1_turn)
     {
         printf("Player 1 won! Congratulations!\n");
