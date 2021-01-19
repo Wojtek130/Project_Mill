@@ -210,7 +210,7 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
                 {
                     if (mill_achieved(board, square_number, field_number))
                     {
-                        printf("This man is in a mill and you cannot remove it, select another one\n");
+                        printf("This man is in the mill and you cannot remove it, select another one\n");
                     }
                     else
                     {
@@ -242,7 +242,7 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
                 {
                     if (mill_achieved(board, square_number, field_number))
                     {
-                        printf("This man is in a mill and you cannot remove it, select another one\n");
+                        printf("This man is in the mill and you cannot remove it, select another one\n");
                     }
                     else
                     {
@@ -293,7 +293,7 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
         }
         else
         {
-            printf("Player's 2 turn! Enter number of the square and number of the man that you want to move: : ");
+            printf("Player's 2 turn! Enter number of the square and number of the man that you want to move: ");
         }
         scanf("%d %d", &current_square_number, &current_field_number);
         printf("\n");
@@ -486,5 +486,4 @@ void show_winner(bool players_1_turn)
     {
         printf("Player 2 won! Congratulations!\n");
     }
-    
 }
