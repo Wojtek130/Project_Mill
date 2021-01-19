@@ -58,8 +58,13 @@ int main()
         move_men(board_test_3, p_1_turn, &men_number_p_1_test, &men_number_p_2_test);
         print_board(board_test_3);
         printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1_test, men_number_p_2_test);
+        if (game_over(board_test_3, p_1_turn, men_number_p_1_test, men_number_p_2_test) == true)
+        {
+            break;
+        }
         p_1_turn = !p_1_turn;
     }
+    show_winner(p_1_turn);
 
     // for (int i = 0; i < m*3; i++)
     // {

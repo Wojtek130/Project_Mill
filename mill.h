@@ -20,7 +20,10 @@ bool mill_achieved(Board* board, int current_square, int current_field);
 void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2);
 bool all_oponents_men_in_a_mill(Board* board, bool player_1_turn);
 void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2);
-bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number);
-bool properly_selected_field_to_move_on(Board* board, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number);
+bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, int men_number_player_1, int men_number_player_2);
+bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2);
+bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
+bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
+void show_winner(bool players_1_turn);
 
 #endif

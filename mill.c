@@ -298,7 +298,7 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
         scanf("%d %d", &current_square_number, &current_field_number);
         printf("\n");
         
-        if (properly_selected_man_to_move(board, players_1_turn, current_square_number, current_field_number) == false)
+        if (properly_selected_man_to_move(board, players_1_turn, current_square_number, current_field_number, *men_number_player_1, *men_number_player_2) == false)
         {
             continue;
         }
@@ -312,7 +312,7 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
         }
         scanf("%d %d", &chosen_square_number, &chosen_field_number);
         printf("\n");
-        if (properly_selected_field_to_move_on(board, current_square_number, current_field_number, chosen_square_number, chosen_field_number) == false)
+        if (properly_selected_field_to_move_on(board, players_1_turn, current_square_number, current_field_number, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
         {
             continue;
         }
@@ -335,7 +335,7 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
     }  
 }
 
-bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number)
+bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2)
 {
     if (board->data[square_number][field_number] == 0)
     {
@@ -351,6 +351,14 @@ bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square
     {
         printf("This is a man of Player 1, select again\n");
         return false;
+    }
+    if (players_1_turn && men_number_player_1 == 3)
+    {
+        return true;
+    }
+    if (!players_1_turn && men_number_player_2 == 3)
+    {
+        return true;
     }
     if (board->data[square_number][(field_number + 1) % NUMBER_OF_FIELDS] == 0 || board->data[square_number][(field_number + - 1 + NUMBER_OF_FIELDS) % NUMBER_OF_FIELDS] == 0)
     {
@@ -374,18 +382,109 @@ bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square
     return false;
 }
 
-bool properly_selected_field_to_move_on(Board* board, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number)
+bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, int men_number_player_1, int men_number_player_2)
 {
     if (board->data[chosen_square_number][chosen_field_number] != 0)
     {
         printf("This is a field is already occupied, select again\n");
         return false;
     }
-    if (((abs(current_field_number - chosen_field_number) == 1 && current_square_number == chosen_square_number) 
+    if (players_1_turn && men_number_player_1 == 3)
+    {
+        return true;
+    }
+    if (!players_1_turn && men_number_player_2 == 3)
+    {
+        return true;
+    }
+    if ((((abs(current_field_number - chosen_field_number) == 1 || abs(current_field_number - chosen_field_number) == 7) 
+    && current_square_number == chosen_square_number) 
     || ((current_field_number % 2 == 1) && current_field_number == chosen_field_number && (abs(current_square_number - chosen_square_number) == 1))) == false) 
     {
         printf("A man can be moved only by one step, select again\n");
         return false;
     }
     return true;
+}
+
+bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2)
+{
+    if (players_1_turn && men_number_player_2 <=2)
+    {
+        return true;
+    }
+    if (!players_1_turn && men_number_player_1 <=2)
+    {
+        return true;
+    }
+    if (any_move_possible(board, players_1_turn, men_number_player_1, men_number_player_2) == false)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2)
+{
+    if (players_1_turn && men_number_player_2 == 3)
+    {
+        return true;
+    }
+    if (!players_1_turn && men_number_player_1 == 3)
+    {
+        return true;
+    }
+    int opponents_men;
+    if (players_1_turn)
+    {
+        opponents_men = 2; 
+    }
+    else
+    {
+        opponents_men = 1;
+    }
+    for (int sqr = 0; sqr < board->number_of_squares; sqr++)
+    {
+        for (int field = 0; field < NUMBER_OF_FIELDS; field++)
+        {
+            if (board->data[sqr][field] != opponents_men)
+            {
+                continue;
+            }
+            if (board->data[sqr][(field + 1) % NUMBER_OF_FIELDS] == 0 || board->data[sqr][(field + - 1 + NUMBER_OF_FIELDS) % NUMBER_OF_FIELDS] == 0)
+            {
+                return true;
+            }
+            if ((sqr - 1 >= 0) && (field % 2 == 1))
+            {
+                if (board->data[sqr - 1][field] == 0)
+                {
+                    return true;
+                }
+            }
+            if ((sqr + 1 <= board->number_of_squares - 1) && (field % 2 == 1))
+            {
+                if (board->data[sqr + 1][field] == 0)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    printf("No moves possible!\n");
+    return false;
+}
+
+void show_winner(bool players_1_turn)
+{
+    printf("GAME OVER!!!\n")
+    if (players_1_turn)
+    {
+        printf("Player 1 won! Congratulations!\n");
+    }
+    else
+    {
+        printf("Player 2 won! Congratulations!\n");
+    }
+    
 }
