@@ -3,6 +3,9 @@ CFLAGS=-std=c11 -Wall -Wextra -Werror
 #LDFLAGS=-lm
 LDLIBS =`pkg-config gtk+-3.0 --cflags --libs`
 NAME = mill
+mill_2: main.c mill.c
+	$(CC) $(CFLAGS) main.c mill.c  $(LDLIBS) -o mill_2
+
 
 $(NAME): main.o mill.o
 	$(CC) $(CFLAGS) main.c mill.c  $(LDLIBS) -o $(NAME)

@@ -286,15 +286,18 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
     bool not_successfully_selected = true; 
     while (not_successfully_selected)
     {
+        
         if (players_1_turn)
         {
-            printf("Player's 1 turn! Enter number of the square and number of the man that you want to move: ");        }
+            printf("Player's 1 turn! Enter number of the square and number of the man that you want to move: ");
+        }
         else
         {
             printf("Player's 2 turn! Enter number of the square and number of the man that you want to move: : ");
         }
         scanf("%d %d", &current_square_number, &current_field_number);
         printf("\n");
+        
         if (properly_selected_man_to_move(board, players_1_turn, current_square_number, current_field_number) == false)
         {
             continue;
@@ -353,14 +356,14 @@ bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square
     {
         return true;
     }
-    if (square_number - 1 >= 0)
+    if ((square_number - 1 >= 0) && (field_number % 2 == 1))
     {
         if (board->data[square_number - 1][field_number] == 0)
         {
             return true;
         }
     }
-    if (square_number + 1 <= board->number_of_squares - 1)
+    if ((square_number + 1 <= board->number_of_squares - 1) && (field_number % 2 == 1))
     {
         if (board->data[square_number + 1][field_number] == 0)
         {

@@ -21,6 +21,7 @@ int main()
     board_test_3->data[1][4] = 2;
     board_test_3->data[1][6] = 2;
     board_test_3->data[1][7] = 2;
+    //
     print_board(board_test_3);
     //Board *board_2 = generate_board(m);
     //print_board(board_3);
@@ -29,8 +30,8 @@ int main()
     // //printf("\n");
     //int men_number_p_1 = 0;
     //int men_number_p_2 = 0;
-    int men_number_p_1_test = 0;
-    int men_number_p_2_test = 0;
+    int men_number_p_1_test = 6;
+    int men_number_p_2_test = 6;
     bool p_1_turn = true;
     /*
     for (int i = 0; i < n*3; i++)
@@ -57,9 +58,7 @@ int main()
         move_men(board_test_3, p_1_turn, &men_number_p_1_test, &men_number_p_2_test);
         print_board(board_test_3);
         printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1_test, men_number_p_2_test);
-        move_men(board_test_3, !p_1_turn, &men_number_p_1_test, &men_number_p_2_test);
-        print_board(board_test_3);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1_test, men_number_p_2_test);
+        p_1_turn = !p_1_turn;
     }
 
     // for (int i = 0; i < m*3; i++)
