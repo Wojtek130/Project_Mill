@@ -141,6 +141,12 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
             printf("wrong field selected, try again\n");
         }     
     }
+    sendStringToPipe(potoki, "abc");
+    char output[10];
+    if (getStringFromPipe(potoki, output, 1000))
+    {
+        printf("output : %s\n", output);
+    }
 }
 
 
@@ -297,8 +303,7 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
     int current_square_number, current_field_number, chosen_square_number, chosen_field_number;
     bool not_successfully_selected = true; 
     while (not_successfully_selected)
-    {
-        
+    {   
         if (players_1_turn)
         {
             printf("Player's 1 turn! Enter number of the square and number of the man that you want to move: ");
@@ -339,7 +344,8 @@ void move_men(Board* board, bool players_1_turn, int *men_number_player_1, int *
     {
         board->data[chosen_square_number][chosen_field_number] = 2;
     }
-    
+    /*char* text_to_send = int_to_char(value_to_send(chosen_square_number, chosen_square_number, -1, -1, players_1_turn));
+    sendStringToPipe(potoki, text_to_send);*/
     if (mill_achieved(board, chosen_square_number, chosen_field_number))
     {
         print_board(board);
@@ -509,12 +515,27 @@ int compute_value_to_send(int position_number, int characterstic_value)
     return pow(characterstic_value, position_number+1);
 }
 
-int value_to_send(int square_number_place, int field_number_place, int square_number_remove,int field_number_remove)
+int value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn)
 {
     int result = 1;
-    result *= compute_value_to_send(square_number_place, 2); 
-    result *= compute_value_to_send(field_number_place, 3);
-    result *= compute_value_to_send(square_number_remove, 5);
-    result *= compute_value_to_send(field_number_remove, 7);
+    result *= compute_value_to_send(current_square_number, 2); 
+    result *= compute_value_to_send(current_field_number, 3);
+    result *= compute_value_to_send(chosen_square_number, 5); 
+    result *= compute_value_to_send(chosen_field_number, 7);
+    if (remove)
+    {
+        result *= 11;
+    }
+    if (players_1_turn == false)
+    {
+        result *= -1;
+    }
     return result;
+}
+
+char* int_to_char(int value)
+{
+    char value_string[10];
+    sprintf(value_string, "%d", value);
+    return value_string;
 }

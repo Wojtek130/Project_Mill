@@ -1,15 +1,16 @@
 
 #include "mill.h"
 #include "fifo.h"
-
+#define MAKS_DL_TEKSTU 10000
 // Wojciech Sniady, nr indeksu: 322993
 
-static PipesPtr potoki;
-static char *moj_id, *twoj_id;
 
+static char *moj_id, *twoj_id;
+PipesPtr potoki;
 
 int main(int argc,char *argv[])
 {
+    
     if ((potoki=initPipes(argc,argv)) == NULL)
         return 1;
     if (argc == 2 && strcmp(argv[1],"A") == 0) 
@@ -22,10 +23,6 @@ int main(int argc,char *argv[])
         moj_id="B > ";
         twoj_id="A > ";
     }
-
-
-    
-
     int m = 2;
     //int n = 3;
     /*Board *board_test_3 = generate_board(n);
@@ -124,6 +121,7 @@ int main(int argc,char *argv[])
     //     place_men(board_2, false);
     //     print_board(board_2);
     // }
+    //g_timeout_add(100,pobierz_tekst,NULL);
     free_board(board_2);
     //free_board(board_3);
     //free_board(board_test_3);

@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-std=c11 -Wall -Wextra -Werror
+#CFLAGS=-std=c11 -Wall -Wextra -Werror
+CFLAGS=-std=c11 -Wall -Wextra
 LDFLAGS=-lm
 LDLIBS =`pkg-config gtk+-3.0 --cflags --libs`
 NAME = mill
@@ -20,4 +21,4 @@ mill_debug: main.o mill.o
 	$(CC) $(CFLAGS) -g $(LDLIBS) main.o mill.o -o mill_debug
 
 clean:
-	rm -f main.o mill.o lin-fifo.o mill
+	rm -f main.o mill.o lin-fifo.o mill AtoB BtoA

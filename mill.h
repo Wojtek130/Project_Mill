@@ -12,6 +12,8 @@ typedef struct Board {
     int number_of_squares;
 } Board;
 
+extern PipesPtr potoki;
+
 
 Board *generate_board(int n);
 void free_board(Board* board);
@@ -26,5 +28,7 @@ bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square
 bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
 bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
 void show_winner(bool players_1_turn);
+char* int_to_char(int value);
+int value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn);
 
 #endif
