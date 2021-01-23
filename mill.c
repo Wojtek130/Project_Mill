@@ -141,8 +141,11 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
             printf("wrong field selected, try again\n");
         }     
     }
+    int move_information_int = value_to_send(square_number, field_number, -1, -1, false, true);
+    char move_information[10];
+    strcpy(move_information, (int_to_char(move_information_int)));
     printf("bababa\n");
-    sendStringToPipe(potoki, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    sendStringToPipe(potoki, move_information);
 }
 
 
@@ -531,7 +534,7 @@ int value_to_send(int current_square_number, int current_field_number, int chose
 
 char* int_to_char(int value)
 {
-    char value_string[10];
+    char *value_string = malloc(10*sizeof(char));
     sprintf(value_string, "%d", value);
     return value_string;
 }

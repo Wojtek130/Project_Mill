@@ -1,13 +1,13 @@
 
 #include "mill.h"
 #include "fifo.h"
-#define MAKS_DL_TEKSTU 10
+#define MAX_TEXT_LENGHT 10
 // Wojciech Sniady, nr indeksu: 322993
 
 
 //static char *moj_id, *twoj_id;
 PipesPtr potoki;
-gchar wejscie[MAKS_DL_TEKSTU+5];
+gchar wejscie[MAX_TEXT_LENGHT];
 bool your_turn;
 
 static void przekaz_tekst(gpointer arg_1)
@@ -17,7 +17,7 @@ static void przekaz_tekst(gpointer arg_1)
 
 static gboolean pobierz_tekst(gpointer data)
 {
-    getStringFromPipe(potoki,wejscie+strlen(wejscie),MAKS_DL_TEKSTU);
+    getStringFromPipe(potoki,wejscie+strlen(wejscie),MAX_TEXT_LENGHT);
     printf("output : %s\n", wejscie);
     return TRUE;
 }
@@ -46,7 +46,7 @@ int main(int argc,char *argv[])
     int a;
     while (counter < 10)
     {
-        getStringFromPipe(potoki,wejscie+strlen(wejscie),MAKS_DL_TEKSTU);
+        getStringFromPipe(potoki,wejscie+strlen(wejscie),MAX_TEXT_LENGHT);
         printf("input: ");
         scanf("%d", &a);
         counter++;
@@ -85,12 +85,12 @@ int main(int argc,char *argv[])
     int men_number_p_2 = 0;
     bool p_1_turn = true;
     bool received_no_message = true;
-    char move_information[MAKS_DL_TEKSTU];
-    for (int i = 0; i < n*3; i++)
+    char move_information[MAX_TEXT_LENGHT];
+    for (int i = 0; i < 2*n*3; i++)
     {
         if (your_turn)
         {
-            place_men(board_3, your_turn, &men_number_p_1, &men_number_p_2);
+            place_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
             print_board(board_3);
             printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
         }
@@ -98,7 +98,7 @@ int main(int argc,char *argv[])
         {
             while (received_no_message)
             {
-                if (getStringFromPipe(potoki,wejscie+strlen(wejscie),MAKS_DL_TEKSTU))
+                if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
                 {
                     strcpy(move_information, wejscie);
                     printf("rec : %s", move_information);
@@ -108,6 +108,7 @@ int main(int argc,char *argv[])
             received_no_message = true;
         }
         your_turn = !your_turn;
+        p_1_turn = !p_1_turn;
         
     }
     while (1)
