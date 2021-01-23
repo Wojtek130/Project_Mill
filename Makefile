@@ -15,7 +15,7 @@ mill.o: mill.c mill.h
 	$(CC) $(CFLAGS) -c mill.c $(LDLIBS) -o mill.o
 
 lin-fifo.o: lin-fifo.c fifo.h
-	$(CC) $(CFLAGS) -c lin-fifo.c -o lin-fifo.o
+	$(CC) $(CFLAGS) -c lin-fifo.c $(LDLIBS) -o lin-fifo.o
 	
 mill_debug: main.o mill.o
 	$(CC) $(CFLAGS) -g $(LDLIBS) main.o mill.o -o mill_debug
