@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h> 
 #include "mill.h"
+#include "fifo.h"
 #define NUMBER_OF_FIELDS 8
 
 
 // Wojciech Sniady, nr indeksu: 322993
+
+
 
 Board* generate_board(int n)
 {
@@ -111,8 +115,6 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
         {
             printf("Player's 2 turn! Enter number of the square and number of the field: ");
         }
-        
-        
         scanf("%d %d", &square_number, &field_number);
         printf("\n");
         if (board->data[square_number][field_number] == 0)
@@ -140,6 +142,7 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
         }     
     }
 }
+
 
 bool mill_achieved(Board* board, int current_square, int current_field)
 {
@@ -495,4 +498,23 @@ void show_winner(bool players_1_turn)
     {
         printf("Player 2 won! Congratulations!\n");
     }
+}
+
+int compute_value_to_send(int position_number, int characterstic_value)
+{
+    if (position_number == -1)
+    {
+        return 1;
+    }
+    return pow(characterstic_value, position_number+1);
+}
+
+int value_to_send(int square_number_place, int field_number_place, int square_number_remove,int field_number_remove)
+{
+    int result = 1;
+    result *= compute_value_to_send(square_number_place, 2); 
+    result *= compute_value_to_send(field_number_place, 3);
+    result *= compute_value_to_send(square_number_remove, 5);
+    result *= compute_value_to_send(field_number_remove, 7);
+    return result;
 }

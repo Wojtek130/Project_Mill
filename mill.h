@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <stdbool.h>
+#include "fifo.h"
 // Wojciech Sniady, nr indeksu: 322993
 
 typedef struct Board {

@@ -1,11 +1,31 @@
 
 #include "mill.h"
+#include "fifo.h"
 
 // Wojciech Sniady, nr indeksu: 322993
 
-int main()
+static PipesPtr potoki;
+static char *moj_id, *twoj_id;
+
+
+int main(int argc,char *argv[])
 {
+    if ((potoki=initPipes(argc,argv)) == NULL)
+        return 1;
+    if (argc == 2 && strcmp(argv[1],"A") == 0) 
+    { 
+        twoj_id="B > ";
+        moj_id="A > "; 
+    }
+    else 
+    { 
+        moj_id="B > ";
+        twoj_id="A > ";
+    }
+
+
     
+
     int m = 2;
     //int n = 3;
     /*Board *board_test_3 = generate_board(n);
