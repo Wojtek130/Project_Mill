@@ -538,3 +538,46 @@ char* int_to_char(int value)
     sprintf(value_string, "%d", value);
     return value_string;
 }
+
+int* received_value(char* value_char)
+{
+    int value_int = atoi(value_char);
+    int* move_information_int = malloc(6*sizeof(int));
+    move_information_int[0] = compute_received_value(2, value_int);
+    move_information_int[1] = compute_received_value(3, value_int);
+    move_information_int[2] = compute_received_value(5, value_int);
+    move_information_int[3] = compute_received_value(7, value_int);
+    if (value_int % 11 == 0)
+    {
+        move_information_int[4] = 1;
+    }
+    else
+    {
+        move_information_int[4] = 0;
+    }
+    if (value_int >= 0)
+    {
+        move_information_int[5] = 1;
+    }
+    else
+    {
+        move_information_int[5] = 0;
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        printf("mov_info[%d] : %d\n", i, move_information_int[i]);
+    }
+    return move_information_int;
+}
+
+int compute_received_value(int position_number, int received_value)
+{
+    int result = -1;
+    while (received_value % position_number == 0)
+    {
+        received_value = received_value / position_number;
+        result++;
+    }
+    return result;
+    
+}

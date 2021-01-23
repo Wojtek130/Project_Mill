@@ -30,5 +30,7 @@ bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int m
 void show_winner(bool players_1_turn);
 char* int_to_char(int value);
 int value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn);
+int* received_value(char* value_char);
+int compute_received_value(int position_number, int received_value);
 
 #endif

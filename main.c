@@ -102,6 +102,7 @@ int main(int argc,char *argv[])
                 {
                     strcpy(move_information, wejscie);
                     printf("rec : %s", move_information);
+                    received_value(move_information);
                     received_no_message = false;
                 }
             }
