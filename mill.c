@@ -143,6 +143,7 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
 
 bool mill_achieved(Board* board, int current_square, int current_field)
 {
+    //printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
     if (current_field % 2 == 0)
     {
         if ((board->data[current_square][current_field] ==  board->data[current_square][(current_field + 1) % NUMBER_OF_FIELDS]) 
@@ -200,7 +201,8 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
             }
             else
             {
-                if (all_oponents_men_in_a_mill(board, !players_1_turn))
+                
+                if (all_opponents_men_in_a_mill(board, players_1_turn))
                 {
                     board->data[square_number][field_number] = 0;
                     (*men_number_player_1)--;
@@ -208,12 +210,14 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
                 }
                 else
                 {
+                    
                     if (mill_achieved(board, square_number, field_number))
                     {
                         printf("This man is in the mill and you cannot remove it, select another one\n");
                     }
                     else
                     {
+                        
                         board->data[square_number][field_number] = 0;
                         (*men_number_player_1)--;
                         not_successfully_selected = false;
@@ -232,7 +236,7 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
             }
             else
             {
-                if (all_oponents_men_in_a_mill(board, players_1_turn))
+                if (all_opponents_men_in_a_mill(board, players_1_turn))
                 {
                     board->data[square_number][field_number] = 0;
                     (*men_number_player_2)--;
@@ -246,6 +250,7 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
                     }
                     else
                     {
+                        
                         board->data[square_number][field_number] = 0;
                         (*men_number_player_2)--;
                         not_successfully_selected = false;
@@ -257,12 +262,13 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
     }
 }
 
-bool all_oponents_men_in_a_mill(Board* board, bool player_1_turn)
+bool all_opponents_men_in_a_mill(Board* board, bool player_1_turn)
 {
     for (int sqr = 0; sqr < board->number_of_squares; sqr++)
     {
         for (int field = 0; field < NUMBER_OF_FIELDS; field++)
         {
+            
             if (player_1_turn && board->data[sqr][field] == 2)
             {
                 if (mill_achieved(board, sqr, field) == false)
@@ -271,10 +277,13 @@ bool all_oponents_men_in_a_mill(Board* board, bool player_1_turn)
                 }
             }
             else if (player_1_turn == false && board->data[sqr][field] == 1)
-            if (mill_achieved(board, sqr, field) == false)
-                {
-                    return false;
-                }
+            {
+                
+                if (mill_achieved(board, sqr, field) == false)
+                    {
+                        return false;
+                    }
+            }
         }
     }
     return true;
