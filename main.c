@@ -1,7 +1,7 @@
 
 #include "mill.h"
 #include "fifo.h"
-#define MAKS_DL_TEKSTU 10000
+#define MAKS_DL_TEKSTU 10
 // Wojciech Sniady, nr indeksu: 322993
 
 
@@ -17,7 +17,6 @@ static void przekaz_tekst(gpointer arg_1)
 
 static gboolean pobierz_tekst(gpointer data)
 {
-    printf("vvvvvvvv\n");
     getStringFromPipe(potoki,wejscie+strlen(wejscie),MAKS_DL_TEKSTU);
     printf("output : %s\n", wejscie);
     return TRUE;
@@ -35,7 +34,7 @@ int main(int argc,char *argv[])
     { 
         your_turn = false;
     }
-    if (strcmp(argv[1],"A") == 0)
+    /*if (strcmp(argv[1],"A") == 0)
     {
         przekaz_tekst((gpointer) "AAA");
     }
@@ -45,7 +44,6 @@ int main(int argc,char *argv[])
     }
     int counter = 0;
     int a;
-    g_timeout_add(10, pobierz_tekst, NULL);
     while (counter < 10)
     {
         getStringFromPipe(potoki,wejscie+strlen(wejscie),MAKS_DL_TEKSTU);
@@ -53,9 +51,9 @@ int main(int argc,char *argv[])
         scanf("%d", &a);
         counter++;
     }
-    
+    */
     //int m = 2;
-    //int n = 3;
+    int n = 3;
     /*Board *board_test_3 = generate_board(n);
     board_test_3->data[0][0] = 1;
     board_test_3->data[0][1] = 1;
@@ -80,25 +78,41 @@ int main(int argc,char *argv[])
     //int men_number_p_1_test = 6;
     //int men_number_p_2_test = 6;
     
-    //Board *board_3 = generate_board(n); 
-    //print_board(board_3);
-    //printf("\n");
-    /*int men_number_p_1 = 0;
+    Board *board_3 = generate_board(n); 
+    print_board(board_3);
+    printf("\n");
+    int men_number_p_1 = 0;
     int men_number_p_2 = 0;
-    bool p_1_turn = true;*/
-    /*
+    bool p_1_turn = true;
+    bool received_no_message = true;
+    char move_information[MAKS_DL_TEKSTU];
     for (int i = 0; i < n*3; i++)
     {
-        place_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
-        print_board(board_3);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
-        place_men(board_3, !p_1_turn, &men_number_p_1, &men_number_p_2);
-        print_board(board_3);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
+        if (your_turn)
+        {
+            place_men(board_3, your_turn, &men_number_p_1, &men_number_p_2);
+            print_board(board_3);
+            printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
+        }
+        else
+        {
+            while (received_no_message)
+            {
+                if (getStringFromPipe(potoki,wejscie+strlen(wejscie),MAKS_DL_TEKSTU))
+                {
+                    strcpy(move_information, wejscie);
+                    printf("rec : %s", move_information);
+                    received_no_message = false;
+                }
+            }
+            received_no_message = true;
+        }
+        your_turn = !your_turn;
+        
     }
     while (1)
     {
-        move_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
+        move_men(board_3, your_turn, &men_number_p_1, &men_number_p_2);
         print_board(board_3);
         printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
         if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
@@ -108,7 +122,7 @@ int main(int argc,char *argv[])
         p_1_turn = !p_1_turn;
     }
     show_winner(p_1_turn);
-    */
+
    /*
     for (int i = 0; i < m*3; i++)
     {

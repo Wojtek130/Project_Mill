@@ -103,7 +103,6 @@ void free_board(Board* board)
 
 void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2)
 {
-    
     int square_number, field_number;
     bool not_successfully_selected = true;
     while (not_successfully_selected)
@@ -142,12 +141,8 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
             printf("wrong field selected, try again\n");
         }     
     }
-    sendStringToPipe(potoki, "abc");
-    char output[10];
-    if (getStringFromPipe(potoki, output, 1000))
-    {
-        printf("output : %s\n", output);
-    }
+    printf("bababa\n");
+    sendStringToPipe(potoki, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 }
 
 
