@@ -10,17 +10,6 @@ PipesPtr potoki;
 gchar wejscie[MAX_TEXT_LENGHT];
 bool your_turn;
 
-static void przekaz_tekst(gpointer arg_1)
-{
-    sendStringToPipe(potoki, arg_1);
-}
-
-static gboolean pobierz_tekst(gpointer data)
-{
-    getStringFromPipe(potoki,wejscie+strlen(wejscie),MAX_TEXT_LENGHT);
-    printf("output : %s\n", wejscie);
-    return TRUE;
-}
 
 int main(int argc,char *argv[])
 {
@@ -85,6 +74,7 @@ int main(int argc,char *argv[])
     int men_number_p_2 = 0;
     bool p_1_turn = true;
     bool received_no_message = true;
+    bool waiting_for_remove_message = false;
     char move_information[MAX_TEXT_LENGHT];
     for (int i = 0; i < 2*n*3; i++)
     {
@@ -92,7 +82,6 @@ int main(int argc,char *argv[])
         {
             place_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
             print_board(board_3);
-            printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
         }
         else
         {
@@ -101,16 +90,40 @@ int main(int argc,char *argv[])
                 if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
                 {
                     strcpy(move_information, wejscie);
-                    printf("rec : %s", move_information);
-                    received_value(move_information);
-                    received_no_message = false;
+                    printf("rec : %s\n", move_information);
+                    int* move_information_arr = received_value(move_information);
+                    int sqr_number_pla = move_information_arr[0];
+                    int fie_number_pla = move_information_arr[1];
+                    if (waiting_for_remove_message == false)
+                    {
+                        place_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        print_board(board_3);
+                        int remove_man = move_information_arr[4];
+                        if (remove_man)
+                        {
+                            waiting_for_remove_message = true;
+                        }
+                        else
+                        {
+                            received_no_message = false;
+                        }
+                    }
+                    else
+                    {
+                        remove_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        print_board(board_3);
+                        waiting_for_remove_message = true;
+                        received_no_message = false;
+                    }
                 }
+            sleep(0.2);
             }
-            received_no_message = true;
         }
+        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
+        waiting_for_remove_message = false;
+        received_no_message = true;
         your_turn = !your_turn;
         p_1_turn = !p_1_turn;
-        
     }
     while (1)
     {

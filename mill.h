@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include "fifo.h"
 // Wojciech Sniady, nr indeksu: 322993
 
@@ -32,5 +33,10 @@ char* int_to_char(int value);
 int value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn);
 int* received_value(char* value_char);
 int compute_received_value(int position_number, int received_value);
+void place_men_received(Board* board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
+void remove_men_received(Board* board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
+void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn);
+
+
 
 #endif
