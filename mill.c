@@ -133,12 +133,12 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
             if (mill_achieved(board, square_number, field_number))
             {
                 print_board(board);
-                send_move_information(square_number, field_number, -1, -1, true, true);
+                send_move_information(square_number, field_number, -1, -1, true);
                 remove_opponents_men(board, players_1_turn, men_number_player_1, men_number_player_2);
             }
             else
             {
-                send_move_information(square_number, field_number, -1, -1, false, true);
+                send_move_information(square_number, field_number, -1, -1, false);
             }
             
         }
@@ -227,7 +227,6 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
                         board->data[square_number][field_number] = 0;
                         (*men_number_player_1)--;
                         not_successfully_selected = false;
-                        send_move_information(square_number, field_number, -1, -1, false, true);
                     }  
                 } 
             }     
@@ -258,17 +257,13 @@ void remove_opponents_men(Board* board, bool players_1_turn, int *men_number_pla
                         board->data[square_number][field_number] = 0;
                         (*men_number_player_2)--;
                         not_successfully_selected = false;
-                        send_move_information(square_number, field_number, -1, -1, false, true);
                     }
                     
                 }
             }
         }     
     }
-    int move_information_int = value_to_send(square_number, field_number, -1, -1, false, true);
-    char move_information[10];
-    strcpy(move_information, (int_to_char(move_information_int)));
-    sendStringToPipe(potoki, move_information);
+    send_move_information(square_number, field_number, -1, -1, false);
 }
 
 bool all_opponents_men_in_a_mill(Board* board, bool player_1_turn)
@@ -515,7 +510,7 @@ int compute_value_to_send(int position_number, int characterstic_value)
     return pow(characterstic_value, position_number+1);
 }
 
-int value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn)
+int value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
     int result = 1;
     result *= compute_value_to_send(current_square_number, 2); 
@@ -526,10 +521,7 @@ int value_to_send(int current_square_number, int current_field_number, int chose
     {
         result *= 11;
     }
-    if (players_1_turn == false)
-    {
-        result *= -1;
-    }
+    printf("res com: %d\n", result);
     return result;
 }
 
@@ -543,7 +535,7 @@ char* int_to_char(int value)
 int* received_value(char* value_char)
 {
     int value_int = atoi(value_char);
-    int* move_information_int = malloc(6*sizeof(int));
+    int* move_information_int = malloc(5*sizeof(int));
     move_information_int[0] = compute_received_value(2, value_int);
     move_information_int[1] = compute_received_value(3, value_int);
     move_information_int[2] = compute_received_value(5, value_int);
@@ -555,14 +547,6 @@ int* received_value(char* value_char)
     else
     {
         move_information_int[4] = 0;
-    }
-    if (value_int >= 0)
-    {
-        move_information_int[5] = 1;
-    }
-    else
-    {
-        move_information_int[5] = 0;
     }
     /*for (int i = 0; i < 6; i++)
     {
@@ -609,9 +593,9 @@ void remove_men_received(Board* board, bool players_1_turn, int square_number, i
     }
 }
 
-void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove, bool players_1_turn)
+void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
-    int move_information_int = value_to_send(current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove, players_1_turn);
+    int move_information_int = value_to_send(current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
     char move_information[10];
     strcpy(move_information, (int_to_char(move_information_int)));
     sendStringToPipe(potoki, move_information);
