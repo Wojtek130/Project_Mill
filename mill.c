@@ -585,11 +585,11 @@ void remove_men_received(Board* board, bool players_1_turn, int square_number, i
     board->data[square_number][field_number] = 0;
     if (players_1_turn)
     {
-        (*men_number_player_1)--;   
+        (*men_number_player_2)--;   
     }
     else
     {
-        (*men_number_player_2)--;
+        (*men_number_player_1)--;
     }
 }
 
