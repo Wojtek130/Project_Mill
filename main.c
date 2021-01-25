@@ -75,10 +75,11 @@ int main(int argc,char *argv[])
     bool p_1_turn = true;
     bool received_no_message = true;
     bool waiting_for_remove_message = false;
+    bool game_goes_on = true;
     char move_information[MAX_TEXT_LENGHT];
     //int x = 2*3;
     int x = 2; 
-    for (int i = 0; i < 4*x; i++)
+    for (int i = 0; i < 3*x; i++)
     {
         if (your_turn)
         {
@@ -128,9 +129,8 @@ int main(int argc,char *argv[])
         p_1_turn = !p_1_turn;
     }
     received_no_message = true;
-    while (1)
+    while (game_goes_on)
     {
-
     //aa
         if (your_turn)
         {
@@ -138,6 +138,9 @@ int main(int argc,char *argv[])
             print_board(board_3);
             if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
             {
+                printf("IFFFFFFFFFFFFFFF\n");
+                send_move_information(17, -1, -1, -1, false);
+                sleep(1);
                 break;
             }
         }
@@ -148,15 +151,21 @@ int main(int argc,char *argv[])
                 if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
                 {
                     strcpy(move_information, wejscie);
-                    printf("rec : %s\n", move_information);
+                    //printf("rec : %s\n", move_information);
                     long* move_information_arr = received_value(move_information);
                     int sqr_number_pla = move_information_arr[0];
+                    if (sqr_number_pla == 17)
+                    {
+                        printf("Yuuuuuuuuuuuuuuuppi\n");
+                        p_1_turn = !p_1_turn;
+                        game_goes_on = false;
+                        break;
+                    }
                     int fie_number_pla = move_information_arr[1];
                     int chosen_sqr_number_pla = move_information_arr[2];
                     int chosen_fie_number_pla = move_information_arr[3];
                     if (waiting_for_remove_message == false)
                     {
-                        printf("p1 turn: %d\n", p_1_turn);
                         move_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla);
                         print_board(board_3);
                         int remove_man = move_information_arr[4];
@@ -185,68 +194,11 @@ int main(int argc,char *argv[])
         received_no_message = true;
         your_turn = !your_turn;
         p_1_turn = !p_1_turn;
-    //vv
-
-
-       /* move_men(board_3, your_turn, &men_number_p_1, &men_number_p_2);
-        print_board(board_3);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
-        if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
-        {
-            break;
-        }
-        p_1_turn = !p_1_turn;*/
     }
     show_winner(p_1_turn);
 
-   /*
-    for (int i = 0; i < m*3; i++)
-    {
-        place_men(board_2, p_1_turn, &men_number_p_1, &men_number_p_2);
-        print_board(board_2);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
-        place_men(board_2, !p_1_turn, &men_number_p_1, &men_number_p_2);
-        print_board(board_2);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
-    }
-    while (1)
-    {
-        move_men(board_2, p_1_turn, &men_number_p_1, &men_number_p_2);
-        print_board(board_2);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
-        if (game_over(board_2, p_1_turn, men_number_p_1, men_number_p_2) == true)
-        {
-            break;
-        }
-        p_1_turn = !p_1_turn;
-    }
-    show_winner(p_1_turn);
-    */
-/*
-   while(1)
-    {
-        move_men(board_test_3, p_1_turn, &men_number_p_1_test, &men_number_p_2_test);
-        print_board(board_test_3);
-        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1_test, men_number_p_2_test);
-        if (game_over(board_test_3, p_1_turn, men_number_p_1_test, men_number_p_2_test) == true)
-        {
-            break;
-        }
-        p_1_turn = !p_1_turn;
-    }
-    show_winner(p_1_turn);
-*/
-
-    // for (int i = 0; i < m*3; i++)
-    // {
-    //     place_men(board_2, true);
-    //     print_board(board_2);
-    //     place_men(board_2, false);
-    //     print_board(board_2);
-    // }
-    //g_timeout_add(100,pobierz_tekst,NULL);
     //free_board(board_2);
-    //free_board(board_3);
+    free_board(board_3);
     //free_board(board_test_3);
     //free_board(board_7);
 

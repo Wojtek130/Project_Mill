@@ -496,11 +496,11 @@ void show_winner(bool players_1_turn)
     printf("GAME OVER!!!\n");
     if (players_1_turn)
     {
-        printf("Player 1 won! Congratulations!\n");
+        printf("Player 1 won!\n");
     }
     else
     {
-        printf("Player 2 won! Congratulations!\n");
+        printf("Player 2 won!\n");
     }
 }
 
@@ -516,7 +516,18 @@ int compute_value_to_send(int position_number, int characterstic_value)
 long value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
     long result = 1;
-    result *= compute_value_to_send(current_square_number, 2); 
+    if (current_square_number == 17)
+    {
+        printf("here 17!!!!!\n");
+        result = 17 * 3 * 5 * 7;
+        return result; 
+    }
+    else
+    {
+        result *= compute_value_to_send(current_square_number, 2); 
+    }
+    
+    
     result *= compute_value_to_send(current_field_number, 3);
     result *= compute_value_to_send(chosen_square_number, 5); 
     result *= compute_value_to_send(chosen_field_number, 7);
@@ -524,7 +535,7 @@ long value_to_send(int current_square_number, int current_field_number, int chos
     {
         result *= -1;
     }
-    printf("res com: %ld\n", result);
+    //printf("res com: %ld\n", result);
     return result;
 }
 
@@ -539,6 +550,16 @@ long* received_value(char* value_char)
 {
     long value_int = atol(value_char);
     long* move_information_int = malloc(5*sizeof(long));
+    if (value_int % 17 == 0)
+    {
+        move_information_int[0] = 17;
+        move_information_int[1] = -1;
+        move_information_int[2] = -1;
+        move_information_int[3] = -1;
+        move_information_int[4] = 0;
+        move_information_int[5] = 0;
+        return move_information_int;
+    }
     move_information_int[0] = compute_received_value(2, value_int);
     move_information_int[1] = compute_received_value(3, value_int);
     move_information_int[2] = compute_received_value(5, value_int);
@@ -551,17 +572,17 @@ long* received_value(char* value_char)
     {
         move_information_int[4] = 0;
     }
-    for (int i = 0; i < 6; i++)
+    /*for (int i = 0; i < 6; i++)
     {
         printf("mov_info[%d] : %ld\n", i, move_information_int[i]);
-    }
+    }*/
     return move_information_int;
 }
 
 long compute_received_value(int position_number, long received_value)
 {
     int result = -1;
-    printf("rec_com_v : %ld\n", received_value);
+    //printf("rec_com_v : %ld\n", received_value);
     while (received_value % position_number == 0)
     {
         received_value = received_value / position_number;
