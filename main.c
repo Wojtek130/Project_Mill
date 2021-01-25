@@ -1,7 +1,6 @@
 
 #include "mill.h"
 #include "fifo.h"
-#define MAX_TEXT_LENGHT 10
 // Wojciech Sniady, nr indeksu: 322993
 
 
@@ -43,6 +42,7 @@ int main(int argc,char *argv[])
     */
     //int m = 2;
     int n = 3;
+    //int n = 2;
     /*Board *board_test_3 = generate_board(n);
     board_test_3->data[0][0] = 1;
     board_test_3->data[0][1] = 1;
@@ -76,7 +76,9 @@ int main(int argc,char *argv[])
     bool received_no_message = true;
     bool waiting_for_remove_message = false;
     char move_information[MAX_TEXT_LENGHT];
-    for (int i = 0; i < 2*n*3; i++)
+    //int x = 2*3;
+    int x = 2; 
+    for (int i = 0; i < 4*x; i++)
     {
         if (your_turn)
         {
@@ -91,7 +93,7 @@ int main(int argc,char *argv[])
                 {
                     strcpy(move_information, wejscie);
                     printf("rec : %s\n", move_information);
-                    int* move_information_arr = received_value(move_information);
+                    long* move_information_arr = received_value(move_information);
                     int sqr_number_pla = move_information_arr[0];
                     int fie_number_pla = move_information_arr[1];
                     if (waiting_for_remove_message == false)
@@ -116,7 +118,7 @@ int main(int argc,char *argv[])
                         received_no_message = false;
                     }
                 }
-            sleep(0.2);
+            sleep(0.1);
             }
         }
         printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
@@ -125,16 +127,75 @@ int main(int argc,char *argv[])
         your_turn = !your_turn;
         p_1_turn = !p_1_turn;
     }
+    received_no_message = true;
     while (1)
     {
-        move_men(board_3, your_turn, &men_number_p_1, &men_number_p_2);
+
+    //aa
+        if (your_turn)
+        {
+            move_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
+            print_board(board_3);
+            if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
+            {
+                break;
+            }
+        }
+        else
+        {
+            while (received_no_message)
+            {
+                if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
+                {
+                    strcpy(move_information, wejscie);
+                    printf("rec : %s\n", move_information);
+                    long* move_information_arr = received_value(move_information);
+                    int sqr_number_pla = move_information_arr[0];
+                    int fie_number_pla = move_information_arr[1];
+                    int chosen_sqr_number_pla = move_information_arr[2];
+                    int chosen_fie_number_pla = move_information_arr[3];
+                    if (waiting_for_remove_message == false)
+                    {
+                        printf("p1 turn: %d\n", p_1_turn);
+                        move_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla);
+                        print_board(board_3);
+                        int remove_man = move_information_arr[4];
+                        if (remove_man)
+                        {
+                            waiting_for_remove_message = true;
+                        }
+                        else
+                        {
+                            received_no_message = false;
+                        }
+                    }
+                    else
+                    {
+                        remove_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        print_board(board_3);
+                        waiting_for_remove_message = true;
+                        received_no_message = false;
+                    }
+                }
+            sleep(0.1);
+            }
+        }
+        printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
+        waiting_for_remove_message = false;
+        received_no_message = true;
+        your_turn = !your_turn;
+        p_1_turn = !p_1_turn;
+    //vv
+
+
+       /* move_men(board_3, your_turn, &men_number_p_1, &men_number_p_2);
         print_board(board_3);
         printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
         if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
         {
             break;
         }
-        p_1_turn = !p_1_turn;
+        p_1_turn = !p_1_turn;*/
     }
     show_winner(p_1_turn);
 
