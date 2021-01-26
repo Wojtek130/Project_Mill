@@ -526,16 +526,7 @@ int compute_value_to_send(int position_number, int characterstic_value)
 long value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
     long result = 1;
-    if (current_square_number == 17)
-    {
-        printf("here 17!!!!!\n");
-        result = 17 * 3 * 5 * 7;
-        return result; 
-    }
-    else
-    {
-        result *= compute_value_to_send(current_square_number, 2); 
-    }
+    result *= compute_value_to_send(current_square_number, 2); 
     
     
     result *= compute_value_to_send(current_field_number, 3);
@@ -560,16 +551,6 @@ long* received_value(char* value_char)
 {
     long value_int = atol(value_char);
     long* move_information_int = malloc(5*sizeof(long));
-    if (value_int % 17 == 0)
-    {
-        move_information_int[0] = 17;
-        move_information_int[1] = -1;
-        move_information_int[2] = -1;
-        move_information_int[3] = -1;
-        move_information_int[4] = 0;
-        move_information_int[5] = 0;
-        return move_information_int;
-    }
     move_information_int[0] = compute_received_value(2, value_int);
     move_information_int[1] = compute_received_value(3, value_int);
     move_information_int[2] = compute_received_value(5, value_int);
@@ -645,6 +626,8 @@ void send_move_information(int current_square_number, int current_field_number, 
 {
     long move_information_int = value_to_send(current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
     char move_information[MAX_TEXT_LENGHT];
-    strcpy(move_information, (long_int_to_char(move_information_int)));
+    char* move_information_char = long_int_to_char(move_information_int);
+    strcpy(move_information, move_information_char);
+    free(move_information_char);
     sendStringToPipe(potoki, move_information);
 }

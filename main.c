@@ -94,7 +94,7 @@ int main(int argc,char *argv[])
                 if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
                 {
                     strcpy(move_information, wejscie);
-                    printf("rec : %s\n", move_information);
+                    //printf("rec : %s\n", move_information);
                     long* move_information_arr = received_value(move_information);
                     int sqr_number_pla = move_information_arr[0];
                     int fie_number_pla = move_information_arr[1];
@@ -119,6 +119,7 @@ int main(int argc,char *argv[])
                         waiting_for_remove_message = true;
                         received_no_message = false;
                     }
+                    free(move_information_arr);
                 }
             sleep(0.1);
             }
@@ -132,7 +133,6 @@ int main(int argc,char *argv[])
     received_no_message = true;
     while (game_goes_on)
     {
-    //aa
         if (your_turn)
         {
             move_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
@@ -149,7 +149,6 @@ int main(int argc,char *argv[])
                 if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
                 {   
                     strcpy(move_information, wejscie);
-                    //printf("rec : %s\n", move_information);
                     long* move_information_arr = received_value(move_information);
                     int sqr_number_pla = move_information_arr[0];
                     int fie_number_pla = move_information_arr[1];
@@ -176,14 +175,15 @@ int main(int argc,char *argv[])
                         waiting_for_remove_message = true;
                         received_no_message = false;
                     }
-            if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
-            {
-                game_goes_on = false;
-                loss_message_received = true;
-                break;
-            }
+                    free(move_information_arr);
+                    if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
+                    {
+                        game_goes_on = false;
+                        loss_message_received = true;
+                        break;
+                    }
                 }
-            sleep(0.1);
+                sleep(0.1);
             }
         }
         printf("men number player 1: %d, men number player 2: %d\n", men_number_p_1, men_number_p_2);
@@ -193,11 +193,8 @@ int main(int argc,char *argv[])
         p_1_turn = !p_1_turn;
     }
     show_winner(p_1_turn, loss_message_received);
-
+    closePipes(potoki);
     //free_board(board_2);
     free_board(board_3);
-    //free_board(board_test_3);
-    //free_board(board_7);
-
     return 0;
 }

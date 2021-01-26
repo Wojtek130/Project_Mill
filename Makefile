@@ -6,7 +6,7 @@ LDLIBS =`pkg-config gtk+-3.0 --cflags --libs`
 NAME = mill
 
 $(NAME): main.o mill.o lin-fifo.o
-	$(CC) $(CFLAGS) main.o mill.o lin-fifo.o $(LDLIBS) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) -g main.o mill.o lin-fifo.o $(LDLIBS) -o $(NAME) $(LDFLAGS)
 
 main.o: main.c mill.h fifo.h 
 	$(CC) $(CFLAGS) -c main.c $(LDLIBS) -o main.o
