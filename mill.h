@@ -30,14 +30,14 @@ bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square
 bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
 bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
 void show_winner(bool players_1_turn, bool loss_message_received);
-char* long_int_to_char(long value);
+//char* long_int_to_char(long value);
 long value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove);
-long* received_value(char* value_char);
-long compute_received_value(int position_number, long received_value);
+//long* received_value(char* value_char);
+//long compute_received_value(int position_number, long received_value);
 void place_men_received(Board* board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
 void remove_men_received(Board* board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
 void move_men_received(Board* board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number);
-void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove);
+//void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove);
 
 
 

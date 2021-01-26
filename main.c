@@ -1,6 +1,7 @@
 
 #include "mill.h"
 #include "fifo.h"
+#include "data_sending.h"
 // Wojciech Sniady, nr indeksu: 322993
 
 
@@ -22,51 +23,7 @@ int main(int argc,char *argv[])
     { 
         your_turn = false;
     }
-    /*if (strcmp(argv[1],"A") == 0)
-    {
-        przekaz_tekst((gpointer) "AAA");
-    }
-    else
-    {
-        przekaz_tekst((gpointer) "BBB");
-    }
-    int counter = 0;
-    int a;
-    while (counter < 10)
-    {
-        getStringFromPipe(potoki,wejscie+strlen(wejscie),MAX_TEXT_LENGHT);
-        printf("input: ");
-        scanf("%d", &a);
-        counter++;
-    }
-    */
-    //int m = 2;
     int n = 3;
-    //int n = 2;
-    /*Board *board_test_3 = generate_board(n);
-    board_test_3->data[0][0] = 1;
-    board_test_3->data[0][1] = 1;
-    board_test_3->data[0][3] = 1;
-    board_test_3->data[0][4] = 2;
-    board_test_3->data[0][6] = 2;
-    board_test_3->data[0][7] = 2;
-    board_test_3->data[1][0] = 1;
-    board_test_3->data[1][1] = 1;
-    board_test_3->data[1][3] = 1;
-    board_test_3->data[1][4] = 2;
-    board_test_3->data[1][6] = 2;
-    board_test_3->data[1][7] = 2;*/
-
-    //print_board(board_test_3);
-
-    //Board *board_2 = generate_board(m);
-    
-    //print_board(board_2);
-    
-    // //printf("\n");
-    //int men_number_p_1_test = 6;
-    //int men_number_p_2_test = 6;
-    
     Board *board_3 = generate_board(n); 
     print_board(board_3);
     printf("\n");
@@ -78,7 +35,6 @@ int main(int argc,char *argv[])
     bool game_goes_on = true;
     bool loss_message_received = false;
     char move_information[MAX_TEXT_LENGHT];
-    //int x = 2*3;
     int x = 2; 
     for (int i = 0; i < 3*x; i++)
     {

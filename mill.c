@@ -4,6 +4,7 @@
 #include <math.h> 
 #include "mill.h"
 #include "fifo.h"
+#include "data_sending.h"
 #define NUMBER_OF_FIELDS 8
 
 
@@ -513,7 +514,7 @@ void show_winner(bool players_1_turn, bool loss_message_received)
     
     
 }
-
+/*
 int compute_value_to_send(int position_number, int characterstic_value)
 {
     if (position_number == -1)
@@ -522,7 +523,8 @@ int compute_value_to_send(int position_number, int characterstic_value)
     }
     return pow(characterstic_value, position_number+1);
 }
-
+*/
+/*
 long value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
     long result = 1;
@@ -539,13 +541,15 @@ long value_to_send(int current_square_number, int current_field_number, int chos
     //printf("res com: %ld\n", result);
     return result;
 }
-
+*/
+/*
 char* long_int_to_char(long value)
 {
     char *value_string = malloc(11*sizeof(char));
     sprintf(value_string, "%ld", value);
     return value_string;
 }
+
 
 long* received_value(char* value_char)
 {
@@ -563,13 +567,11 @@ long* received_value(char* value_char)
     {
         move_information_int[4] = 0;
     }
-    /*for (int i = 0; i < 6; i++)
-    {
-        printf("mov_info[%d] : %ld\n", i, move_information_int[i]);
-    }*/
     return move_information_int;
 }
+*/
 
+/*
 long compute_received_value(int position_number, long received_value)
 {
     int result = -1;
@@ -581,6 +583,7 @@ long compute_received_value(int position_number, long received_value)
     }
     return result;
 }
+*/
 
 void place_men_received(Board* board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2)
 {
@@ -621,7 +624,7 @@ void move_men_received(Board* board, bool players_1_turn, int current_square_num
     }
 }
 
-
+/*
 void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
     long move_information_int = value_to_send(current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
@@ -631,3 +634,4 @@ void send_move_information(int current_square_number, int current_field_number, 
     free(move_information_char);
     sendStringToPipe(potoki, move_information);
 }
+*/
