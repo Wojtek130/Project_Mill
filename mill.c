@@ -491,17 +491,27 @@ bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_
     return false;
 }
 
-void show_winner(bool players_1_turn)
+void show_winner(bool players_1_turn, bool loss_message_received)
 {
     printf("GAME OVER!!!\n");
-    if (players_1_turn)
+    if (players_1_turn && loss_message_received == false)
     {
         printf("Player 1 won!\n");
     }
-    else
+    else if (players_1_turn == false && loss_message_received == false)
     {
         printf("Player 2 won!\n");
     }
+    else if (players_1_turn)
+    {
+        printf("Player 2 won!\n");
+    }
+    else
+    {
+        printf("Player 1 won!\n");
+    }
+    
+    
 }
 
 int compute_value_to_send(int position_number, int characterstic_value)

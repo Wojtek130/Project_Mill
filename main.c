@@ -76,6 +76,7 @@ int main(int argc,char *argv[])
     bool received_no_message = true;
     bool waiting_for_remove_message = false;
     bool game_goes_on = true;
+    bool loss_message_received = false;
     char move_information[MAX_TEXT_LENGHT];
     //int x = 2*3;
     int x = 2; 
@@ -138,9 +139,6 @@ int main(int argc,char *argv[])
             print_board(board_3);
             if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
             {
-                printf("IFFFFFFFFFFFFFFF\n");
-                send_move_information(17, -1, -1, -1, false);
-                sleep(1);
                 break;
             }
         }
@@ -149,18 +147,11 @@ int main(int argc,char *argv[])
             while (received_no_message)
             {
                 if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT))
-                {
+                {   
                     strcpy(move_information, wejscie);
                     //printf("rec : %s\n", move_information);
                     long* move_information_arr = received_value(move_information);
                     int sqr_number_pla = move_information_arr[0];
-                    if (sqr_number_pla == 17)
-                    {
-                        printf("Yuuuuuuuuuuuuuuuppi\n");
-                        p_1_turn = !p_1_turn;
-                        game_goes_on = false;
-                        break;
-                    }
                     int fie_number_pla = move_information_arr[1];
                     int chosen_sqr_number_pla = move_information_arr[2];
                     int chosen_fie_number_pla = move_information_arr[3];
@@ -185,6 +176,12 @@ int main(int argc,char *argv[])
                         waiting_for_remove_message = true;
                         received_no_message = false;
                     }
+            if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
+            {
+                game_goes_on = false;
+                loss_message_received = true;
+                break;
+            }
                 }
             sleep(0.1);
             }
@@ -195,7 +192,7 @@ int main(int argc,char *argv[])
         your_turn = !your_turn;
         p_1_turn = !p_1_turn;
     }
-    show_winner(p_1_turn);
+    show_winner(p_1_turn, loss_message_received);
 
     //free_board(board_2);
     free_board(board_3);

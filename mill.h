@@ -29,7 +29,7 @@ bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int c
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2);
 bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
 bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
-void show_winner(bool players_1_turn);
+void show_winner(bool players_1_turn, bool loss_message_received);
 char* long_int_to_char(long value);
 long value_to_send(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove);
 long* received_value(char* value_char);
