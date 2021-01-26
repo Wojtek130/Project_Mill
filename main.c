@@ -2,6 +2,7 @@
 #include "mill.h"
 #include "fifo.h"
 #include "data_sending.h"
+#include "gui.h"
 // Wojciech Sniady, nr indeksu: 322993
 
 
@@ -23,8 +24,20 @@ int main(int argc,char *argv[])
     { 
         your_turn = false;
     }
+
+    gtk_init(&argc, &argv);
     int n = 3;
-    Board *board_3 = generate_board(n); 
+    Board *board_3 = generate_board(n);
+    gchar window_heading[32];
+    sprintf(window_heading,"Mill Game Player %d", (your_turn) ? (1) : (2));
+    GtkWidget* window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), window_heading);
+    g_signal_connect(G_OBJECT(window), "destroy",G_CALLBACK(close_window), board_3);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+    gtk_widget_show_all(window);
+    gtk_main();
+
+
     print_board(board_3);
     printf("\n");
     int men_number_p_1 = 0;
@@ -149,6 +162,7 @@ int main(int argc,char *argv[])
         p_1_turn = !p_1_turn;
     }
     show_winner(p_1_turn, loss_message_received);
+    
     closePipes(potoki);
     //free_board(board_2);
     free_board(board_3);
