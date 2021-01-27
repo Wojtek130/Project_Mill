@@ -9,6 +9,8 @@
 //static char *moj_id, *twoj_id;
 PipesPtr potoki;
 gchar wejscie[MAX_TEXT_LENGHT];
+GtkWidget* MAIN_WINDOW;
+GtkWidget* main_label;
 bool your_turn;
 
 
@@ -26,16 +28,48 @@ int main(int argc,char *argv[])
     }
 
     gtk_init(&argc, &argv);
+    enable_css("./button_colors.css");
     int n = 3;
     Board *board_3 = generate_board(n);
     gchar window_heading[32];
     sprintf(window_heading,"Mill Game Player %d", (your_turn) ? (1) : (2));
-    GtkWidget* window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), window_heading);
-    g_signal_connect(G_OBJECT(window), "destroy",G_CALLBACK(close_window), board_3);
-    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
-    gtk_widget_show_all(window);
-    gtk_main();
+    MAIN_WINDOW = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(MAIN_WINDOW), window_heading);
+    gtk_window_set_default_size(GTK_WINDOW(MAIN_WINDOW), 400, 300);
+    g_signal_connect(G_OBJECT(MAIN_WINDOW), "destroy",G_CALLBACK(close_window), board_3);
+    gtk_container_set_border_width(GTK_CONTAINER(MAIN_WINDOW), 10);
+    //GtkWidget *box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    //gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), box1);
+    GtkWidget *main_label = gtk_label_new("Permutations");
+    gtk_widget_set_size_request(main_label, 50, 10);
+    //gtk_box_pack_start(GTK_BOX(box1), main_label, TRUE, TRUE, 0);
+    GtkWidget *fixed_box = gtk_fixed_new();
+    gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), fixed_box);
+    gtk_widget_set_has_window(fixed_box, TRUE);
+    GtkWidget *button = gtk_button_new();
+    GtkWidget *layout = gtk_layout_new(NULL, NULL);
+    //GdkRGBA color;
+    //gdk_color_parse ("red", &color);
+    gtk_widget_set_name(button, "red-background");
+    //gdk_rgba_parse(&color, "rgba(100,90,80,0.1)");
+    //gtk_widget_override_background_color( GTK_WIDGET(button), GTK_STATE_NORMAL, &color);
+    GtkWidget *image = gtk_image_new_from_file("./ksiazki.jpg");
+    //GdkPixbuf *pixbuf = gtk_image_get_pixbuf(GTK_IMAGE(image));
+    //pixbuf = gdk_pixbuf_scale_simple(pixbuf, 20, 30, GDK_INTERP_BILINEAR);
+    //gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
+    gtk_layout_put(GTK_LAYOUT(layout), image, 0, 0);
+    gtk_style_context_add_class(gtk_widget_get_style_context( GTK_WIDGET(button)),"circular");
+    gtk_container_add(GTK_CONTAINER (fixed_box), layout);
+    gtk_fixed_put(GTK_FIXED(fixed_box), button, 15, 15);
+    gtk_widget_set_size_request(button, 30, 30);
+
+    
+
+    pthread_t thread_id;
+
+    pthread_create(&thread_id, NULL, run_gtk_loop, NULL); 
+
+    
 
 
     print_board(board_3);
@@ -55,6 +89,8 @@ int main(int argc,char *argv[])
         {
             place_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
             print_board(board_3);
+            change_label_value(main_label);
+            gtk_widget_set_name(button, "yellow-background");
         }
         else
         {

@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <pthread.h> 
 #include "fifo.h"
 #define MAX_TEXT_LENGHT 20
 // Wojciech Sniady, nr indeksu: 322993
@@ -15,6 +16,8 @@ typedef struct Board {
 } Board;
 
 extern PipesPtr potoki;
+extern GtkWidget* MAIN_WINDOW;
+extern GtkWidget* main_label;
 
 
 Board *generate_board(int n);
