@@ -116,7 +116,15 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
         {
             printf("Player's 2 turn! Enter number of the square and number of the field: ");
         }
-        scanf("%d %d", &square_number, &field_number);
+        while (CURRENT_MOVE[0] == -1)
+        {
+            sleep(1);
+        }
+        CURRENT_MOVE[0] == -1;
+        CURRENT_MOVE[1] == -1;
+        //scanf("%d %d", &square_number, &field_number);
+        square_number = CURRENT_MOVE[0];
+        field_number = CURRENT_MOVE[1];
         printf("\n");
         if (board->data[square_number][field_number] == 0)
         {
