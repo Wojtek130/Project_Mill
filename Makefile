@@ -22,9 +22,6 @@ data_sending.o: data_sending.c data_sending.h mill.h fifo.h
 
 gui.o: gui.c gui.h mill.h fifo.h 
 	$(CC) $(CFLAGS) -c gui.c $(LDLIBS) -o gui.o
-	
-mill_debug: main.o mill.o
-	$(CC) $(CFLAGS) -g $(LDLIBS) main.o mill.o -o mill_debug
 
 clean:
 	rm -f main.o mill.o lin-fifo.o data_sending.o gui.o mill AtoB BtoA 
