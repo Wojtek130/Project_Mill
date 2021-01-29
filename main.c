@@ -63,14 +63,32 @@ int main(int argc,char *argv[])
     //GtkWidget *layout = gtk_layout_new(NULL, NULL);
     //gtk_container_add(GTK_CONTAINER (fixed_box), layout);
     
-    GtkWidget *button = gtk_button_new();
-    gtk_widget_set_name(button, "black-background");
-    gtk_widget_set_size_request(button, 70, 70);
-    gtk_style_context_add_class(gtk_widget_get_style_context( GTK_WIDGET(button)),"circular");
-    gtk_fixed_put(GTK_FIXED(fixed_box), button, 70, 70);
+    
 
-    GtkWidget* button_1 = create_button(500, 500, fixed_box);
-    gtk_widget_set_name(button_1, "yellow-background");
+    GtkWidget* button_2_0 = create_button(70, 70, fixed_box);
+    GtkWidget* button_2_1 = create_button(365, 70, fixed_box);
+    GtkWidget* button_2_2 = create_button(660, 70, fixed_box);
+    GtkWidget* button_2_3 = create_button(660, 365, fixed_box);
+    GtkWidget* button_2_4 = create_button(660, 660, fixed_box);
+    GtkWidget* button_2_5 = create_button(365, 660, fixed_box);
+    GtkWidget* button_2_6 = create_button(70, 660, fixed_box);
+    GtkWidget* button_2_7 = create_button(70, 365, fixed_box);
+    GtkWidget* button_1_0 = create_button(170, 170, fixed_box);
+    GtkWidget* button_1_1 = create_button(365, 170, fixed_box);
+    GtkWidget* button_1_2 = create_button(560, 170, fixed_box);
+    GtkWidget* button_1_3 = create_button(560, 365, fixed_box);
+    GtkWidget* button_1_4 = create_button(560, 560, fixed_box);
+    GtkWidget* button_1_5 = create_button(365, 560, fixed_box);
+    GtkWidget* button_1_6 = create_button(170, 560, fixed_box);
+    GtkWidget* button_1_7 = create_button(170, 365, fixed_box);
+    GtkWidget* button_0_0 = create_button(270, 270, fixed_box);
+    GtkWidget* button_0_1 = create_button(365, 270, fixed_box);
+    GtkWidget* button_0_2 = create_button(460, 270, fixed_box);
+    GtkWidget* button_0_3 = create_button(460, 365, fixed_box);
+    GtkWidget* button_0_4 = create_button(460, 460, fixed_box);
+    GtkWidget* button_0_5 = create_button(365, 460, fixed_box);
+    GtkWidget* button_0_6 = create_button(270, 460, fixed_box);
+    GtkWidget* button_0_7 = create_button(270, 365, fixed_box);
 
     pthread_t thread_id;
 
@@ -97,7 +115,7 @@ int main(int argc,char *argv[])
             place_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
             print_board(board_3);
             change_label_value(main_label);
-            gtk_widget_set_name(button, "yellow-background");
+            //gtk_widget_set_name(button, "yellow-background");
         }
         else
         {
