@@ -14,6 +14,7 @@ GtkWidget* main_label;
 bool your_turn;
 int CURRENT_MOVE[2] = {-1, -1};
 GtkWidget* CURRENT_BUTTON;
+//B BUTTON_BOARD;
 
 
 int main(int argc,char *argv[])
@@ -73,8 +74,10 @@ int main(int argc,char *argv[])
 
     //GtkWidget *layout = gtk_layout_new(NULL, NULL);
     //gtk_container_add(GTK_CONTAINER (fixed_box), layout);
+    ButtonBoard* BUTTON_BOARD = generate_button_board(n); 
     GtkWidget* button_2_0 = create_single_button(70, 70, fixed_box);
     int arr_2_0[] = {2, 0};
+    BUTTON_BOARD->data[2][0] = button_2_0;
     g_signal_connect(G_OBJECT(button_2_0), "clicked",G_CALLBACK(button_callback), (gpointer) arr_2_0);
     GtkWidget* button_2_1 = create_single_button(365, 70, fixed_box);
     int arr_2_1[] = {2, 1};
@@ -142,7 +145,7 @@ int main(int argc,char *argv[])
                     int fie_number_pla = move_information_arr[1];
                     if (waiting_for_remove_message == false)
                     {
-                        place_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        place_men_received(board_3, BUTTON_BOARD, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
                         print_board(board_3);
                         int remove_man = move_information_arr[4];
                         if (remove_man)

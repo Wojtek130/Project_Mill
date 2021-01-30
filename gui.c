@@ -1,5 +1,5 @@
 #include "gui.h"
-
+#define NUMBER_OF_FIELDS 8
 /*
 typedef struct CallbackArguments
 {
@@ -103,4 +103,27 @@ GtkWidget **create_all_buttons(int board_size, GtkWidget* box_to_put_in)
   GtkWidget* button_0_6 = create_single_button(270, 460, box_to_put_in);
   GtkWidget* button_0_7 = create_single_button(270, 365, box_to_put_in);
   return button_arr;
+}
+
+ButtonBoard* generate_button_board(int n)
+{
+    //int counter = 0;
+    ButtonBoard* button_board = malloc(sizeof(ButtonBoard));
+    button_board->number_of_squares = n;
+    button_board->data = malloc(sizeof(GtkWidget**)*n);
+    for (int k = 0; k < n; k++)
+    {
+        button_board->data[k] = malloc(sizeof(GtkWidget*)*NUMBER_OF_FIELDS);   
+    }
+    return button_board;
+}
+
+void free_button_board(ButtonBoard* button_board)
+{
+    for (int k = 0; k < button_board->number_of_squares; k++)
+    {
+        free(button_board->data[k]);  
+    }
+    free(button_board->data);
+    free(button_board);
 }

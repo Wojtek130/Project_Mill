@@ -522,17 +522,20 @@ void show_winner(bool players_1_turn, bool loss_message_received)
     }
 }
 
-void place_men_received(Board* board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2)
+void place_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2)
 {
     if (players_1_turn)
     {
         board->data[square_number][field_number] = 1;
         (*men_number_player_1)++;
+        gtk_widget_set_name(button_board->data[square_number][field_number], "blue-background");
+
     }
     else
     {
         board->data[square_number][field_number] = 2;
         (*men_number_player_2)++;
+        gtk_widget_set_name(button_board->data[square_number][field_number], "red-background");
     }
 }
 
