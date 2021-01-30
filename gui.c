@@ -9,6 +9,7 @@ typedef struct CallbackArguments
 } CallbackArguments;
 typedef struct CallbackArguments CallbackArguments;*/
 int CURRENT_MOVE[2];
+GtkWidget* CURRENT_BUTTON;
 
 void *run_gtk_loop()
 {
@@ -19,7 +20,7 @@ void *run_gtk_loop()
 
 void close_window(GtkWidget *widget, Board* board)
 {
-  closePipes(potoki);
+  //closePipes(potoki);
   free_board(board);
   gtk_main_quit();
   exit(0);
@@ -56,6 +57,7 @@ void button_callback(GtkWidget *widget, gpointer data)
   int *move_array = (int*) data;
   CURRENT_MOVE[0] = move_array[0];
   CURRENT_MOVE[1] = move_array[1];
+  CURRENT_BUTTON = widget;
   /*if (REMOVE)
   {
     gtk_widget_set_name(widget, "black-background");

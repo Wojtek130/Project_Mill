@@ -120,25 +120,29 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
         {
             sleep(1);
         }
-        CURRENT_MOVE[0] == -1;
-        CURRENT_MOVE[1] == -1;
-        //scanf("%d %d", &square_number, &field_number);
         square_number = CURRENT_MOVE[0];
         field_number = CURRENT_MOVE[1];
+        CURRENT_MOVE[0] = -1;
+        CURRENT_MOVE[1] = -1;
+        printf("\nsqr : %d, fie : %d\n", square_number, field_number);
+        //scanf("%d %d", &square_number, &field_number);
         printf("\n");
         if (board->data[square_number][field_number] == 0)
         {
             if (players_1_turn)
             {
                 board->data[square_number][field_number] = 1;
+                gtk_widget_set_name(CURRENT_BUTTON, "blue-background");
                 (*men_number_player_1)++;
             }
             else
             {
                 board->data[square_number][field_number] = 2;
+                gtk_widget_set_name(CURRENT_BUTTON, "red-background");
                 (*men_number_player_2)++;
             }
             not_successfully_selected = false;
+            CURRENT_BUTTON = NULL;
             if (mill_achieved(board, square_number, field_number))
             {
                 print_board(board);
@@ -148,8 +152,7 @@ void place_men(Board* board, bool players_1_turn, int *men_number_player_1, int 
             else
             {
                 send_move_information(square_number, field_number, -1, -1, false);
-            }
-            
+            } 
         }
         else
         {

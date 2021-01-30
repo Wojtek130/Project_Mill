@@ -19,8 +19,7 @@ extern PipesPtr potoki;
 extern GtkWidget* MAIN_WINDOW;
 extern GtkWidget* main_label;
 extern int CURRENT_MOVE[2];
-extern bool P_1_TURN;
-extern bool REMOVE;
+extern GtkWidget* CURRENT_BUTTON;
 
 
 Board *generate_board(int n);

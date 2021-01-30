@@ -13,8 +13,7 @@ GtkWidget* MAIN_WINDOW;
 GtkWidget* main_label;
 bool your_turn;
 int CURRENT_MOVE[2] = {-1, -1};
-bool P_1_TURN = true;
-bool REMOVE = false; 
+GtkWidget* CURRENT_BUTTON;
 
 
 int main(int argc,char *argv[])
@@ -38,6 +37,7 @@ int main(int argc,char *argv[])
     MAIN_WINDOW = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(MAIN_WINDOW), window_heading);
     gtk_window_set_default_size(GTK_WINDOW(MAIN_WINDOW), 1100, 800);
+    //gtk_window_set_resizable(GTK_WIDGET(MAIN_WINDOW), FALSE);
     g_signal_connect(G_OBJECT(MAIN_WINDOW), "destroy",G_CALLBACK(close_window), board_3);
     gtk_container_set_border_width(GTK_CONTAINER(MAIN_WINDOW), 10);
     //GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
@@ -47,12 +47,20 @@ int main(int argc,char *argv[])
     gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), hbox);
     //gtk_box_pack_start(GTK_BOX(vbox), hbox, 0, 0, 0);
     GtkWidget *fixed_box = gtk_fixed_new();
+    GtkWidget * label_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(hbox), fixed_box, 0, 0, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), label_box, 0, 0, 0);
     gtk_widget_set_has_window(fixed_box, TRUE);
     GtkWidget *image = gtk_image_new_from_file("./images/board_3.jpg");    
     gtk_container_add(GTK_CONTAINER(fixed_box), image);
     GtkWidget *main_label = gtk_label_new("Mill Game");
-    gtk_box_pack_start(GTK_BOX(hbox), main_label, 0, 0, 0);
+    GtkWidget *s_label = gtk_label_new("sssssssssssss");
+    gtk_box_pack_start(GTK_BOX(label_box), main_label, 0, 0, 0);
+    gtk_box_pack_start(GTK_BOX(label_box), s_label, 0, 0, 0);
+    //gtk_widget_set_halign (main_label, GTK_ALIGN_CENTER);
+    //gtk_widget_set_valign (main_label, GTK_ALIGN_START);
+    gtk_widget_set_halign (fixed_box, GTK_ALIGN_START);
+    gtk_widget_set_halign (label_box, GTK_ALIGN_CENTER);
     //GtkWidget *second_label = gtk_label_new("Second labek");
     //gtk_box_pack_end(GTK_BOX(vbox), second_label, 0, 0, 0);
     //gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), vbox);
@@ -70,8 +78,7 @@ int main(int argc,char *argv[])
     g_signal_connect(G_OBJECT(button_2_0), "clicked",G_CALLBACK(button_callback), (gpointer) arr_2_0);
     GtkWidget* button_2_1 = create_single_button(365, 70, fixed_box);
     int arr_2_1[] = {2, 1};
-    g_signal_connect(G_OBJECT(button_2_0), "clicked",G_CALLBACK(button_callback), (gpointer) arr_2_1);
-    extern GtkWidget* button_2_2;
+    g_signal_connect(G_OBJECT(button_2_1), "clicked",G_CALLBACK(button_callback), (gpointer) arr_2_1);
     GtkWidget* button_2_2 = create_single_button(660, 70, fixed_box);
     GtkWidget* button_2_3 = create_single_button(660, 365, fixed_box);
     GtkWidget* button_2_4 = create_single_button(660, 660, fixed_box);
@@ -106,7 +113,7 @@ int main(int argc,char *argv[])
     printf("\n");
     int men_number_p_1 = 0;
     int men_number_p_2 = 0;
-    //bool P_1_TURN = true;
+    bool p_1_turn = true;
     bool received_no_message = true;
     bool waiting_for_remove_message = false;
     bool game_goes_on = true;
@@ -117,7 +124,7 @@ int main(int argc,char *argv[])
     {
         if (your_turn)
         {
-            place_men(board_3, P_1_TURN, &men_number_p_1, &men_number_p_2);
+            place_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
             print_board(board_3);
             change_label_value(main_label);
             //gtk_widget_set_name(button, "yellow-background");
@@ -135,7 +142,7 @@ int main(int argc,char *argv[])
                     int fie_number_pla = move_information_arr[1];
                     if (waiting_for_remove_message == false)
                     {
-                        place_men_received(board_3, P_1_TURN, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        place_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
                         print_board(board_3);
                         int remove_man = move_information_arr[4];
                         if (remove_man)
@@ -149,7 +156,7 @@ int main(int argc,char *argv[])
                     }
                     else
                     {
-                        remove_men_received(board_3, P_1_TURN, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        remove_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
                         print_board(board_3);
                         waiting_for_remove_message = true;
                         received_no_message = false;
@@ -163,16 +170,16 @@ int main(int argc,char *argv[])
         waiting_for_remove_message = false;
         received_no_message = true;
         your_turn = !your_turn;
-        P_1_TURN = !P_1_TURN;
+        p_1_turn = !p_1_turn;
     }
     received_no_message = true;
     while (game_goes_on)
     {
         if (your_turn)
         {
-            move_men(board_3, P_1_TURN, &men_number_p_1, &men_number_p_2);
+            move_men(board_3, p_1_turn, &men_number_p_1, &men_number_p_2);
             print_board(board_3);
-            if (game_over(board_3, P_1_TURN, men_number_p_1, men_number_p_2) == true)
+            if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
             {
                 break;
             }
@@ -191,7 +198,7 @@ int main(int argc,char *argv[])
                     int chosen_fie_number_pla = move_information_arr[3];
                     if (waiting_for_remove_message == false)
                     {
-                        move_men_received(board_3, P_1_TURN, sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla);
+                        move_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla);
                         print_board(board_3);
                         int remove_man = move_information_arr[4];
                         if (remove_man)
@@ -205,13 +212,13 @@ int main(int argc,char *argv[])
                     }
                     else
                     {
-                        remove_men_received(board_3, P_1_TURN, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
+                        remove_men_received(board_3, p_1_turn, sqr_number_pla, fie_number_pla, &men_number_p_1, &men_number_p_2);
                         print_board(board_3);
                         waiting_for_remove_message = true;
                         received_no_message = false;
                     }
                     free(move_information_arr);
-                    if (game_over(board_3, P_1_TURN, men_number_p_1, men_number_p_2) == true)
+                    if (game_over(board_3, p_1_turn, men_number_p_1, men_number_p_2) == true)
                     {
                         game_goes_on = false;
                         loss_message_received = true;
@@ -225,9 +232,9 @@ int main(int argc,char *argv[])
         waiting_for_remove_message = false;
         received_no_message = true;
         your_turn = !your_turn;
-        P_1_TURN = !P_1_TURN;
+        p_1_turn = !p_1_turn;
     }
-    show_winner(P_1_TURN, loss_message_received);
+    show_winner(p_1_turn, loss_message_received);
     
     closePipes(potoki);
     //free_board(board_2);
