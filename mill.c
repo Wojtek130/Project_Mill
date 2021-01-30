@@ -528,14 +528,30 @@ void place_men_received(Board* board, ButtonBoard* button_board, bool players_1_
     {
         board->data[square_number][field_number] = 1;
         (*men_number_player_1)++;
-        gtk_widget_set_name(button_board->data[square_number][field_number], "blue-background");
+        if (button_board->number_of_squares == 3)
+        {
+            gtk_widget_set_name(button_board->data[square_number][field_number], "blue-background");
+        }
+        else
+        {
+            gtk_widget_set_name(button_board->data[square_number-1][field_number], "blue-background");
+        }
+        
+        
 
     }
     else
     {
         board->data[square_number][field_number] = 2;
         (*men_number_player_2)++;
-        gtk_widget_set_name(button_board->data[square_number][field_number], "red-background");
+        if (button_board->number_of_squares == 3)
+        {
+            gtk_widget_set_name(button_board->data[square_number][field_number], "red-background");
+        }
+        else
+        {
+            gtk_widget_set_name(button_board->data[square_number-1][field_number], "red-background");
+        }
     }
 }
 

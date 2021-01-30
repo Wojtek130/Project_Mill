@@ -42,13 +42,19 @@ void enable_css(char* css_file)
     g_object_unref (provider);
 }
 
-GtkWidget *create_single_button(int coor_x, int coor_y, GtkWidget* box_to_put_in)
+GtkWidget *generate_single_button(ButtonBoard* button_board, int coor_x, int coor_y, GtkWidget* box_to_put_in, int square_number, int field_number)
 {
     GtkWidget *button = gtk_button_new();
     gtk_widget_set_name(button, "black-background");
     gtk_widget_set_size_request(button, 70, 70);
-    gtk_style_context_add_class(gtk_widget_get_style_context( GTK_WIDGET(button)),"circular");
+    gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(button)),"circular");
     gtk_fixed_put(GTK_FIXED(box_to_put_in), button, coor_x, coor_y);
+    if (button_board->number_of_squares == 2)
+    {
+      square_number--;
+    }
+    int arr_button[] = {square_number, field_number};
+    button_board->data[square_number][field_number] = button;
     return button;
 }
 
@@ -57,52 +63,7 @@ void button_callback(GtkWidget *widget, gpointer data)
   int *move_array = (int*) data;
   CURRENT_MOVE[0] = move_array[0];
   CURRENT_MOVE[1] = move_array[1];
-  CURRENT_BUTTON = widget;
-  /*if (REMOVE)
-  {
-    gtk_widget_set_name(widget, "black-background");
-    REMOVE = false;
-  }
-  else if (P_1_TURN)
-  {
-    gtk_widget_set_name(widget, "red-background");
-  }
-  else
-  {
-    gtk_widget_set_name(widget, "blue-background");
-  }*/
-  
-  
-}
-
-GtkWidget **create_all_buttons(int board_size, GtkWidget* box_to_put_in)
-{
-  GtkWidget **button_arr = malloc(sizeof(GtkWidget*)*board_size);
-  GtkWidget* button_2_0 = create_single_button(70, 70, box_to_put_in);
-  GtkWidget* button_2_1 = create_single_button(365, 70, box_to_put_in);
-  GtkWidget* button_2_2 = create_single_button(660, 70, box_to_put_in);
-  GtkWidget* button_2_3 = create_single_button(660, 365, box_to_put_in);
-  GtkWidget* button_2_4 = create_single_button(660, 660, box_to_put_in);
-  GtkWidget* button_2_5 = create_single_button(365, 660, box_to_put_in);
-  GtkWidget* button_2_6 = create_single_button(70, 660, box_to_put_in);
-  GtkWidget* button_2_7 = create_single_button(70, 365, box_to_put_in);
-  GtkWidget* button_1_0 = create_single_button(170, 170, box_to_put_in);
-  GtkWidget* button_1_1 = create_single_button(365, 170, box_to_put_in);
-  GtkWidget* button_1_2 = create_single_button(560, 170, box_to_put_in);
-  GtkWidget* button_1_3 = create_single_button(560, 365, box_to_put_in);
-  GtkWidget* button_1_4 = create_single_button(560, 560, box_to_put_in);
-  GtkWidget* button_1_5 = create_single_button(365, 560, box_to_put_in);
-  GtkWidget* button_1_6 = create_single_button(170, 560, box_to_put_in);
-  GtkWidget* button_1_7 = create_single_button(170, 365, box_to_put_in);
-  GtkWidget* button_0_0 = create_single_button(270, 270, box_to_put_in);
-  GtkWidget* button_0_1 = create_single_button(365, 270, box_to_put_in);
-  GtkWidget* button_0_2 = create_single_button(460, 270, box_to_put_in);
-  GtkWidget* button_0_3 = create_single_button(460, 365, box_to_put_in);
-  GtkWidget* button_0_4 = create_single_button(460, 460, box_to_put_in);
-  GtkWidget* button_0_5 = create_single_button(365, 460, box_to_put_in);
-  GtkWidget* button_0_6 = create_single_button(270, 460, box_to_put_in);
-  GtkWidget* button_0_7 = create_single_button(270, 365, box_to_put_in);
-  return button_arr;
+  CURRENT_BUTTON = widget; 
 }
 
 ButtonBoard* generate_button_board(int n)
