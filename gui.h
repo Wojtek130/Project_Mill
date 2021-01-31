@@ -15,5 +15,7 @@ GtkWidget *generate_single_button(ButtonBoard* button_board, int coor_x, int coo
 void button_callback(GtkWidget *widget, gpointer data);
 ButtonBoard* generate_button_board(int n);
 void free_button_board(ButtonBoard* button_board);
+void disable_all_your_buttons(ButtonBoard* button_board);
+void enable_all_your_buttons(ButtonBoard* button_board);
 
 #endif

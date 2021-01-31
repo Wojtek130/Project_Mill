@@ -150,8 +150,10 @@ void place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
             }
             not_successfully_selected = false;
             CURRENT_BUTTON = NULL;
+            printf("Before mill\n");
             if (mill_achieved(board, square_number, field_number))
             {
+                printf("Mill achieved!\n");
                 print_board(board);
                 send_move_information(square_number, field_number, -1, -1, true);
                 remove_opponents_men(board, button_board, players_1_turn, men_number_player_1, men_number_player_2);
@@ -301,6 +303,7 @@ void remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_
         }     
     }
     send_move_information(square_number, field_number, -1, -1, false);
+    printf("value sent sqr: %d, fie %d\n", square_number, field_number);
 }
 
 bool all_opponents_men_in_a_mill(Board* board, bool player_1_turn)
@@ -598,6 +601,7 @@ void place_men_received(Board* board, ButtonBoard* button_board, bool players_1_
 
 void remove_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2)
 {
+    printf("REMOVE MAN RECEIVED, sqr : %d, fie : %d\n", square_number, field_number);
     board->data[square_number][field_number] = 0;
     gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
     if (players_1_turn)

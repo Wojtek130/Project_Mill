@@ -88,3 +88,25 @@ void free_button_board(ButtonBoard* button_board)
     free(button_board->data);
     free(button_board);
 }
+
+void disable_all_your_buttons(ButtonBoard* button_board)
+{
+  for (int sqr = 0; sqr < button_board->number_of_squares; sqr++)
+  {
+    for (int fie = 0; fie < NUMBER_OF_FIELDS; fie++)
+    {
+      gtk_widget_set_sensitive (button_board->data[sqr][fie], FALSE);
+    }
+  }
+}
+
+void enable_all_your_buttons(ButtonBoard* button_board)
+{
+  for (int sqr = 0; sqr < button_board->number_of_squares; sqr++)
+  {
+    for (int fie = 0; fie < NUMBER_OF_FIELDS; fie++)
+    {
+      gtk_widget_set_sensitive (button_board->data[sqr][fie], TRUE);
+    }
+  }
+}

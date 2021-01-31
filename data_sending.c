@@ -23,8 +23,6 @@ long value_to_send(int current_square_number, int current_field_number, int chos
 {
     long result = 1;
     result *= compute_value_to_send(current_square_number, 2); 
-    
-    
     result *= compute_value_to_send(current_field_number, 3);
     result *= compute_value_to_send(chosen_square_number, 5); 
     result *= compute_value_to_send(chosen_field_number, 7);
@@ -32,6 +30,7 @@ long value_to_send(int current_square_number, int current_field_number, int chos
     {
         result *= -1;
     }
+        printf("VALUE TO SEND: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
     //printf("res com: %ld\n", result);
     return result;
 }
@@ -60,6 +59,7 @@ long* received_value(char* value_char)
     {
         move_information_int[4] = 0;
     }
+    printf("RECEIVED VALUE: sqr : %ld, fie: %ld, ch_sqr: %ld, ch_fie : %ld, remove : %ld\n", move_information_int[0], move_information_int[1], move_information_int[2], move_information_int[3], move_information_int[4]);
     return move_information_int;
 }
 
