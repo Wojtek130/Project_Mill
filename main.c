@@ -19,6 +19,8 @@ ButtonBoard* BUTTON_BOARD;
 Board *BOARD; 
 int MEN_NUMBER_P_1 = 0;
 int MEN_NUMBER_P_2 = 0;
+int SQUARE_NUMBER_TO_MOVE_FROM;
+int FIELD_NUMBER_TO_MOVE_FROM;
 
   
 int main(int argc,char *argv[])
@@ -98,7 +100,7 @@ int main(int argc,char *argv[])
 
     //GtkWidget *layout = gtk_layout_new(NULL, NULL);
     //gtk_container_add(GTK_CONTAINER (fixed_box), layout);
-    ButtonBoard* BUTTON_BOARD = generate_BUTTON_BOARD(n); 
+    ButtonBoard* BUTTON_BOARD = generate_button_board(n); 
     GtkWidget* button_2_0 = generate_single_button(BUTTON_BOARD, 70, 70, fixed_box, 2, 0);
     int arr_2_0[] = {2, 0};
     g_signal_connect(G_OBJECT(button_2_0), "clicked",G_CALLBACK(button_callback), (gpointer) arr_2_0);

@@ -13,6 +13,8 @@ ButtonBoard* BUTTON_BOARD;
 Board *BOARD; 
 int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
+int SQUARE_NUMBER_TO_MOVE_FROM;
+int FIELD_NUMBER_TO_MOVE_FROM;
 
 void close_window(GtkWidget *widget, Board* board)
 {
@@ -60,14 +62,14 @@ void button_callback(GtkWidget *widget, gpointer data)
     int square_number = move_array[0];
     int field_number = move_array[1];
     CURRENT_BUTTON = widget;
-    int *totally_placed_men_current_player = (P_1_TURN) ? (TOTALLY_PLACED_MEN_PLAYER_1) : (TOTALLY_PLACED_MEN_PLAYER_2);
+    int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
     if (YOUR_TURN == false)
     {
         return;
     }
     if (REMOVING)
     {
-        if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number)
+        if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
             REMOVING = false;
             P_1_TURN = !P_1_TURN;
@@ -76,7 +78,7 @@ void button_callback(GtkWidget *widget, gpointer data)
     }
     else if ((*totally_placed_men_current_player) < 9)
     {
-        if (place_men(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+        if (place_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
             (*totally_placed_men_current_player)++;
             if (mill_achieved(BOARD, square_number, field_number))
@@ -93,16 +95,18 @@ void button_callback(GtkWidget *widget, gpointer data)
     }
     else
     {
-        if (CURRENT_STAGE_OF_MOVING = select_your_man)
+        if (CURRENT_STAGE_OF_MOVING == select_your_man)
         {
-            if (select_man_to_move(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+            if (select_man_to_move(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
             {
                 CURRENT_STAGE_OF_MOVING = select_free_field_to_move_on;
+                SQUARE_NUMBER_TO_MOVE_FROM = square_number;
+                FIELD_NUMBER_TO_MOVE_FROM = field_number;
             }
         }
-        else if (CURRENT_STAGE_OF_MOVING = select_free_field_to_move_on)
+        else if (CURRENT_STAGE_OF_MOVING == select_free_field_to_move_on)
         {
-            if (select_field_to_move_on(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+            if (select_field_to_move_on(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
             {
                 CURRENT_STAGE_OF_MOVING = select_your_man;
                 if (mill_achieved(BOARD, square_number, field_number))
@@ -118,10 +122,6 @@ void button_callback(GtkWidget *widget, gpointer data)
             }
         }    
     }
-    
-
-
-
 }
 
 ButtonBoard* generate_button_board(int n)

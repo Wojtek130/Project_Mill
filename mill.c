@@ -338,14 +338,14 @@ bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool playe
     }
     if (board->number_of_squares == 2)
     {
-        CURRENT_SQUARE_NUMBER--;
+        SQUARE_NUMBER_TO_MOVE_FROM--;
     }
-    if (properly_selected_field_to_move_on(board, players_1_turn, CURRENT_SQUARE_NUMBER, CURRENT_FIELD_NUMBER, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
+    if (properly_selected_field_to_move_on(board, players_1_turn, SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
     {
         return false;
     }
-    board->data[CURRENT_SQUARE_NUMBER][CURRENT_FIELD_NUMBER] = 0;
-    gtk_widget_set_name(button_board->data[CURRENT_SQUARE_NUMBER][CURRENT_FIELD_NUMBER], "black-background");
+    board->data[SQUARE_NUMBER_TO_MOVE_FROM][FIELD_NUMBER_TO_MOVE_FROM] = 0;
+    gtk_widget_set_name(button_board->data[SQUARE_NUMBER_TO_MOVE_FROM][FIELD_NUMBER_TO_MOVE_FROM], "black-background");
     if (players_1_turn)
     {
         board->data[chosen_square_number][chosen_field_number] = 1;
@@ -357,12 +357,12 @@ bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool playe
         gtk_widget_set_name(button_board->data[chosen_square_number][chosen_field_number], "red-background");
 
     }
-    send_move_information(CURRENT_SQUARE_NUMBER, CURRENT_FIELD_NUMBER, chosen_square_number, chosen_field_number, false);    
+    send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, false);    
     return true;
     /*if (mill_achieved(board, chosen_square_number, chosen_field_number))
     {
         print_board(board);
-        send_move_information(CURRENT_SQUARE_NUMBER, CURRENT_FIELD_NUMBER, chosen_square_number, chosen_field_number, true);
+        send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, true);
         remove_opponents_men(board, button_board, players_1_turn, men_number_player_1, men_number_player_2);
     }*/  
 }
