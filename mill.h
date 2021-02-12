@@ -28,6 +28,10 @@ extern int CURRENT_SQUARE_NUMBER;
 extern int CURRENT_FIELD_NUMBER;
 extern bool YOUR_TURN;
 extern bool P_1_TURN;
+extern ButtonBoard* BUTTON_BOARD; 
+extern Board *BOARD; 
+extern int MEN_NUMBER_P_1;
+extern int MEN_NUMBER_P_2;
 
 //extern ButtonBoard* BUTTON_BOARD;
 

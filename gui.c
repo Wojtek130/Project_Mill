@@ -4,8 +4,15 @@
 int CURRENT_MOVE[2];
 GtkWidget* CURRENT_BUTTON;
 bool YOUR_TURN;
+bool P_1_TURN;
+bool REMOVING = false;
 int TOTALLY_PLACED_MEN_PLAYER_1 = 0;
 int TOTALLY_PLACED_MEN_PLAYER_2 = 0;
+enum stage_of_moving CURRENT_STAGE_OF_MOVING = 0;
+ButtonBoard* BUTTON_BOARD; 
+Board *BOARD; 
+int MEN_NUMBER_P_1;
+int MEN_NUMBER_P_2;
 
 void close_window(GtkWidget *widget, Board* board)
 {
@@ -50,11 +57,26 @@ GtkWidget *generate_single_button(ButtonBoard* button_board, int coor_x, int coo
 void button_callback(GtkWidget *widget, gpointer data)
 {
   int *move_array = (int*) data;
-  CURRENT_MOVE[0] = move_array[0];
-  CURRENT_MOVE[1] = move_array[1];
+  int square_number = move_array[0];
+  int field_number = move_array[1];
   CURRENT_BUTTON = widget;
 
-  // 
+  if (YOUR_TURN == false)
+  {
+        return;
+  }
+  if (REMOVING)
+  {
+    if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+    {
+        REMOVING = false;
+        P_1_TURN = !P_1_TURN;
+        YOUR_TURN = !YOUR_TURN;
+    }
+  }
+
+
+
 }
 
 ButtonBoard* generate_button_board(int n)
