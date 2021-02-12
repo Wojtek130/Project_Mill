@@ -10,7 +10,7 @@ int TOTALLY_PLACED_MEN_PLAYER_1 = 0;
 int TOTALLY_PLACED_MEN_PLAYER_2 = 0;
 enum stage_of_moving CURRENT_STAGE_OF_MOVING = select_your_man;
 ButtonBoard* BUTTON_BOARD; 
-Board *BOARD; 
+//Board *BOARD; 
 int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
 int SQUARE_NUMBER_TO_MOVE_FROM;

@@ -49,8 +49,7 @@ int main(int argc,char *argv[])
         printf("The size of the board must be set to 2 or 3\n");
         return 0;
     }
-    Board *BOARD = generate_board(n);
-     printf("\nMAIN!!! NUM %d\n", BOARD->number_of_squares);
+    BOARD = generate_board(n);
     gchar window_heading[32];
     sprintf(window_heading,"Mill Game Player %d", (YOUR_TURN) ? (1) : (2));
     MAIN_WINDOW = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -101,7 +100,7 @@ int main(int argc,char *argv[])
 
     //GtkWidget *layout = gtk_layout_new(NULL, NULL);
     //gtk_container_add(GTK_CONTAINER (fixed_box), layout);
-    ButtonBoard* BUTTON_BOARD = generate_button_board(n); 
+    BUTTON_BOARD = generate_button_board(n); 
     GtkWidget* button_2_0 = generate_single_button(BUTTON_BOARD, 70, 70, fixed_box, 2, 0);
     int arr_2_0[] = {2, 0};
     g_signal_connect(G_OBJECT(button_2_0), "clicked",G_CALLBACK(button_callback), (gpointer) arr_2_0);

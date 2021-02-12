@@ -112,13 +112,10 @@ bool place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
     {
         printf("Player's 2 turn! Enter number of the square and number of the field: ");
     }
-            printf("\nHELLO!!! NUM %d\n", BOARD->number_of_squares);
-    exit(0);
     if (board->number_of_squares == 2)
     {
         square_number--;
     };
-
     printf("\nsqr : %d, fie : %d\n", square_number, field_number);
     if (board->data[square_number][field_number] == 0)
     {
