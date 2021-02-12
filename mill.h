@@ -44,6 +44,7 @@ bool mill_achieved(Board* board, int current_square, int current_field);
 bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int square_number, int field_number);
 bool all_opponents_men_in_a_mill(Board* board, bool player_1_turn);
 bool select_man_to_move(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int current_square_number, int current_field_number);
+bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int chosen_square_number, int chosen_field_number);
 bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, int men_number_player_1, int men_number_player_2);
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2);
 bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);

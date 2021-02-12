@@ -4,7 +4,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "mill.h"
 
-enum stage_of_moving {selecting_your_man = 0, selecting_free_field_to_move = 1};
+enum stage_of_moving {select_your_man = 0, select_free_field_to_move_on = 1};
 
 void close_window(GtkWidget *widget, Board* board);
 //void change_label_value(GtkWidget *widget, gpointer data);

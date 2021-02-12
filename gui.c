@@ -8,7 +8,7 @@ bool P_1_TURN;
 bool REMOVING = false;
 int TOTALLY_PLACED_MEN_PLAYER_1 = 0;
 int TOTALLY_PLACED_MEN_PLAYER_2 = 0;
-enum stage_of_moving CURRENT_STAGE_OF_MOVING = 0;
+enum stage_of_moving CURRENT_STAGE_OF_MOVING = select_your_man;
 ButtonBoard* BUTTON_BOARD; 
 Board *BOARD; 
 int MEN_NUMBER_P_1;
@@ -56,24 +56,69 @@ GtkWidget *generate_single_button(ButtonBoard* button_board, int coor_x, int coo
 
 void button_callback(GtkWidget *widget, gpointer data)
 {
-  int *move_array = (int*) data;
-  int square_number = move_array[0];
-  int field_number = move_array[1];
-  CURRENT_BUTTON = widget;
-
-  if (YOUR_TURN == false)
-  {
-        return;
-  }
-  if (REMOVING)
-  {
-    if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+    int *move_array = (int*) data;
+    int square_number = move_array[0];
+    int field_number = move_array[1];
+    CURRENT_BUTTON = widget;
+    int *totally_placed_men_current_player = (P_1_TURN) ? (TOTALLY_PLACED_MEN_PLAYER_1) : (TOTALLY_PLACED_MEN_PLAYER_2);
+    if (YOUR_TURN == false)
     {
-        REMOVING = false;
-        P_1_TURN = !P_1_TURN;
-        YOUR_TURN = !YOUR_TURN;
+        return;
     }
-  }
+    if (REMOVING)
+    {
+        if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number)
+        {
+            REMOVING = false;
+            P_1_TURN = !P_1_TURN;
+            YOUR_TURN = !YOUR_TURN;
+        }
+    }
+    else if ((*totally_placed_men_current_player) < 9)
+    {
+        if (place_men(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+        {
+            (*totally_placed_men_current_player)++;
+            if (mill_achieved(BOARD, square_number, field_number))
+            {
+                REMOVING = true;
+            }
+            else
+            {
+                REMOVING = false;
+                P_1_TURN = !P_1_TURN;
+                YOUR_TURN = !YOUR_TURN;
+            }
+        }
+    }
+    else
+    {
+        if (CURRENT_STAGE_OF_MOVING = select_your_man)
+        {
+            if (select_man_to_move(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+            {
+                CURRENT_STAGE_OF_MOVING = select_free_field_to_move_on;
+            }
+        }
+        else if (CURRENT_STAGE_OF_MOVING = select_free_field_to_move_on)
+        {
+            if (select_field_to_move_on(BOARD, BUTTON_BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2, square_number, field_number))
+            {
+                CURRENT_STAGE_OF_MOVING = select_your_man;
+                if (mill_achieved(BOARD, square_number, field_number))
+                {
+                    REMOVING = true;
+                }
+                else
+                {
+                    REMOVING = false;
+                    P_1_TURN = !P_1_TURN;
+                    YOUR_TURN = !YOUR_TURN;
+                }
+            }
+        }    
+    }
+    
 
 
 
