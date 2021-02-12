@@ -78,8 +78,10 @@ void button_callback(GtkWidget *widget, gpointer data)
     }
     else if ((*totally_placed_men_current_player) < 9)
     {
+
         if (place_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
+
             (*totally_placed_men_current_player)++;
             if (mill_achieved(BOARD, square_number, field_number))
             {

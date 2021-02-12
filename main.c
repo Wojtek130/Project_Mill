@@ -50,6 +50,7 @@ int main(int argc,char *argv[])
         return 0;
     }
     Board *BOARD = generate_board(n);
+     printf("\nMAIN!!! NUM %d\n", BOARD->number_of_squares);
     gchar window_heading[32];
     sprintf(window_heading,"Mill Game Player %d", (YOUR_TURN) ? (1) : (2));
     MAIN_WINDOW = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -76,7 +77,7 @@ int main(int argc,char *argv[])
     }
     else 
     {
-        image = gtk_image_new_from_file("./images/BOARD.jpg"); 
+        image = gtk_image_new_from_file("./images/board_3.jpg"); 
     }
      
     gtk_container_add(GTK_CONTAINER(fixed_box), image);
@@ -177,13 +178,6 @@ int main(int argc,char *argv[])
         g_signal_connect(G_OBJECT(button_0_7), "clicked",G_CALLBACK(button_callback), (gpointer) arr_0_7);
     }
     print_board(BOARD);
-    printf("\n");
-    bool received_no_message = true;
-    bool waiting_for_remove_message = false;
-    bool game_goes_on = true;
-    bool loss_message_received = false;
-    char move_information[MAX_TEXT_LENGHT];
-    int x;
 
     gtk_widget_show_all(MAIN_WINDOW);
     gtk_main();

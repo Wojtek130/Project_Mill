@@ -11,7 +11,6 @@
 // Wojciech Sniady, nr indeksu: 322993
 
 
-
 Board* generate_board(int n)
 {
     //int counter = 0;
@@ -104,6 +103,7 @@ void free_board(Board* board)
 
 bool place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int square_number, int field_number)
 {
+                            
     if (players_1_turn)
     {
         printf("Player's 1 turn! Enter number of the square and number of the field: ");
@@ -112,10 +112,13 @@ bool place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
     {
         printf("Player's 2 turn! Enter number of the square and number of the field: ");
     }
+            printf("\nHELLO!!! NUM %d\n", BOARD->number_of_squares);
+    exit(0);
     if (board->number_of_squares == 2)
     {
         square_number--;
     };
+
     printf("\nsqr : %d, fie : %d\n", square_number, field_number);
     if (board->data[square_number][field_number] == 0)
     {
