@@ -120,6 +120,7 @@ void place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
         {
             sleep(0.01);
         }
+        printf("\nafter sleep while\n");
         if (board->number_of_squares == 3)
         {
             square_number = CURRENT_MOVE[0];

@@ -64,6 +64,7 @@ void button_callback(GtkWidget *widget, gpointer data)
   CURRENT_MOVE[0] = move_array[0];
   CURRENT_MOVE[1] = move_array[1];
   CURRENT_BUTTON = widget; 
+  printf("\n!!!!!!!!!!!!!!!!!!!!!!!BUTTON PRESSED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 }
 
 ButtonBoard* generate_button_board(int n)
