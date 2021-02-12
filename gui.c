@@ -63,6 +63,7 @@ void button_callback(GtkWidget *widget, gpointer data)
     int field_number = move_array[1];
     CURRENT_BUTTON = widget;
     int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
+    printf("YOUR_TURN : %d\n", YOUR_TURN);
     if (YOUR_TURN == false)
     {
         return;
@@ -74,15 +75,15 @@ void button_callback(GtkWidget *widget, gpointer data)
             REMOVING = false;
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
+            
         }
     }
     else if ((*totally_placed_men_current_player) < 9)
     {
-
         if (place_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
-
             (*totally_placed_men_current_player)++;
+            
             if (mill_achieved(BOARD, square_number, field_number))
             {
                 REMOVING = true;
@@ -92,11 +93,13 @@ void button_callback(GtkWidget *widget, gpointer data)
                 REMOVING = false;
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
+                
             }
         }
     }
     else
     {
+        printf("YOUR_TURN33333333 : %d\n", YOUR_TURN);
         if (CURRENT_STAGE_OF_MOVING == select_your_man)
         {
             if (select_man_to_move(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))

@@ -6,7 +6,6 @@
 // Wojciech Sniady, nr indeksu: 322993
 
 
-//static char *moj_id, *twoj_id;
 PipesPtr potoki;
 gchar wejscie[MAX_TEXT_LENGHT];
 GtkWidget* MAIN_WINDOW;
@@ -177,6 +176,7 @@ int main(int argc,char *argv[])
         g_signal_connect(G_OBJECT(button_0_7), "clicked",G_CALLBACK(button_callback), (gpointer) arr_0_7);
     }
     print_board(BOARD);
+    printf("P1_TURN : %d\n", P_1_TURN);
 
     gtk_widget_show_all(MAIN_WINDOW);
     gtk_main();

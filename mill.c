@@ -124,7 +124,7 @@ bool place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
             board->data[square_number][field_number] = 1;
             gtk_widget_set_name(CURRENT_BUTTON, "blue-background");
             (*men_number_player_1)++;
-            return false;
+            return true;
         }
         else
         {
