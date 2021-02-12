@@ -1,22 +1,11 @@
 #include "gui.h"
 #define NUMBER_OF_FIELDS 8
-/*
-typedef struct CallbackArguments
-{
-    int len;
-    int *a_num;
-    GtkWidget **a_label;    
-} CallbackArguments;
-typedef struct CallbackArguments CallbackArguments;*/
+
 int CURRENT_MOVE[2];
 GtkWidget* CURRENT_BUTTON;
-
-void *run_gtk_loop()
-{
-  gtk_widget_show_all(MAIN_WINDOW);
-  gtk_main();
-  return NULL;
-}
+bool YOUR_TURN;
+int TOTALLY_PLACED_MEN_PLAYER_1 = 0;
+int TOTALLY_PLACED_MEN_PLAYER_2 = 0;
 
 void close_window(GtkWidget *widget, Board* board)
 {
@@ -63,8 +52,9 @@ void button_callback(GtkWidget *widget, gpointer data)
   int *move_array = (int*) data;
   CURRENT_MOVE[0] = move_array[0];
   CURRENT_MOVE[1] = move_array[1];
-  CURRENT_BUTTON = widget; 
-  printf("\n!!!!!!!!!!!!!!!!!!!!!!!BUTTON PRESSED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+  CURRENT_BUTTON = widget;
+
+  // 
 }
 
 ButtonBoard* generate_button_board(int n)

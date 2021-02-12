@@ -102,57 +102,41 @@ void free_board(Board* board)
     free(board);
 }
 
-void place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2)
+bool place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int square_number, int field_number)
 {
-    int square_number, field_number;
-    bool not_successfully_selected = true;
-    while (not_successfully_selected)
+    if (players_1_turn)
+    {
+        printf("Player's 1 turn! Enter number of the square and number of the field: ");
+    }
+    else
+    {
+        printf("Player's 2 turn! Enter number of the square and number of the field: ");
+    }
+    if (board->number_of_squares == 2)
+    {
+        square_number--;
+    };
+    printf("\nsqr : %d, fie : %d\n", square_number, field_number);
+    if (board->data[square_number][field_number] == 0)
     {
         if (players_1_turn)
         {
-            printf("Player's 1 turn! Enter number of the square and number of the field: ");
+            board->data[square_number][field_number] = 1;
+            gtk_widget_set_name(CURRENT_BUTTON, "blue-background");
+            (*men_number_player_1)++;
+            return false;
         }
         else
         {
-            printf("Player's 2 turn! Enter number of the square and number of the field: ");
+            board->data[square_number][field_number] = 2;
+            gtk_widget_set_name(CURRENT_BUTTON, "red-background");
+            (*men_number_player_2)++;
+            return true;
         }
-        while (CURRENT_MOVE[0] == -1)
-        {
-            sleep(0.01);
-        }
-        printf("\nafter sleep while\n");
-        if (board->number_of_squares == 3)
-        {
-            square_number = CURRENT_MOVE[0];
-        }
-        else
-        {
-            square_number = CURRENT_MOVE[0] - 1;
-        }
-        field_number = CURRENT_MOVE[1];
-        CURRENT_MOVE[0] = -1;
-        CURRENT_MOVE[1] = -1;
-        printf("\nsqr : %d, fie : %d\n", square_number, field_number);
-        //scanf("%d %d", &square_number, &field_number);
-        printf("\n");
-        if (board->data[square_number][field_number] == 0)
-        {
-            if (players_1_turn)
-            {
-                board->data[square_number][field_number] = 1;
-                gtk_widget_set_name(CURRENT_BUTTON, "blue-background");
-                (*men_number_player_1)++;
-            }
-            else
-            {
-                board->data[square_number][field_number] = 2;
-                gtk_widget_set_name(CURRENT_BUTTON, "red-background");
-                (*men_number_player_2)++;
-            }
-            not_successfully_selected = false;
-            CURRENT_BUTTON = NULL;
-            printf("Before mill\n");
-            if (mill_achieved(board, square_number, field_number))
+    }
+    printf("wrong field selected, try again\n"); 
+    return false;
+            /*if (mill_achieved(board, square_number, field_number))
             {
                 printf("Mill achieved!\n");
                 print_board(board);
@@ -162,13 +146,7 @@ void place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
             else
             {
                 send_move_information(square_number, field_number, -1, -1, false);
-            } 
-        }
-        else
-        {
-            printf("wrong field selected, try again\n");
-        }     
-    }
+            }*/
 }
 
 
@@ -210,101 +188,90 @@ bool mill_achieved(Board* board, int current_square, int current_field)
     return false;
 }
 
-void remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2)
+bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int square_number, int field_number)
 {
-    int square_number, field_number;
-    bool not_successfully_selected = true;
-    while (not_successfully_selected)
+    printf("Enter number of the square and number of the opponents man that you want to remove: ");
+    if (board->number_of_squares == 2)
     {
-        printf("Enter number of the square and number of the opponents man that you want to remove: ");
-        //scanf("%d %d", &square_number, &field_number);
-        while (CURRENT_MOVE[0] == -1)
+        square_number--;
+    }
+    if (board->data[square_number][field_number] == 0)
+    {
+        printf("There is no men on this field selected, select again\n");
+        return false;
+    }
+    else if (board->data[square_number][field_number] == 1)
+    {
+        if (players_1_turn)
         {
-            sleep(0.01);
-        }
-        if (board->number_of_squares == 3)
-        {
-            square_number = CURRENT_MOVE[0];
+            printf("You cannot remove your man, select a man of the opponent\n");
+            return false;
         }
         else
         {
-            square_number = CURRENT_MOVE[0] - 1;
-        }
-        field_number = CURRENT_MOVE[1];
-        CURRENT_MOVE[0] = -1;
-        CURRENT_MOVE[1] = -1;
-        printf("\n");
-        if (board->data[square_number][field_number] == 0)
-        {
-            printf("There is no men on this field selected, select again\n");
-        }
-        else if (board->data[square_number][field_number] == 1)
-        {
-            if (players_1_turn)
+            if (all_opponents_men_in_a_mill(board, players_1_turn))
             {
-                printf("You cannot remove your man, select a man of the opponent\n");
+                board->data[square_number][field_number] = 0;
+                gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
+                (*men_number_player_1)--;
+                send_move_information(square_number, field_number, -1, -1, false);
+                return true;
             }
             else
             {
-                if (all_opponents_men_in_a_mill(board, players_1_turn))
+                if (mill_achieved(board, square_number, field_number))
+                {
+                    printf("This man is in the mill and you cannot remove it, select another one\n");
+                    return false;
+                }
+                else
                 {
                     board->data[square_number][field_number] = 0;
                     gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
                     (*men_number_player_1)--;
-                    not_successfully_selected = false;
-                }
-                else
-                {
-                    
-                    if (mill_achieved(board, square_number, field_number))
-                    {
-                        printf("This man is in the mill and you cannot remove it, select another one\n");
-                    }
-                    else
-                    {
-                        board->data[square_number][field_number] = 0;
-                        gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
-                        (*men_number_player_1)--;
-                        not_successfully_selected = false;
-                    }  
-                } 
-            }     
+                    send_move_information(square_number, field_number, -1, -1, false);
+                    return true;
+                }  
+            } 
+        }     
+    }
+    else
+    {
+        if (players_1_turn == false)
+        {
+            printf("You cannot remove your man, select a man of the opponent\n");
+            return false;
         }
         else
         {
-            if (players_1_turn == false)
+            if (all_opponents_men_in_a_mill(board, players_1_turn))
             {
-                printf("You cannot remove your man, select a man of the opponent\n");
+                board->data[square_number][field_number] = 0;
+                gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
+                (*men_number_player_2)--;
+                send_move_information(square_number, field_number, -1, -1, false);
+                return true;
             }
             else
             {
-                if (all_opponents_men_in_a_mill(board, players_1_turn))
+                if (mill_achieved(board, square_number, field_number))
+                {
+                    printf("This man is in the mill and you cannot remove it, select another one\n");
+                    return false;
+                }
+                else
                 {
                     board->data[square_number][field_number] = 0;
                     gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
                     (*men_number_player_2)--;
-                    not_successfully_selected = false;
-                }
-                else
-                {
-                    if (mill_achieved(board, square_number, field_number))
-                    {
-                        printf("This man is in the mill and you cannot remove it, select another one\n");
-                    }
-                    else
-                    {
-                        board->data[square_number][field_number] = 0;
-                        gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
-                        (*men_number_player_2)--;
-                        not_successfully_selected = false;
-                    }
-                    
+                    send_move_information(square_number, field_number, -1, -1, false);
+                    return true;
                 }
             }
-        }     
-    }
-    send_move_information(square_number, field_number, -1, -1, false);
+        }
+    }     
     printf("value sent sqr: %d, fie %d\n", square_number, field_number);
+    return false;
 }
 
 bool all_opponents_men_in_a_mill(Board* board, bool player_1_turn)
@@ -334,74 +301,51 @@ bool all_opponents_men_in_a_mill(Board* board, bool player_1_turn)
     return true;
 }
 
-void move_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2)
-{
-    int current_square_number, current_field_number, chosen_square_number, chosen_field_number;
-    bool not_successfully_selected = true; 
-    while (not_successfully_selected)
-    {   
-        if (players_1_turn)
-        {
-            printf("Player's 1 turn! Enter number of the square and number of the man that you want to move: ");
-        }
-        else
-        {
-            printf("Player's 2 turn! Enter number of the square and number of the man that you want to move: ");
-        }
-        //scanf("%d %d", &current_square_number, &current_field_number);
-        while (CURRENT_MOVE[0] == -1)
-        {
-            sleep(0.01);
-        }
-        if (board->number_of_squares == 3)
-        {
-            current_square_number = CURRENT_MOVE[0];
-        }
-        else
-        {
-            current_square_number = CURRENT_MOVE[0] - 1;
-        }
-        current_field_number = CURRENT_MOVE[1];
-        CURRENT_MOVE[0] = -1;
-        CURRENT_MOVE[1] = -1;
-        printf("\n");
-        if (properly_selected_man_to_move(board, players_1_turn, current_square_number, current_field_number, *men_number_player_1, *men_number_player_2) == false)
-        {
-            continue;
-        }
-        if (players_1_turn)
-        {
-            printf("Move! Enter number of the square and number of the field where you want to move it: ");
-        }
-        else
-        {
-            printf("Move! Enter number of the square and number of the field where you want to move it: ");
-        }
-        //scanf("%d %d", &chosen_square_number, &chosen_field_number);
-        while (CURRENT_MOVE[0] == -1)
-        {
-            sleep(0.01);
-        }
-        if (board->number_of_squares == 3)
-        {
-            chosen_square_number= CURRENT_MOVE[0];
-        }
-        else
-        {
-            chosen_square_number = CURRENT_MOVE[0] - 1;
-        }
-        chosen_field_number = CURRENT_MOVE[1];
-        CURRENT_MOVE[0] = -1;
-        CURRENT_MOVE[1] = -1;
-        printf("\n");
-        if (properly_selected_field_to_move_on(board, players_1_turn, current_square_number, current_field_number, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
-        {
-            continue;
-        }
-        not_successfully_selected = false;  
+bool select_man_to_move(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int current_square_number, int current_field_number)
+{   
+    if (players_1_turn)
+    {
+        printf("Player's 1 turn! Enter number of the square and number of the man that you want to move: ");
     }
-    board->data[current_square_number][current_field_number] = 0;
-    gtk_widget_set_name(button_board->data[current_square_number][current_field_number], "black-background");
+    else
+    {
+        printf("Player's 2 turn! Enter number of the square and number of the man that you want to move: ");
+    }
+    if (board->number_of_squares == 2)
+    {
+        current_square_number--;
+    }
+    if (properly_selected_man_to_move(board, players_1_turn, current_square_number, current_field_number, *men_number_player_1, *men_number_player_2) == false)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int chosen_square_number, int chosen_field_number)
+{
+    /*if (properly_selected_field_to_move_on(board, players_1_turn, current_square_number, current_field_number, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
+    {
+        return false;
+    }*/
+    if (players_1_turn)
+    {
+        printf("Move! Enter number of the square and number of the field where you want to move it: ");
+    }
+    else
+    {
+        printf("Move! Enter number of the square and number of the field where you want to move it: ");
+    }
+    if (board->number_of_squares == 2)
+    {
+        CURRENT_SQUARE_NUMBER--;
+    }
+    if (properly_selected_field_to_move_on(board, players_1_turn, CURRENT_SQUARE_NUMBER, CURRENT_FIELD_NUMBER, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
+    {
+        return false;
+    }
+    board->data[CURRENT_SQUARE_NUMBER][CURRENT_FIELD_NUMBER] = 0;
+    gtk_widget_set_name(button_board->data[CURRENT_SQUARE_NUMBER][CURRENT_FIELD_NUMBER], "black-background");
     if (players_1_turn)
     {
         board->data[chosen_square_number][chosen_field_number] = 1;
@@ -413,14 +357,14 @@ void move_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int 
         gtk_widget_set_name(button_board->data[chosen_square_number][chosen_field_number], "red-background");
 
     }
-    if (mill_achieved(board, chosen_square_number, chosen_field_number))
+    send_move_information(CURRENT_SQUARE_NUMBER, CURRENT_FIELD_NUMBER, chosen_square_number, chosen_field_number, false);    
+    return true;
+    /*if (mill_achieved(board, chosen_square_number, chosen_field_number))
     {
         print_board(board);
-        send_move_information(current_square_number, current_field_number, chosen_square_number, chosen_field_number, true);
+        send_move_information(CURRENT_SQUARE_NUMBER, CURRENT_FIELD_NUMBER, chosen_square_number, chosen_field_number, true);
         remove_opponents_men(board, button_board, players_1_turn, men_number_player_1, men_number_player_2);
-    }  
-    send_move_information(current_square_number, current_field_number, chosen_square_number, chosen_field_number, false);
-
+    }*/  
 }
 
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2)
