@@ -8,8 +8,6 @@
 
 PipesPtr potoki;
 gchar wejscie[MAX_TEXT_LENGHT];
-GtkWidget* MAIN_WINDOW;
-GtkWidget* main_label;
 bool YOUR_TURN;
 bool P_1_TURN = true;
 int CURRENT_MOVE[2] = {-1, -1};
@@ -33,7 +31,6 @@ int main(int argc,char *argv[])
     else 
     { 
         YOUR_TURN = false;
-        //disable_all_your_buttons(BUTTON_BOARD);
     }
     gtk_init(&argc, &argv);
     enable_css("./styles/button_colors.css");
@@ -52,17 +49,16 @@ int main(int argc,char *argv[])
     BOARD = generate_board(n);
     gchar window_heading[32];
     sprintf(window_heading,"Mill Game Player %d", (YOUR_TURN) ? (1) : (2));
-    MAIN_WINDOW = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(MAIN_WINDOW), window_heading);
-    gtk_window_set_default_size(GTK_WINDOW(MAIN_WINDOW), 1100, 800);
-    //gtk_window_set_resizable(GTK_WIDGET(MAIN_WINDOW), FALSE);
-    g_signal_connect(G_OBJECT(MAIN_WINDOW), "destroy",G_CALLBACK(close_window), BOARD);
-    gtk_container_set_border_width(GTK_CONTAINER(MAIN_WINDOW), 10);
+    GtkWidget* main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(main_window), window_heading);
+    gtk_window_set_default_size(GTK_WINDOW(main_window), 1100, 800);
+    g_signal_connect(G_OBJECT(main_window), "destroy",G_CALLBACK(close_window), BOARD);
+    gtk_container_set_border_width(GTK_CONTAINER(main_window), 10);
     //GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
-    //gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), vbox);
+    //gtk_container_add(GTK_CONTAINER(main_window), vbox);
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
     //gtk_box_pack_start(GTK_BOX(vbox), hbox, 0, 0, 0);
-    gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), hbox);
+    gtk_container_add(GTK_CONTAINER(main_window), hbox);
     //gtk_box_pack_start(GTK_BOX(vbox), hbox, 0, 0, 0);
     GtkWidget *fixed_box = gtk_fixed_new();
     GtkWidget *label_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -88,18 +84,6 @@ int main(int argc,char *argv[])
     //gtk_widget_set_valign (main_label, GTK_ALIGN_START);
     gtk_widget_set_halign (fixed_box, GTK_ALIGN_START);
     gtk_widget_set_halign (label_box, GTK_ALIGN_CENTER);
-    //GtkWidget *second_label = gtk_label_new("Second labek");
-    //gtk_box_pack_end(GTK_BOX(vbox), second_label, 0, 0, 0);
-    //gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), vbox);
-    //GtkWidget *box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    //gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), box1);
-    
-    //gtk_widget_set_size_request(main_label, 50, 10);
-    //gtk_box_pack_start(GTK_BOX(box1), main_label, TRUE, TRUE, 0);
-    
-
-    //GtkWidget *layout = gtk_layout_new(NULL, NULL);
-    //gtk_container_add(GTK_CONTAINER (fixed_box), layout);
     BUTTON_BOARD = generate_button_board(n); 
     GtkWidget* button_2_0 = generate_single_button(BUTTON_BOARD, 70, 70, fixed_box, 2, 0);
     int arr_2_0[] = {2, 0};
@@ -176,13 +160,12 @@ int main(int argc,char *argv[])
         int arr_0_7[] = {0, 7};
         g_signal_connect(G_OBJECT(button_0_7), "clicked",G_CALLBACK(button_callback), (gpointer) arr_0_7);
     }
-    print_board(BOARD);
-    printf("P1_TURN : %d\n", P_1_TURN);
+ 
+
     g_timeout_add(100, receive_move_information,NULL);
-    gtk_widget_show_all(MAIN_WINDOW);
+    gtk_widget_show_all(main_window);
     gtk_main();
     closePipes(potoki);
-    //free_board(board_2);
     free_board(BOARD);
     return 0;
 }

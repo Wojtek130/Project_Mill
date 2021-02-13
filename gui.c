@@ -69,8 +69,6 @@ void button_callback(GtkWidget *widget, gpointer data)
     {
         square_number--;
     }
-    printf("sqauuuuree: %d, fie : %d \n", square_number, field_number);
-
     if (YOUR_TURN == false)
     {
         return;
@@ -104,7 +102,6 @@ void button_callback(GtkWidget *widget, gpointer data)
             if (mill_achieved(BOARD, square_number, field_number))
             {
                 send_move_information(square_number, field_number, -1, -1, false);
-                printf("MILL ACHIEVED!\n");
                 REMOVING = true;
             }
             else
@@ -117,7 +114,6 @@ void button_callback(GtkWidget *widget, gpointer data)
                     disable_all_your_buttons(BUTTON_BOARD);
                     sleep(1);
                     send_move_information(11, -1, -1, -1, false);
-                    //return;
                 }
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
@@ -156,7 +152,6 @@ void button_callback(GtkWidget *widget, gpointer data)
                         disable_all_your_buttons(BUTTON_BOARD);
                         sleep(1);
                         send_move_information(11, -1, -1, -1, false);
-                        //return;
                     }
                     P_1_TURN = !P_1_TURN;
                     YOUR_TURN = !YOUR_TURN;
@@ -169,7 +164,6 @@ void button_callback(GtkWidget *widget, gpointer data)
 
 ButtonBoard* generate_button_board(int n)
 {
-    //int counter = 0;
     ButtonBoard* button_board = malloc(sizeof(ButtonBoard));
     button_board->number_of_squares = n;
     button_board->data = malloc(sizeof(GtkWidget**)*n);

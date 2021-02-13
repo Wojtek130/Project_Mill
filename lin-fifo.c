@@ -12,7 +12,6 @@ struct pipes {
 } ;
 
 int fileno(FILE *file);
-//void pokazBlad(char *komunikat);
 static FILE *openOutPipe(char *name);
 static FILE *openInPipe(char *name);
 
@@ -86,9 +85,7 @@ void sendStringToPipe(PipesPtr pipes, const char *data)
 bool getStringFromPipe(PipesPtr pipes, char *buffer, size_t size)
 {
     char *result = fgets(buffer,size,pipes->fifo_in);
-    //printf("text received: %s\n", result);
     fflush(pipes->fifo_in);
-    //if (result == NULL) printf("Failed to read data");
     return result != NULL;
 }
 

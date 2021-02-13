@@ -29,14 +29,6 @@ gboolean receive_move_information(gpointer data)
     int chosen_sqr_number_pla = move_information_arr[2];
     int chosen_fie_number_pla = move_information_arr[3];
     bool remove_rec = move_information_arr[4];
-    /*if (BOARD->number_of_squares == 2 && sqr_number_pla != -1 && sqr_number_pla != 11)
-    {
-        sqr_number_pla--;
-    }
-    if (BOARD->number_of_squares == 2 && chosen_sqr_number_pla != -1)
-    {
-        sqr_number_pla--;
-    }*/
     printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
@@ -52,7 +44,6 @@ gboolean receive_move_information(gpointer data)
     }
     if (remove_rec)
     {
-        printf("remove\n");
         remove_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
         remove_rec = false;
         P_1_TURN = !P_1_TURN;
@@ -116,8 +107,6 @@ long value_to_send(int current_square_number, int current_field_number, int chos
         result *= -1;
     }
         printf("VALUE TO SEND: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
-    //printf("res com: %ld\n", result);
-    printf("sent long : %ld\n", result);
     return result;
 }
 
@@ -133,7 +122,6 @@ long* received_value(char* value_char)
 {
     long value_int = atol(value_char);
     long* move_information_int = malloc(5*sizeof(long));
-    printf("received long : %ld\n", value_int);
     move_information_int[0] = compute_received_value(2, value_int);
     move_information_int[1] = compute_received_value(3, value_int);
     move_information_int[2] = compute_received_value(5, value_int);
@@ -146,14 +134,12 @@ long* received_value(char* value_char)
     {
         move_information_int[4] = 0;
     }
-    //printf("RECEIVED VALUE: sqr : %ld, fie: %ld, ch_sqr: %ld, ch_fie : %ld, remove : %ld\n", move_information_int[0], move_information_int[1], move_information_int[2], move_information_int[3], move_information_int[4]);
     return move_information_int;
 }
 
 long compute_received_value(int position_number, long received_value)
 {
     int result = -1;
-    //printf("rec_com_v : %ld\n", received_value);
     while (received_value % position_number == 0)
     {
         received_value = received_value / position_number;
