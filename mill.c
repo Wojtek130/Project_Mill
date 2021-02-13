@@ -441,6 +441,13 @@ bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int c
 
 bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2)
 {
+    int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
+    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
+    if (*totally_placed_men_current_player < maximal_number_of_men)
+    {
+        return false;
+    }
+    printf("men num 1 : %d, men num 2 : %d\n", men_number_player_1, men_number_player_2);
     if (players_1_turn && men_number_player_2 <=2)
     {
         return true;

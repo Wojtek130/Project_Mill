@@ -17,10 +17,6 @@ void send_move_information(int current_square_number, int current_field_number, 
 
 gboolean receive_move_information(gpointer data)
 {
-  if (YOUR_TURN == true)
-  {
-      return TRUE;
-  }
   gchar wejscie[MAX_TEXT_LENGHT];
   if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT)) 
   {
@@ -36,6 +32,15 @@ gboolean receive_move_information(gpointer data)
     printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
+    if (sqr_number_pla == 11)
+    {
+        show_winner(P_1_TURN, true);
+        return FALSE;
+    }
+      if (YOUR_TURN == true)
+    {
+      return TRUE;
+    }
     if (remove_rec)
     {
         printf("remove\n");
@@ -103,6 +108,7 @@ long value_to_send(int current_square_number, int current_field_number, int chos
     }
         printf("VALUE TO SEND: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
     //printf("res com: %ld\n", result);
+    printf("sent long : %ld\n", result);
     return result;
 }
 
@@ -118,6 +124,7 @@ long* received_value(char* value_char)
 {
     long value_int = atol(value_char);
     long* move_information_int = malloc(5*sizeof(long));
+    printf("received long : %ld\n", value_int);
     move_information_int[0] = compute_received_value(2, value_int);
     move_information_int[1] = compute_received_value(3, value_int);
     move_information_int[2] = compute_received_value(5, value_int);

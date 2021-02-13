@@ -76,6 +76,13 @@ void button_callback(GtkWidget *widget, gpointer data)
         {
             REMOVING = false;
             send_move_information(square_number, field_number, -1, -1, true);
+            if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
+            {
+                show_winner(P_1_TURN, false);
+                sleep(1);
+                send_move_information(11, -1, -1, -1, false);
+                //return;
+            }
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
             //disable_all_your_buttons(BUTTON_BOARD);
@@ -98,6 +105,13 @@ void button_callback(GtkWidget *widget, gpointer data)
             {
                 REMOVING = false;
                 send_move_information(square_number, field_number, -1, -1, false);
+                if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
+                {
+                    show_winner(P_1_TURN, false);
+                    sleep(1);
+                    send_move_information(11, -1, -1, -1, false);
+                    //return;
+                }
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
                 //disable_all_your_buttons(BUTTON_BOARD);
@@ -129,6 +143,13 @@ void button_callback(GtkWidget *widget, gpointer data)
                 {
                     REMOVING = false;
                     send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, false);
+                    if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
+                    {
+                        show_winner(P_1_TURN, false);
+                        sleep(1);
+                        send_move_information(11, -1, -1, -1, false);
+                        //return;
+                    }
                     P_1_TURN = !P_1_TURN;
                     YOUR_TURN = !YOUR_TURN;
                     //disable_all_your_buttons(BUTTON_BOARD);
