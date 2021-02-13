@@ -52,7 +52,7 @@ GtkWidget *generate_single_button(ButtonBoard* button_board, int coor_x, int coo
     {
       square_number--;
     }
-    int arr_button[] = {square_number, field_number};
+    // arr_button[] = {square_number, field_number};
     button_board->data[square_number][field_number] = button;
     return button;
 }
@@ -65,7 +65,12 @@ void button_callback(GtkWidget *widget, gpointer data)
     CURRENT_BUTTON = widget;
     int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
-    printf("YOUR_TURN : %d\n", YOUR_TURN);
+    if (BOARD->number_of_squares == 2)
+    {
+        square_number--;
+    }
+    printf("sqauuuuree: %d, fie : %d \n", square_number, field_number);
+
     if (YOUR_TURN == false)
     {
         return;

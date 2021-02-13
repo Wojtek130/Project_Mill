@@ -112,10 +112,10 @@ bool place_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int
     {
         printf("Player's 2 turn! Enter number of the square and number of the field: ");
     }
-    if (board->number_of_squares == 2)
+    /*if (board->number_of_squares == 2)
     {
         square_number--;
-    };
+    };*/
     printf("\nsqr : %d, fie : %d\n", square_number, field_number);
     if (board->data[square_number][field_number] == 0)
     {
@@ -191,10 +191,10 @@ bool mill_achieved(Board* board, int current_square, int current_field)
 bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_1_turn, int *men_number_player_1, int *men_number_player_2, int square_number, int field_number)
 {
     printf("Enter number of the square and number of the opponents man that you want to remove: ");
-    if (board->number_of_squares == 2)
+    /*if (board->number_of_squares == 2)
     {
         square_number--;
-    }
+    }*/
     if (board->data[square_number][field_number] == 0)
     {
         printf("There is no men on this field selected, select again\n");
@@ -311,10 +311,10 @@ bool select_man_to_move(Board* board, ButtonBoard* button_board, bool players_1_
     {
         printf("Player's 2 turn! Enter number of the square and number of the man that you want to move: ");
     }
-    if (board->number_of_squares == 2)
+    /*if (board->number_of_squares == 2)
     {
         current_square_number--;
-    }
+    }*/
     if (properly_selected_man_to_move(board, players_1_turn, current_square_number, current_field_number, *men_number_player_1, *men_number_player_2) == false)
     {
         return false;
@@ -336,10 +336,10 @@ bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool playe
     {
         printf("Move! Enter number of the square and number of the field where you want to move it: ");
     }
-    if (board->number_of_squares == 2)
+    /*if (board->number_of_squares == 2)
     {
         SQUARE_NUMBER_TO_MOVE_FROM--;
-    }
+    }*/
     if (properly_selected_field_to_move_on(board, players_1_turn, SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, *men_number_player_1, *men_number_player_2) == false)
     {
         return false;
@@ -369,6 +369,10 @@ bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool playe
 
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2)
 {
+    if (board->number_of_squares == 2)
+    /*{
+        square_number++;
+    }*/
     if (board->data[square_number][field_number] == 0)
     {
         printf("There is no man on this field, select again\n");
@@ -416,6 +420,11 @@ bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square
 
 bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, int men_number_player_1, int men_number_player_2)
 {
+    /*if (board->number_of_squares == 2)
+    {
+        current_square_number++;
+        chosen_square_number++;
+    }*/
     if (board->data[chosen_square_number][chosen_field_number] != 0)
     {
         printf("This is a field is already occupied, select again\n");

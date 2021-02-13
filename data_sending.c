@@ -29,6 +29,14 @@ gboolean receive_move_information(gpointer data)
     int chosen_sqr_number_pla = move_information_arr[2];
     int chosen_fie_number_pla = move_information_arr[3];
     bool remove_rec = move_information_arr[4];
+    /*if (BOARD->number_of_squares == 2 && sqr_number_pla != -1 && sqr_number_pla != 11)
+    {
+        sqr_number_pla--;
+    }
+    if (BOARD->number_of_squares == 2 && chosen_sqr_number_pla != -1)
+    {
+        sqr_number_pla--;
+    }*/
     printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
