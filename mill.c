@@ -214,7 +214,7 @@ bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_
                 board->data[square_number][field_number] = 0;
                 gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
                 (*men_number_player_1)--;
-                send_move_information(square_number, field_number, -1, -1, false);
+                //send_move_information(square_number, field_number, -1, -1, false);
                 return true;
             }
             else
@@ -229,7 +229,7 @@ bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_
                     board->data[square_number][field_number] = 0;
                     gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
                     (*men_number_player_1)--;
-                    send_move_information(square_number, field_number, -1, -1, false);
+                    //send_move_information(square_number, field_number, -1, -1, false);
                     return true;
                 }  
             } 
@@ -249,7 +249,7 @@ bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_
                 board->data[square_number][field_number] = 0;
                 gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
                 (*men_number_player_2)--;
-                send_move_information(square_number, field_number, -1, -1, false);
+                //send_move_information(square_number, field_number, -1, -1, false);
                 return true;
             }
             else
@@ -264,7 +264,7 @@ bool remove_opponents_men(Board* board, ButtonBoard* button_board, bool players_
                     board->data[square_number][field_number] = 0;
                     gtk_widget_set_name(button_board->data[square_number][field_number], "black-background");
                     (*men_number_player_2)--;
-                    send_move_information(square_number, field_number, -1, -1, false);
+                    //send_move_information(square_number, field_number, -1, -1, false);
                     return true;
                 }
             }
@@ -357,14 +357,14 @@ bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool playe
         gtk_widget_set_name(button_board->data[chosen_square_number][chosen_field_number], "red-background");
 
     }
-    send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, false);    
+    //send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, false);    
     return true;
     /*if (mill_achieved(board, chosen_square_number, chosen_field_number))
     {
         print_board(board);
         send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, chosen_square_number, chosen_field_number, true);
         remove_opponents_men(board, button_board, players_1_turn, men_number_player_1, men_number_player_2);
-    }*/  
+    } */ 
 }
 
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2)

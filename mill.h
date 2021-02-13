@@ -34,6 +34,8 @@ extern int MEN_NUMBER_P_1;
 extern int MEN_NUMBER_P_2;
 extern int SQUARE_NUMBER_TO_MOVE_FROM;
 extern int FIELD_NUMBER_TO_MOVE_FROM;
+extern int TOTALLY_PLACED_MEN_PLAYER_1;
+extern int TOTALLY_PLACED_MEN_PLAYER_2;
 
 
 //extern ButtonBoard* BUTTON_BOARD;

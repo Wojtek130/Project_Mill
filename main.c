@@ -178,6 +178,7 @@ int main(int argc,char *argv[])
     print_board(BOARD);
     printf("P1_TURN : %d\n", P_1_TURN);
 
+    g_timeout_add(100, receive_move_information,NULL);
     gtk_widget_show_all(MAIN_WINDOW);
     gtk_main();
     closePipes(potoki);

@@ -20,7 +20,7 @@ lin-fifo.o: lin-fifo.c fifo.h
 data_sending.o: data_sending.c data_sending.h mill.h fifo.h 
 	$(CC) $(CFLAGS) -c data_sending.c $(LDLIBS) -o data_sending.o
 
-gui.o: gui.c gui.h mill.h fifo.h 
+gui.o: gui.c gui.h mill.h fifo.h data_sending.h
 	$(CC) $(CFLAGS) -c gui.c $(LDLIBS) -o gui.o
 
 clean:

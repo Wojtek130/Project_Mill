@@ -1,4 +1,5 @@
 #include "gui.h"
+#include "data_sending.h"
 #define NUMBER_OF_FIELDS 8
 
 int CURRENT_MOVE[2];
@@ -73,6 +74,7 @@ void button_callback(GtkWidget *widget, gpointer data)
         if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
             REMOVING = false;
+            send_move_information(square_number, field_number, -1, -1, false);
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
             
@@ -87,10 +89,12 @@ void button_callback(GtkWidget *widget, gpointer data)
             if (mill_achieved(BOARD, square_number, field_number))
             {
                 REMOVING = true;
+                send_move_information(square_number, field_number, -1, -1, true);
             }
             else
             {
                 REMOVING = false;
+                send_move_information(square_number, field_number, -1, -1, false);
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
                 
@@ -99,7 +103,6 @@ void button_callback(GtkWidget *widget, gpointer data)
     }
     else
     {
-        printf("YOUR_TURN33333333 : %d\n", YOUR_TURN);
         if (CURRENT_STAGE_OF_MOVING == select_your_man)
         {
             if (select_man_to_move(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
@@ -117,10 +120,12 @@ void button_callback(GtkWidget *widget, gpointer data)
                 if (mill_achieved(BOARD, square_number, field_number))
                 {
                     REMOVING = true;
+                    send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, true);
                 }
                 else
                 {
                     REMOVING = false;
+                    send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, false);
                     P_1_TURN = !P_1_TURN;
                     YOUR_TURN = !YOUR_TURN;
                 }
