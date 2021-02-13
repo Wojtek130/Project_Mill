@@ -84,13 +84,14 @@ void button_callback(GtkWidget *widget, gpointer data)
             if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
             {
                 show_winner(P_1_TURN, false);
+                disable_all_your_buttons(BUTTON_BOARD);
                 sleep(1);
                 send_move_information(11, -1, -1, -1, false);
                 //return;
             }
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
-            //disable_all_your_buttons(BUTTON_BOARD);
+            disable_all_your_buttons(BUTTON_BOARD);
             
         }
     }
@@ -113,13 +114,14 @@ void button_callback(GtkWidget *widget, gpointer data)
                 if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
                 {
                     show_winner(P_1_TURN, false);
+                    disable_all_your_buttons(BUTTON_BOARD);
                     sleep(1);
                     send_move_information(11, -1, -1, -1, false);
                     //return;
                 }
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
-                //disable_all_your_buttons(BUTTON_BOARD);
+                disable_all_your_buttons(BUTTON_BOARD);
             }
         }
     }
@@ -151,13 +153,14 @@ void button_callback(GtkWidget *widget, gpointer data)
                     if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
                     {
                         show_winner(P_1_TURN, false);
+                        disable_all_your_buttons(BUTTON_BOARD);
                         sleep(1);
                         send_move_information(11, -1, -1, -1, false);
                         //return;
                     }
                     P_1_TURN = !P_1_TURN;
                     YOUR_TURN = !YOUR_TURN;
-                    //disable_all_your_buttons(BUTTON_BOARD);
+                    disable_all_your_buttons(BUTTON_BOARD);
                 }
             }
         }    

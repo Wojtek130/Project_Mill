@@ -43,9 +43,10 @@ gboolean receive_move_information(gpointer data)
     if (sqr_number_pla == 11)
     {
         show_winner(P_1_TURN, true);
+        disable_all_your_buttons(BUTTON_BOARD);
         return FALSE;
     }
-      if (YOUR_TURN == true)
+    if (YOUR_TURN == true)
     {
       return TRUE;
     }
@@ -56,7 +57,7 @@ gboolean receive_move_information(gpointer data)
         remove_rec = false;
         P_1_TURN = !P_1_TURN;
         YOUR_TURN = !YOUR_TURN;
-        //enable_all_your_buttons(BUTTON_BOARD);
+        enable_all_your_buttons(BUTTON_BOARD);
     }
     else if ((*totally_placed_men_current_player) < maximal_number_of_men)
     {
@@ -72,7 +73,7 @@ gboolean receive_move_information(gpointer data)
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
-            //enable_all_your_buttons(BUTTON_BOARD);   
+            enable_all_your_buttons(BUTTON_BOARD);   
         }
     }
     else
@@ -87,7 +88,7 @@ gboolean receive_move_information(gpointer data)
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
-            //enable_all_your_buttons(BUTTON_BOARD);
+            enable_all_your_buttons(BUTTON_BOARD);
         }   
     }
     }
