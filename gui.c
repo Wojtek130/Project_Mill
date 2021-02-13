@@ -64,6 +64,7 @@ void button_callback(GtkWidget *widget, gpointer data)
     int field_number = move_array[1];
     CURRENT_BUTTON = widget;
     int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
+    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
     printf("YOUR_TURN : %d\n", YOUR_TURN);
     if (YOUR_TURN == false)
     {
@@ -74,14 +75,14 @@ void button_callback(GtkWidget *widget, gpointer data)
         if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
             REMOVING = false;
-            send_move_information(square_number, field_number, -1, -1, false);
+            send_move_information(square_number, field_number, -1, -1, true);
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
             //disable_all_your_buttons(BUTTON_BOARD);
             
         }
     }
-    else if ((*totally_placed_men_current_player) < 9)
+    else if ((*totally_placed_men_current_player) < maximal_number_of_men)
     {
         if (place_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
@@ -89,8 +90,9 @@ void button_callback(GtkWidget *widget, gpointer data)
             
             if (mill_achieved(BOARD, square_number, field_number))
             {
+                send_move_information(square_number, field_number, -1, -1, false);
+                printf("MILL ACHIEVED!\n");
                 REMOVING = true;
-                send_move_information(square_number, field_number, -1, -1, true);
             }
             else
             {
@@ -121,7 +123,7 @@ void button_callback(GtkWidget *widget, gpointer data)
                 if (mill_achieved(BOARD, square_number, field_number))
                 {
                     REMOVING = true;
-                    send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, true);
+                    send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, false);
                 }
                 else
                 {

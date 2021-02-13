@@ -33,18 +33,19 @@ gboolean receive_move_information(gpointer data)
     int chosen_sqr_number_pla = move_information_arr[2];
     int chosen_fie_number_pla = move_information_arr[3];
     bool remove_rec = move_information_arr[4];
-    printf("REICEVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
+    printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
+    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
     if (remove_rec)
     {
-        printf("remove");
+        printf("remove\n");
         remove_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
         remove_rec = false;
         P_1_TURN = !P_1_TURN;
         YOUR_TURN = !YOUR_TURN;
         //enable_all_your_buttons(BUTTON_BOARD);
     }
-    else if ((*totally_placed_men_current_player) < 9)
+    else if ((*totally_placed_men_current_player) < maximal_number_of_men)
     {
         
         place_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
@@ -58,14 +59,13 @@ gboolean receive_move_information(gpointer data)
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
-            //enable_all_your_buttons(BUTTON_BOARD);
-            
+            //enable_all_your_buttons(BUTTON_BOARD);   
         }
     }
     else
     {
         move_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla);
-        if (mill_achieved(BOARD, chosen_sqr_number_pla, chosen_sqr_number_pla))
+        if (mill_achieved(BOARD, chosen_sqr_number_pla, chosen_fie_number_pla))
         {
             remove_rec = true;
         }
@@ -77,7 +77,7 @@ gboolean receive_move_information(gpointer data)
             //enable_all_your_buttons(BUTTON_BOARD);
         }   
     }
-}
+    }
   return TRUE;
 }
 
@@ -130,7 +130,7 @@ long* received_value(char* value_char)
     {
         move_information_int[4] = 0;
     }
-    printf("RECEIVED VALUE: sqr : %ld, fie: %ld, ch_sqr: %ld, ch_fie : %ld, remove : %ld\n", move_information_int[0], move_information_int[1], move_information_int[2], move_information_int[3], move_information_int[4]);
+    //printf("RECEIVED VALUE: sqr : %ld, fie: %ld, ch_sqr: %ld, ch_fie : %ld, remove : %ld\n", move_information_int[0], move_information_int[1], move_information_int[2], move_information_int[3], move_information_int[4]);
     return move_information_int;
 }
 
