@@ -1,7 +1,6 @@
 #ifndef GUI_H
 #define GUI_H
 #include <gtk/gtk.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include "mill.h"
 
 enum stage_of_moving {select_your_man = 0, select_free_field_to_move_on = 1};
