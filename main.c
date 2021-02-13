@@ -33,6 +33,7 @@ int main(int argc,char *argv[])
     else 
     { 
         YOUR_TURN = false;
+        //disable_all_your_buttons(BUTTON_BOARD);
     }
     gtk_init(&argc, &argv);
     enable_css("./styles/button_colors.css");
@@ -177,7 +178,6 @@ int main(int argc,char *argv[])
     }
     print_board(BOARD);
     printf("P1_TURN : %d\n", P_1_TURN);
-
     g_timeout_add(100, receive_move_information,NULL);
     gtk_widget_show_all(MAIN_WINDOW);
     gtk_main();

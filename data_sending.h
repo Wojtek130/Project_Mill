@@ -1,7 +1,7 @@
 #ifndef DATA_SENDING_H
 #define DATA_SENDING_H
-#include "mill.h"
 #include <math.h>
+#include "gui.h"
 
 void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove);
 gboolean receive_move_information(gpointer data);

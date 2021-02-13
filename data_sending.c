@@ -19,7 +19,7 @@ gboolean receive_move_information(gpointer data)
 {
   if (YOUR_TURN == true)
   {
-      return FALSE;
+      return TRUE;
   }
   gchar wejscie[MAX_TEXT_LENGHT];
   if (getStringFromPipe(potoki,wejscie,MAX_TEXT_LENGHT)) 
@@ -33,18 +33,20 @@ gboolean receive_move_information(gpointer data)
     int chosen_sqr_number_pla = move_information_arr[2];
     int chosen_fie_number_pla = move_information_arr[3];
     bool remove_rec = move_information_arr[4];
-    printf("VALUE TO SEND: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
-
-
+    printf("REICEVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
+    free(move_information_arr);
     if (remove_rec)
     {
+        printf("remove");
         remove_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
         remove_rec = false;
         P_1_TURN = !P_1_TURN;
         YOUR_TURN = !YOUR_TURN;
+        //enable_all_your_buttons(BUTTON_BOARD);
     }
     else if ((*totally_placed_men_current_player) < 9)
     {
+        
         place_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
         (*totally_placed_men_current_player)++;
         if (mill_achieved(BOARD, sqr_number_pla, fie_number_pla))
@@ -56,6 +58,7 @@ gboolean receive_move_information(gpointer data)
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
+            //enable_all_your_buttons(BUTTON_BOARD);
             
         }
     }
@@ -71,6 +74,7 @@ gboolean receive_move_information(gpointer data)
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
+            //enable_all_your_buttons(BUTTON_BOARD);
         }   
     }
 }

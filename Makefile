@@ -17,7 +17,7 @@ mill.o: mill.c mill.h data_sending.h
 lin-fifo.o: lin-fifo.c fifo.h
 	$(CC) $(CFLAGS) -c lin-fifo.c -o lin-fifo.o
 
-data_sending.o: data_sending.c data_sending.h mill.h fifo.h 
+data_sending.o: data_sending.c data_sending.h mill.h fifo.h  gui.h
 	$(CC) $(CFLAGS) -c data_sending.c $(LDLIBS) -o data_sending.o
 
 gui.o: gui.c gui.h mill.h fifo.h data_sending.h

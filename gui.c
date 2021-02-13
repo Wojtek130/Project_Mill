@@ -77,6 +77,7 @@ void button_callback(GtkWidget *widget, gpointer data)
             send_move_information(square_number, field_number, -1, -1, false);
             P_1_TURN = !P_1_TURN;
             YOUR_TURN = !YOUR_TURN;
+            //disable_all_your_buttons(BUTTON_BOARD);
             
         }
     }
@@ -97,7 +98,7 @@ void button_callback(GtkWidget *widget, gpointer data)
                 send_move_information(square_number, field_number, -1, -1, false);
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
-                
+                //disable_all_your_buttons(BUTTON_BOARD);
             }
         }
     }
@@ -128,6 +129,7 @@ void button_callback(GtkWidget *widget, gpointer data)
                     send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, false);
                     P_1_TURN = !P_1_TURN;
                     YOUR_TURN = !YOUR_TURN;
+                    //disable_all_your_buttons(BUTTON_BOARD);
                 }
             }
         }    
