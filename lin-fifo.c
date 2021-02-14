@@ -6,7 +6,8 @@
 #include <fcntl.h>
 #include "fifo.h"
 
-struct pipes {
+struct pipes 
+{
     FILE *fifo_in, *fifo_out;
     int isA;
 } ;

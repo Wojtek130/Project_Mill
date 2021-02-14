@@ -22,8 +22,9 @@ GtkWidget *WHOSE_TURN_LABEL;
 
 void close_window(GtkWidget *widget, Board* board)
 {
-  //closePipes(potoki);
+  closePipes(potoki);
   free_board(board);
+  free_button_board(BUTTON_BOARD);
   gtk_main_quit();
   exit(0);
 }
@@ -55,7 +56,6 @@ GtkWidget *generate_single_button(ButtonBoard* button_board, int coor_x, int coo
     {
       square_number--;
     }
-    // arr_button[] = {square_number, field_number};
     button_board->data[square_number][field_number] = button;
     return button;
 }
