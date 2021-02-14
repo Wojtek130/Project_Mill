@@ -215,7 +215,7 @@ void enable_all_your_buttons(ButtonBoard* button_board)
 
 void update_label_number_of_men(bool player_1, int current_number_of_men, GtkWidget* men_number_label)
 {
-    char label_text[30] = "Men number Player 1 : 2";
+    char label_text[30] = "Men number Player";
     if (player_1)
     {
         strcat(label_text, " 1 : ");
