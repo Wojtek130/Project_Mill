@@ -2,6 +2,8 @@
 #include "data_sending.h"
 #define NUMBER_OF_FIELDS 8
 
+// Wojciech Sniady, nr indeksu: 322993
+
 GtkWidget* CURRENT_BUTTON;
 bool YOUR_TURN;
 bool P_1_TURN;

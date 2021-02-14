@@ -7,13 +7,11 @@
 #include "data_sending.h"
 #define NUMBER_OF_FIELDS 8
 
+// Wojciech Sniady, nr indeksu: 322993
+
 GtkWidget *MEN_NUMBER_P_1_LABEL;
 GtkWidget *MEN_NUMBER_P_2_LABEL;
 bool REMOVING;
-
-
-// Wojciech Sniady, nr indeksu: 322993
-
 
 Board* generate_board(int n)
 {

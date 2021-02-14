@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "fifo.h"
 #define MAX_TEXT_LENGHT 20
+
 // Wojciech Sniady, nr indeksu: 322993
 
 typedef struct Board {

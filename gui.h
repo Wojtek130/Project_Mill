@@ -3,6 +3,8 @@
 #include <gtk/gtk.h>
 #include "mill.h"
 
+// Wojciech Sniady, nr indeksu: 322993
+
 enum stage_of_moving {select_your_man = 0, select_free_field_to_move_on = 1};
 extern enum stage_of_moving CURRENT_STAGE_OF_MOVING;
 

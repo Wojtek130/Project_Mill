@@ -3,6 +3,7 @@
 #include "fifo.h"
 #include "data_sending.h"
 #include "gui.h"
+
 // Wojciech Sniady, nr indeksu: 322993
 
 
@@ -45,7 +46,6 @@ int main(int argc,char *argv[])
         printf("Too few arguments\n");
         return 0;
     }
-    //int n = 3;
     int n = atoi(argv[2]);
     if (n != 2 && n != 3)
     {
@@ -60,16 +60,11 @@ int main(int argc,char *argv[])
     gtk_window_set_default_size(GTK_WINDOW(MAIN_WINDOW), 1100, 800);
     g_signal_connect(G_OBJECT(MAIN_WINDOW), "destroy",G_CALLBACK(close_window), BOARD);
     gtk_container_set_border_width(GTK_CONTAINER(MAIN_WINDOW), 10);
-    //GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
-    //gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), vbox);
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
-    //gtk_box_pack_start(GTK_BOX(vbox), hbox, 0, 0, 0);
     gtk_container_add(GTK_CONTAINER(MAIN_WINDOW), hbox);
-    //gtk_box_pack_start(GTK_BOX(vbox), hbox, 0, 0, 0);
     GtkWidget *fixed_box = gtk_fixed_new();
     GtkWidget *label_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(hbox), fixed_box, 0, 0, 0);
-    //gtk_box_pack_start(GTK_BOX(hbox), label_box, 0, 0, 0);
     gtk_container_add(GTK_CONTAINER(hbox), label_box);
     gtk_widget_set_has_window(fixed_box, TRUE);
     GtkWidget *image;
@@ -80,8 +75,7 @@ int main(int argc,char *argv[])
     else 
     {
         image = gtk_image_new_from_file("./images/board_3.jpg"); 
-    }
-     
+    }     
     gtk_container_add(GTK_CONTAINER(fixed_box), image);
     GtkWidget *main_label = gtk_label_new("Mill Game");
     MEN_NUMBER_P_1_LABEL = gtk_label_new("Men number Player 1 : 0");
@@ -102,10 +96,6 @@ int main(int argc,char *argv[])
     gtk_grid_attach(GTK_GRID(grid), MEN_NUMBER_P_2_LABEL, 0, 2, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), WHOSE_TURN_LABEL, 0, 3, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), button, 0, 4, 1, 1);
-    //gtk_box_pack_start(GTK_BOX(label_box), main_label, 0, 0, 0);
-    //gtk_box_pack_start(GTK_BOX(label_box), s_label, 0, 0, 0);
-    //gtk_widget_set_halign (main_label, GTK_ALIGN_CENTER);
-    //gtk_widget_set_valign (main_label, GTK_ALIGN_START);
     gtk_widget_set_halign (fixed_box, GTK_ALIGN_START);
     gtk_widget_set_halign (label_box, GTK_ALIGN_CENTER);
     BUTTON_BOARD = generate_button_board(n); 

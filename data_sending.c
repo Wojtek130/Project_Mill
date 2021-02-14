@@ -1,5 +1,7 @@
 #include "data_sending.h"
 
+// Wojciech Sniady, nr indeksu: 322993
+
 int TOTALLY_PLACED_MEN_PLAYER_1;
 int TOTALLY_PLACED_MEN_PLAYER_2;
 int MEN_NUMBER_P_1;
