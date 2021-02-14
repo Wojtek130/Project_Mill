@@ -16,6 +16,9 @@ int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
 int SQUARE_NUMBER_TO_MOVE_FROM;
 int FIELD_NUMBER_TO_MOVE_FROM;
+GtkWidget *FIXED_BOX;
+GtkWidget *MAIN_WINDOW;
+
 
 void close_window(GtkWidget *widget, Board* board)
 {
@@ -77,6 +80,7 @@ void button_callback(GtkWidget *widget, gpointer data)
     {
         if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
+            //show_winner_pop_up_window(MAIN_WINDOW);
             REMOVING = false;
             send_move_information(square_number, field_number, -1, -1, true);
             if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
@@ -204,4 +208,14 @@ void enable_all_your_buttons(ButtonBoard* button_board)
       gtk_widget_set_sensitive (button_board->data[sqr][fie], TRUE);
     }
   }
+}
+
+void show_winner_pop_up_window(GtkWidget* parent_window)
+{
+    printf("pop_up_window\n");
+    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "Player ... won!\n New game?");
+    gtk_window_set_title(GTK_WINDOW(pop_up_window), "GAME OVER!!!");
+    gtk_dialog_run(GTK_DIALOG(pop_up_window));
+    gtk_widget_destroy(pop_up_window);
+    return;
 }

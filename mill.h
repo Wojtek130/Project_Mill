@@ -34,6 +34,9 @@ extern int SQUARE_NUMBER_TO_MOVE_FROM;
 extern int FIELD_NUMBER_TO_MOVE_FROM;
 extern int TOTALLY_PLACED_MEN_PLAYER_1;
 extern int TOTALLY_PLACED_MEN_PLAYER_2;
+extern GtkWidget *FIXED_BOX;
+extern GtkWidget *MAIN_WINDOW;
+
 
 
 //extern ButtonBoard* BUTTON_BOARD;

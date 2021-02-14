@@ -369,7 +369,8 @@ bool select_field_to_move_on(Board* board, ButtonBoard* button_board, bool playe
 
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2)
 {
-    if (board->number_of_squares == 2)
+    printf("selected man to move0 sqr : %d, fie : %d", square_number, field_number);
+    //if (board->number_of_squares == 2)
     /*{
         square_number++;
     }*/
@@ -425,6 +426,7 @@ bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int c
         current_square_number++;
         chosen_square_number++;
     }*/
+    printf("field to move on cur sqr : %d, cur fie : %d, chos sqr : %d, chos fie : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number);
     if (board->data[chosen_square_number][chosen_field_number] != 0)
     {
         printf("This is a field is already occupied, select again\n");

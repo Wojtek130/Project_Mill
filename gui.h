@@ -14,5 +14,5 @@ ButtonBoard* generate_button_board(int n);
 void free_button_board(ButtonBoard* button_board);
 void disable_all_your_buttons(ButtonBoard* button_board);
 void enable_all_your_buttons(ButtonBoard* button_board);
-void show_winner_pop_up_window();
+void show_winner_pop_up_window(GtkWidget* parent_window);
 #endif
