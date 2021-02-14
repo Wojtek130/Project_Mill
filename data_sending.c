@@ -43,7 +43,7 @@ gboolean receive_move_information(gpointer data)
     {
         show_winner(P_1_TURN, true, MAIN_WINDOW);
         disable_all_your_buttons(BUTTON_BOARD);
-        return FALSE;
+        return TRUE;
     }
     if (YOUR_TURN == true)
     {

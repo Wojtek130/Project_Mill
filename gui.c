@@ -2,11 +2,10 @@
 #include "data_sending.h"
 #define NUMBER_OF_FIELDS 8
 
-int CURRENT_MOVE[2];
 GtkWidget* CURRENT_BUTTON;
 bool YOUR_TURN;
 bool P_1_TURN;
-bool REMOVING = false;
+bool REMOVING;
 int TOTALLY_PLACED_MEN_PLAYER_1 = 0;
 int TOTALLY_PLACED_MEN_PLAYER_2 = 0;
 enum stage_of_moving CURRENT_STAGE_OF_MOVING = select_your_man;
@@ -16,7 +15,6 @@ int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
 int SQUARE_NUMBER_TO_MOVE_FROM;
 int FIELD_NUMBER_TO_MOVE_FROM;
-GtkWidget *FIXED_BOX;
 GtkWidget *MAIN_WINDOW;
 GtkWidget *WHOSE_TURN_LABEL;
 
@@ -88,14 +86,11 @@ void button_callback(GtkWidget *widget, gpointer data)
                 sleep(1);
                 send_move_information(11, -1, -1, -1, false);
                 show_winner(P_1_TURN, false, MAIN_WINDOW);
-
-                //return;
             }
             P_1_TURN = !P_1_TURN;
             update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
             YOUR_TURN = !YOUR_TURN;
             disable_all_your_buttons(BUTTON_BOARD);
-            
         }
     }
     else if ((*totally_placed_men_current_player) < maximal_number_of_men)

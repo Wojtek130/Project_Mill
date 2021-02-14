@@ -20,7 +20,6 @@ typedef struct ButtonBoard {
 } ButtonBoard;
 
 extern PipesPtr potoki;
-extern int CURRENT_MOVE[2];
 extern GtkWidget* CURRENT_BUTTON;
 //extern int CURRENT_SQUARE_NUMBER;
 //extern int CURRENT_FIELD_NUMBER;
@@ -34,12 +33,12 @@ extern int SQUARE_NUMBER_TO_MOVE_FROM;
 extern int FIELD_NUMBER_TO_MOVE_FROM;
 extern int TOTALLY_PLACED_MEN_PLAYER_1;
 extern int TOTALLY_PLACED_MEN_PLAYER_2;
-extern GtkWidget *FIXED_BOX;
 extern GtkWidget *MAIN_WINDOW;
 extern GtkWidget *MEN_NUMBER_P_1_LABEL;
 extern GtkWidget *MEN_NUMBER_P_2_LABEL;
 extern GtkWidget *WHOSE_TURN_LABEL;
 extern int PLAYER_ID;
+extern bool REMOVING;
 
 
 //extern ButtonBoard* BUTTON_BOARD;

@@ -9,6 +9,7 @@
 
 GtkWidget *MEN_NUMBER_P_1_LABEL;
 GtkWidget *MEN_NUMBER_P_2_LABEL;
+bool REMOVING;
 
 
 // Wojciech Sniady, nr indeksu: 322993
@@ -558,20 +559,9 @@ void show_winner(bool players_1_turn, bool loss_message_received, GtkWidget* par
         printf("Player 1 won!\n");
         strcpy(game_over_message, "Player 1 won!");
     }
-    strcat(game_over_message,"\n New game?");
-    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s", game_over_message);
+    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", game_over_message);
     gtk_window_set_title(GTK_WINDOW(pop_up_window), "GAME OVER!!!");
     GtkResponseType response = gtk_dialog_run(GTK_DIALOG(pop_up_window));
-    if (response == GTK_RESPONSE_YES)
-    {
-        gtk_widget_destroy(pop_up_window);
-        new_game();
-    }
-    else
-    {
-        gtk_widget_destroy(pop_up_window);
-    }
-    
     gtk_widget_destroy(pop_up_window);
 }
 
@@ -642,6 +632,9 @@ void reset_all_global_variables()
     update_label_number_of_men(false, MEN_NUMBER_P_2, MEN_NUMBER_P_2_LABEL);
     TOTALLY_PLACED_MEN_PLAYER_1 = 0;
     TOTALLY_PLACED_MEN_PLAYER_2 = 0;
+    CURRENT_BUTTON = NULL;
+    CURRENT_STAGE_OF_MOVING = select_your_man;
+    REMOVING = false;
     if (PLAYER_ID == 1)
     {
         YOUR_TURN = true;
