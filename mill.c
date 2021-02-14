@@ -453,7 +453,7 @@ bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int c
 bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2)
 {
     int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
-    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
+    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (9) : (6);
     if (*totally_placed_men_current_player < maximal_number_of_men)
     {
         return false;
@@ -525,25 +525,35 @@ bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_
     return false;
 }
 
-void show_winner(bool players_1_turn, bool loss_message_received)
+void show_winner(bool players_1_turn, bool loss_message_received, GtkWidget* parent_window)
 {
     printf("GAME OVER!!!\n");
+    char game_over_message[30];
     if (players_1_turn && loss_message_received == false)
     {
         printf("Player 1 won!\n");
+        strcpy(game_over_message, "Player 1 won!");
     }
     else if (players_1_turn == false && loss_message_received == false)
     {
         printf("Player 2 won!\n");
+        strcpy(game_over_message, "Player 2 won!");
     }
     else if (players_1_turn)
     {
         printf("Player 2 won!\n");
+        strcpy(game_over_message, "Player 2 won!");
     }
     else
     {
         printf("Player 1 won!\n");
+        strcpy(game_over_message, "Player 1 won!");
     }
+    strcat(game_over_message,"\n New game?");
+    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", game_over_message);
+    gtk_window_set_title(GTK_WINDOW(pop_up_window), "GAME OVER!!!");
+    gtk_dialog_run(GTK_DIALOG(pop_up_window));
+    gtk_widget_destroy(pop_up_window);
 }
 
 void place_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2)

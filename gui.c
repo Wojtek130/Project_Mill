@@ -67,7 +67,7 @@ void button_callback(GtkWidget *widget, gpointer data)
     int field_number = move_array[1];
     CURRENT_BUTTON = widget;
     int *totally_placed_men_current_player = (P_1_TURN) ? (&TOTALLY_PLACED_MEN_PLAYER_1) : (&TOTALLY_PLACED_MEN_PLAYER_2);
-    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
+    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (9) : (6);
     if (BOARD->number_of_squares == 2)
     {
         square_number--;
@@ -80,15 +80,15 @@ void button_callback(GtkWidget *widget, gpointer data)
     {
         if (remove_opponents_men(BOARD, BUTTON_BOARD, P_1_TURN, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2, square_number, field_number))
         {
-            //show_winner_pop_up_window(MAIN_WINDOW);
             REMOVING = false;
             send_move_information(square_number, field_number, -1, -1, true);
             if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
             {
-                show_winner(P_1_TURN, false);
                 disable_all_your_buttons(BUTTON_BOARD);
                 sleep(1);
                 send_move_information(11, -1, -1, -1, false);
+                show_winner(P_1_TURN, false, MAIN_WINDOW);
+
                 //return;
             }
             P_1_TURN = !P_1_TURN;
@@ -114,10 +114,11 @@ void button_callback(GtkWidget *widget, gpointer data)
                 send_move_information(square_number, field_number, -1, -1, false);
                 if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
                 {
-                    show_winner(P_1_TURN, false);
                     disable_all_your_buttons(BUTTON_BOARD);
                     sleep(1);
                     send_move_information(11, -1, -1, -1, false);
+                    show_winner(P_1_TURN, false, MAIN_WINDOW);
+
                 }
                 P_1_TURN = !P_1_TURN;
                 YOUR_TURN = !YOUR_TURN;
@@ -152,10 +153,11 @@ void button_callback(GtkWidget *widget, gpointer data)
                     send_move_information(SQUARE_NUMBER_TO_MOVE_FROM, FIELD_NUMBER_TO_MOVE_FROM, square_number, field_number, false);
                     if (game_over(BOARD, P_1_TURN, MEN_NUMBER_P_1, MEN_NUMBER_P_2))
                     {
-                        show_winner(P_1_TURN, false);
                         disable_all_your_buttons(BUTTON_BOARD);
                         sleep(1);
                         send_move_information(11, -1, -1, -1, false);
+                        show_winner(P_1_TURN, false, MAIN_WINDOW);
+
                     }
                     P_1_TURN = !P_1_TURN;
                     YOUR_TURN = !YOUR_TURN;
@@ -209,13 +211,12 @@ void enable_all_your_buttons(ButtonBoard* button_board)
     }
   }
 }
-
+/*
 void show_winner_pop_up_window(GtkWidget* parent_window)
 {
-    printf("pop_up_window\n");
     GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "Player ... won!\n New game?");
     gtk_window_set_title(GTK_WINDOW(pop_up_window), "GAME OVER!!!");
     gtk_dialog_run(GTK_DIALOG(pop_up_window));
     gtk_widget_destroy(pop_up_window);
     return;
-}
+}*/

@@ -55,7 +55,7 @@ bool properly_selected_field_to_move_on(Board* board, bool players_1_turn, int c
 bool properly_selected_man_to_move(Board* board, bool players_1_turn, int square_number, int field_number, int men_number_player_1, int men_number_player_2);
 bool any_move_possible(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
 bool game_over(Board* board, bool players_1_turn, int men_number_player_1, int men_number_player_2);
-void show_winner(bool players_1_turn, bool loss_message_received);
+void show_winner(bool players_1_turn, bool loss_message_received, GtkWidget* parent_window);
 void place_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
 void remove_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
 void move_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number);

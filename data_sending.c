@@ -4,6 +4,7 @@ int TOTALLY_PLACED_MEN_PLAYER_1;
 int TOTALLY_PLACED_MEN_PLAYER_2;
 int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
+GtkWidget* MAIN_WINDOW;
 
 void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
@@ -31,10 +32,10 @@ gboolean receive_move_information(gpointer data)
     bool remove_rec = move_information_arr[4];
     printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
-    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (5) : (6);
+    int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (9) : (6);
     if (sqr_number_pla == 11)
     {
-        show_winner(P_1_TURN, true);
+        show_winner(P_1_TURN, true, MAIN_WINDOW);
         disable_all_your_buttons(BUTTON_BOARD);
         return FALSE;
     }
