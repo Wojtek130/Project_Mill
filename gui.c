@@ -18,7 +18,7 @@ int SQUARE_NUMBER_TO_MOVE_FROM;
 int FIELD_NUMBER_TO_MOVE_FROM;
 GtkWidget *FIXED_BOX;
 GtkWidget *MAIN_WINDOW;
-
+GtkWidget *WHOSE_TURN_LABEL;
 
 void close_window(GtkWidget *widget, Board* board)
 {
@@ -92,6 +92,7 @@ void button_callback(GtkWidget *widget, gpointer data)
                 //return;
             }
             P_1_TURN = !P_1_TURN;
+            update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
             YOUR_TURN = !YOUR_TURN;
             disable_all_your_buttons(BUTTON_BOARD);
             
@@ -121,6 +122,7 @@ void button_callback(GtkWidget *widget, gpointer data)
 
                 }
                 P_1_TURN = !P_1_TURN;
+                update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
                 YOUR_TURN = !YOUR_TURN;
                 disable_all_your_buttons(BUTTON_BOARD);
             }
@@ -160,6 +162,7 @@ void button_callback(GtkWidget *widget, gpointer data)
 
                     }
                     P_1_TURN = !P_1_TURN;
+                    update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
                     YOUR_TURN = !YOUR_TURN;
                     disable_all_your_buttons(BUTTON_BOARD);
                 }
@@ -228,4 +231,18 @@ void update_label_number_of_men(bool player_1, int current_number_of_men, GtkWid
     sprintf(men_number_str, "%d", current_number_of_men);
     strcat(label_text, men_number_str);
     gtk_label_set_text(GTK_LABEL(men_number_label), label_text);
+}
+
+void update_label_whose_turn(bool player_1, GtkWidget* whose_turn_label)
+{
+    char label_text[30] = "Turn : Player ";
+    if (player_1)
+    {
+        strcat(label_text, "1");
+    }
+    else
+    {
+        strcat(label_text, "2");
+    }
+    gtk_label_set_text(GTK_LABEL(whose_turn_label), label_text);
 }

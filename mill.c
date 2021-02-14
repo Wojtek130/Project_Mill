@@ -559,9 +559,19 @@ void show_winner(bool players_1_turn, bool loss_message_received, GtkWidget* par
         strcpy(game_over_message, "Player 1 won!");
     }
     strcat(game_over_message,"\n New game?");
-    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", game_over_message);
+    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s", game_over_message);
     gtk_window_set_title(GTK_WINDOW(pop_up_window), "GAME OVER!!!");
-    gtk_dialog_run(GTK_DIALOG(pop_up_window));
+    GtkResponseType response = gtk_dialog_run(GTK_DIALOG(pop_up_window));
+    if (response == GTK_RESPONSE_YES)
+    {
+        gtk_widget_destroy(pop_up_window);
+        new_game();
+    }
+    else
+    {
+        gtk_widget_destroy(pop_up_window);
+    }
+    
     gtk_widget_destroy(pop_up_window);
 }
 
@@ -613,4 +623,42 @@ void move_men_received(Board* board, ButtonBoard* button_board, bool players_1_t
         board->data[chosen_square_number][chosen_field_number] = 2;
         gtk_widget_set_name(button_board->data[chosen_square_number][chosen_field_number], "red-background");
     }
+}
+
+void reset_all_global_variables()
+{
+    for (int sqr = 0; sqr < BOARD->number_of_squares; sqr++)
+    {
+        for (int fie = 0; fie < NUMBER_OF_FIELDS; fie++)
+        {
+            BOARD->data[sqr][fie] = 0;
+            gtk_widget_set_name(BUTTON_BOARD->data[sqr][fie], "black-background");
+            //counter++;
+        }
+    }
+    MEN_NUMBER_P_1 = 0;
+    MEN_NUMBER_P_2 = 0;
+    update_label_number_of_men(true, MEN_NUMBER_P_1, MEN_NUMBER_P_1_LABEL);
+    update_label_number_of_men(false, MEN_NUMBER_P_2, MEN_NUMBER_P_2_LABEL);
+    TOTALLY_PLACED_MEN_PLAYER_1 = 0;
+    TOTALLY_PLACED_MEN_PLAYER_2 = 0;
+    if (PLAYER_ID == 1)
+    {
+        YOUR_TURN = true;
+        enable_all_your_buttons(BUTTON_BOARD);
+    }
+    else
+    {
+        YOUR_TURN = false;
+        disable_all_your_buttons(BUTTON_BOARD);
+    }
+    P_1_TURN = TRUE;
+    update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
+    return;
+}
+
+void new_game()
+{
+    reset_all_global_variables();
+    send_move_information(13, -1, -1, -1, false);
 }

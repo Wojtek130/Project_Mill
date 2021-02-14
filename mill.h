@@ -38,6 +38,8 @@ extern GtkWidget *FIXED_BOX;
 extern GtkWidget *MAIN_WINDOW;
 extern GtkWidget *MEN_NUMBER_P_1_LABEL;
 extern GtkWidget *MEN_NUMBER_P_2_LABEL;
+extern GtkWidget *WHOSE_TURN_LABEL;
+extern int PLAYER_ID;
 
 
 //extern ButtonBoard* BUTTON_BOARD;
@@ -60,7 +62,7 @@ void show_winner(bool players_1_turn, bool loss_message_received, GtkWidget* par
 void place_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
 void remove_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int square_number, int field_number, int *men_number_player_1, int *men_number_player_2);
 void move_men_received(Board* board, ButtonBoard* button_board, bool players_1_turn, int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number);
-
-
+void new_game();
+void reset_all_global_variables();
 
 #endif

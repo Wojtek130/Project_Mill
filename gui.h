@@ -16,4 +16,5 @@ void disable_all_your_buttons(ButtonBoard* button_board);
 void enable_all_your_buttons(ButtonBoard* button_board);
 void show_winner_pop_up_window(GtkWidget* parent_window);
 void update_label_number_of_men(bool player_1, int current_number_of_men, GtkWidget* men_number_label);
+void update_label_whose_turn(bool player_1, GtkWidget* men_number_label);
 #endif

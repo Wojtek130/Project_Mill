@@ -22,6 +22,8 @@ GtkWidget *FIXED_BOX;
 GtkWidget *MAIN_WINDOW;
 GtkWidget *MEN_NUMBER_P_1_LABEL;
 GtkWidget *MEN_NUMBER_P_2_LABEL;
+GtkWidget *WHOSE_TURN_LABEL;
+int PLAYER_ID;
   
 int main(int argc,char *argv[])
 {
@@ -30,10 +32,12 @@ int main(int argc,char *argv[])
     if (argc >= 2 && strcmp(argv[1],"A") == 0) 
     { 
         YOUR_TURN = true;
+        PLAYER_ID = 1;
     }
     else 
     { 
         YOUR_TURN = false;
+        PLAYER_ID = 2;
     }
     gtk_init(&argc, &argv);
     enable_css("./styles/button_colors.css");
@@ -83,8 +87,10 @@ int main(int argc,char *argv[])
     GtkWidget *main_label = gtk_label_new("Mill Game");
     MEN_NUMBER_P_1_LABEL = gtk_label_new("Men number Player 1 : 0");
     MEN_NUMBER_P_2_LABEL = gtk_label_new("Men number Player 2 : 0");
+    WHOSE_TURN_LABEL = gtk_label_new("Turn : Player 1");
     GtkWidget *grid =gtk_grid_new();
     GtkWidget *button = gtk_button_new_with_label("New game");
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(new_game), (gpointer) NULL);
     gtk_grid_set_row_spacing(GTK_GRID(grid), 5);
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
@@ -93,10 +99,10 @@ int main(int argc,char *argv[])
     gtk_widget_set_hexpand (label_box, TRUE);
     gtk_widget_set_halign (label_box, GTK_ALIGN_CENTER);
     gtk_grid_attach(GTK_GRID(grid), main_label, 0, 0, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), main_label, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), MEN_NUMBER_P_1_LABEL, 0, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), MEN_NUMBER_P_2_LABEL, 0, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), button, 0, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), WHOSE_TURN_LABEL, 0, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), button, 0, 4, 1, 1);
     //gtk_box_pack_start(GTK_BOX(label_box), main_label, 0, 0, 0);
     //gtk_box_pack_start(GTK_BOX(label_box), s_label, 0, 0, 0);
     //gtk_widget_set_halign (main_label, GTK_ALIGN_CENTER);
@@ -179,8 +185,6 @@ int main(int argc,char *argv[])
         int arr_0_7[] = {0, 7};
         g_signal_connect(G_OBJECT(button_0_7), "clicked",G_CALLBACK(button_callback), (gpointer) arr_0_7);
     }
- 
-
     g_timeout_add(100, receive_move_information,NULL);
     gtk_widget_show_all(MAIN_WINDOW);
     gtk_main();

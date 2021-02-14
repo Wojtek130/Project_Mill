@@ -5,6 +5,7 @@ int TOTALLY_PLACED_MEN_PLAYER_2;
 int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
 GtkWidget* MAIN_WINDOW;
+GtkWidget* WHOSE_TURN_LABEL;
 
 void send_move_information(int current_square_number, int current_field_number, int chosen_square_number, int chosen_field_number, bool remove)
 {
@@ -33,6 +34,11 @@ gboolean receive_move_information(gpointer data)
     printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (9) : (6);
+    if (sqr_number_pla == 13)
+    {
+        reset_all_global_variables();
+        return TRUE;
+    }
     if (sqr_number_pla == 11)
     {
         show_winner(P_1_TURN, true, MAIN_WINDOW);
@@ -48,6 +54,7 @@ gboolean receive_move_information(gpointer data)
         remove_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
         remove_rec = false;
         P_1_TURN = !P_1_TURN;
+        update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
         YOUR_TURN = !YOUR_TURN;
         enable_all_your_buttons(BUTTON_BOARD);
     }
@@ -64,6 +71,7 @@ gboolean receive_move_information(gpointer data)
         {
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
+            update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
             YOUR_TURN = !YOUR_TURN;
             enable_all_your_buttons(BUTTON_BOARD);   
         }
@@ -79,6 +87,7 @@ gboolean receive_move_information(gpointer data)
         {
             remove_rec = false;
             P_1_TURN = !P_1_TURN;
+            update_label_whose_turn(P_1_TURN, WHOSE_TURN_LABEL);
             YOUR_TURN = !YOUR_TURN;
             enable_all_your_buttons(BUTTON_BOARD);
         }   
