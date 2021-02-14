@@ -22,8 +22,6 @@ typedef struct ButtonBoard {
 
 extern PipesPtr potoki;
 extern GtkWidget* CURRENT_BUTTON;
-//extern int CURRENT_SQUARE_NUMBER;
-//extern int CURRENT_FIELD_NUMBER;
 extern bool YOUR_TURN;
 extern bool P_1_TURN;
 extern ButtonBoard* BUTTON_BOARD; 
@@ -40,9 +38,6 @@ extern GtkWidget *MEN_NUMBER_P_2_LABEL;
 extern GtkWidget *WHOSE_TURN_LABEL;
 extern int PLAYER_ID;
 extern bool REMOVING;
-
-
-//extern ButtonBoard* BUTTON_BOARD;
 
 
 Board *generate_board(int n);
