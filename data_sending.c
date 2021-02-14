@@ -33,7 +33,7 @@ gboolean receive_move_information(gpointer data)
     int chosen_sqr_number_pla = move_information_arr[2];
     int chosen_fie_number_pla = move_information_arr[3];
     bool remove_rec = move_information_arr[4];
-    printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
+    //printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (9) : (6);
     if (sqr_number_pla == 13)
@@ -62,7 +62,6 @@ gboolean receive_move_information(gpointer data)
     }
     else if ((*totally_placed_men_current_player) < maximal_number_of_men)
     {
-        
         place_men_received(BOARD, BUTTON_BOARD, P_1_TURN, sqr_number_pla, fie_number_pla, &MEN_NUMBER_P_1, &MEN_NUMBER_P_2);
         (*totally_placed_men_current_player)++;
         if (mill_achieved(BOARD, sqr_number_pla, fie_number_pla))
@@ -118,7 +117,7 @@ long value_to_send(int current_square_number, int current_field_number, int chos
     {
         result *= -1;
     }
-        printf("VALUE TO SEND: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
+    //printf("VALUE TO SEND: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", current_square_number, current_field_number, chosen_square_number, chosen_field_number, remove);
     return result;
 }
 
