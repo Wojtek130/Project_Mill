@@ -1,6 +1,5 @@
 CC=gcc
 CFLAGS=-std=c11 -Wall -Wextra -Wextra -Wno-unused-parameter -Wno-unused-variable -Werror
-#CFLAGS=-std=c11 -Wall -Wextra
 LDFLAGS=-lm
 LDLIBS =`pkg-config gtk+-3.0 --cflags --libs`
 NAME = mill
