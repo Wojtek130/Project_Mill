@@ -36,7 +36,8 @@ extern int TOTALLY_PLACED_MEN_PLAYER_1;
 extern int TOTALLY_PLACED_MEN_PLAYER_2;
 extern GtkWidget *FIXED_BOX;
 extern GtkWidget *MAIN_WINDOW;
-
+extern GtkWidget *MEN_NUMBER_P_1_LABEL;
+extern GtkWidget *MEN_NUMBER_P_2_LABEL;
 
 
 //extern ButtonBoard* BUTTON_BOARD;

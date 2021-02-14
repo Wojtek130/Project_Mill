@@ -211,12 +211,21 @@ void enable_all_your_buttons(ButtonBoard* button_board)
     }
   }
 }
-/*
-void show_winner_pop_up_window(GtkWidget* parent_window)
+
+
+void update_label_number_of_men(bool player_1, int current_number_of_men, GtkWidget* men_number_label)
 {
-    GtkWidget *pop_up_window = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "Player ... won!\n New game?");
-    gtk_window_set_title(GTK_WINDOW(pop_up_window), "GAME OVER!!!");
-    gtk_dialog_run(GTK_DIALOG(pop_up_window));
-    gtk_widget_destroy(pop_up_window);
-    return;
-}*/
+    char label_text[30] = "Men number Player 1 : 2";
+    if (player_1)
+    {
+        strcat(label_text, " 1 : ");
+    }
+    else
+    {
+        strcat(label_text, " 2 : ");
+    }
+    char men_number_str[2];
+    sprintf(men_number_str, "%d", current_number_of_men);
+    strcat(label_text, men_number_str);
+    gtk_label_set_text(GTK_LABEL(men_number_label), label_text);
+}

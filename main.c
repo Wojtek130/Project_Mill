@@ -20,6 +20,8 @@ int SQUARE_NUMBER_TO_MOVE_FROM;
 int FIELD_NUMBER_TO_MOVE_FROM;
 GtkWidget *FIXED_BOX;
 GtkWidget *MAIN_WINDOW;
+GtkWidget *MEN_NUMBER_P_1_LABEL;
+GtkWidget *MEN_NUMBER_P_2_LABEL;
   
 int main(int argc,char *argv[])
 {
@@ -64,7 +66,8 @@ int main(int argc,char *argv[])
     FIXED_BOX = gtk_fixed_new();
     GtkWidget *label_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(hbox), FIXED_BOX, 0, 0, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), label_box, 0, 0, 0);
+    //gtk_box_pack_start(GTK_BOX(hbox), label_box, 0, 0, 0);
+    gtk_container_add(GTK_CONTAINER(hbox), label_box);
     gtk_widget_set_has_window(FIXED_BOX, TRUE);
     GtkWidget *image;
     if (n == 2)
@@ -78,18 +81,22 @@ int main(int argc,char *argv[])
      
     gtk_container_add(GTK_CONTAINER(FIXED_BOX), image);
     GtkWidget *main_label = gtk_label_new("Mill Game");
-    GtkWidget *s_label = gtk_label_new("sssssssssssss");
+    MEN_NUMBER_P_1_LABEL = gtk_label_new("Men number Player 1 : 0");
+    MEN_NUMBER_P_2_LABEL = gtk_label_new("Men number Player 2 : 0");
     GtkWidget *grid =gtk_grid_new();
-    GtkWidget *button = gtk_button_new_with_label("next");
+    GtkWidget *button = gtk_button_new_with_label("New game");
     gtk_grid_set_row_spacing(GTK_GRID(grid), 5);
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_box_pack_start(GTK_BOX(label_box), grid, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(label_box), grid, TRUE, FALSE, 0);
+    gtk_widget_set_hexpand (label_box, TRUE);
+    gtk_widget_set_halign (label_box, GTK_ALIGN_CENTER);
     gtk_grid_attach(GTK_GRID(grid), main_label, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), main_label, 0, 0, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), s_label, 0, 1, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), button, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), MEN_NUMBER_P_1_LABEL, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), MEN_NUMBER_P_2_LABEL, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), button, 0, 3, 1, 1);
     //gtk_box_pack_start(GTK_BOX(label_box), main_label, 0, 0, 0);
     //gtk_box_pack_start(GTK_BOX(label_box), s_label, 0, 0, 0);
     //gtk_widget_set_halign (main_label, GTK_ALIGN_CENTER);
