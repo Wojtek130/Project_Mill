@@ -38,6 +38,7 @@ extern GtkWidget *MEN_NUMBER_P_2_LABEL;
 extern GtkWidget *WHOSE_TURN_LABEL;
 extern int PLAYER_ID;
 extern bool REMOVING;
+extern int NUMBER_OF_SQUARES_ARG;
 
 
 Board *generate_board(int n);

@@ -6,6 +6,7 @@ int TOTALLY_PLACED_MEN_PLAYER_1;
 int TOTALLY_PLACED_MEN_PLAYER_2;
 int MEN_NUMBER_P_1;
 int MEN_NUMBER_P_2;
+int NUMBER_OF_SQUARES_ARG;
 GtkWidget* MAIN_WINDOW;
 GtkWidget* WHOSE_TURN_LABEL;
 
@@ -36,6 +37,19 @@ gboolean receive_move_information(gpointer data)
     //printf("RECEIVED VALUE: sqr : %d, fie: %d, ch_sqr: %d, ch_fie : %d, remove : %d\n", sqr_number_pla, fie_number_pla, chosen_sqr_number_pla, chosen_fie_number_pla, remove_rec);
     free(move_information_arr);
     int maximal_number_of_men = (BUTTON_BOARD->number_of_squares == 3) ? (9) : (6);
+    if (sqr_number_pla == 10)
+    {
+        if (fie_number_pla != NUMBER_OF_SQUARES_ARG)
+        {
+            printf("Both copies of the program must be called with the same number of squares!\n");
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+        
+    }
     if (sqr_number_pla == 13)
     {
         reset_all_global_variables();

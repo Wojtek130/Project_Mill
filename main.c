@@ -24,6 +24,7 @@ GtkWidget *MEN_NUMBER_P_2_LABEL;
 GtkWidget *WHOSE_TURN_LABEL;
 int PLAYER_ID;
 bool REMOVING;
+int NUMBER_OF_SQUARES_ARG;
 
 int main(int argc,char *argv[])
 {
@@ -53,6 +54,8 @@ int main(int argc,char *argv[])
         return 0;
     }
     BOARD = generate_board(n);
+    NUMBER_OF_SQUARES_ARG = n;
+    send_move_information(10, NUMBER_OF_SQUARES_ARG, -1, -1, false);
     gchar window_heading[32];
     sprintf(window_heading,"Mill Game Player %d", (YOUR_TURN) ? (1) : (2));
     GtkWidget* MAIN_WINDOW = gtk_window_new(GTK_WINDOW_TOPLEVEL);
