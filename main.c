@@ -6,6 +6,7 @@
 
 // Wojciech Sniady, nr indeksu: 322993
 
+
 PipesPtr potoki;
 gchar wejscie[MAX_TEXT_LENGHT];
 bool YOUR_TURN;
